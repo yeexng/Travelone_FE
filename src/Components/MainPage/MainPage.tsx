@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./MainPage.css";
 import {
   Button,
@@ -10,9 +11,13 @@ import {
   Container,
   NavLink,
   Figure,
+  Modal,
 } from "react-bootstrap";
 
 const MainPage = () => {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   return (
     <>
       <div>
@@ -23,7 +28,7 @@ const MainPage = () => {
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="mr-auto">
                 <Nav.Link href="#home">Home</Nav.Link>
-                <Nav.Link href="#link">Link</Nav.Link>
+                <Nav.Link onClick={handleShow}>Create Trip</Nav.Link>
                 <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                   <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                   <NavDropdown.Item href="#action/3.2">
@@ -148,6 +153,86 @@ const MainPage = () => {
               </div>
             </Col>
           </Row>
+          {/* Modal Page */}
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header>
+              <Modal.Title> Where's your next plan? 🏞🛤🏕🛣🏖🏜🏝 </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form>
+                <Form.Group className="mb-2">
+                  <Form.Label className="m-0">Title</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Give your trip a fun name"
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-2">
+                  <Form.Label className="m-0">Destination</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter a city or country name"
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-2">
+                  <Form.Label className="m-0">Starting Date</Form.Label>
+                  <Form.Control type="date" placeholder="1234 Main St" />
+                </Form.Group>
+
+                <Form.Group className="mb-2">
+                  <Form.Label className="m-0">Budget</Form.Label>
+                  <Form.Control />
+                </Form.Group>
+
+                <Form.Group className="mb-2">
+                  <Form.Label className="m-0">Looking For</Form.Label>
+                  <Form.Control as="select" defaultValue="Choose...">
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Any</option>
+                  </Form.Control>
+                </Form.Group>
+
+                <Form.Group className="mb-2">
+                  <Form.Label className="m-0">Type of Travel</Form.Label>
+                  <Form.Control as="select" defaultValue="Choose...">
+                    <option>Backpacking</option>
+                    <option>Leisure</option>
+                    <option>Business Travel</option>
+                    <option>Visiting Friends or Relatives</option>
+                    <option>Other</option>
+                  </Form.Control>
+                </Form.Group>
+
+                <Form.Group className="mb-2">
+                  <Form.Label className="m-0">Split Cost</Form.Label>
+                  <Form.Control as="select" defaultValue="Choose...">
+                    <option>Yes</option>
+                    <option>No</option>
+                  </Form.Control>
+                </Form.Group>
+
+                <Form.Group className="mb-2">
+                  <Form.Label className="m-0">Add ons for the trip</Form.Label>
+                  <Form.Control
+                    placeholder="Provide more details about your trip"
+                    as="textarea"
+                    rows={3}
+                  />
+                </Form.Group>
+              </Form>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="primary" onClick={handleClose}>
+                Close
+              </Button>
+              <Button variant="success" onClick={handleClose}>
+                Add Trip
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </div>
       </div>
     </>
