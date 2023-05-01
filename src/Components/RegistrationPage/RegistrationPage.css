@@ -4,18 +4,8 @@
   background-size: cover;
 }
 
-.main-text {
-  color: whitesmoke;
-  font-size: 100px;
-}
-
-.sub-text {
-  color: whitesmoke;
-  font-size: 40px;
-}
-
-.btn {
-  color: whitesmoke;
+.registration-text {
+  color: white;
 }
 
 .logout {
