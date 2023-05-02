@@ -1,18 +1,17 @@
 import { Link } from "react-router-dom";
-import "./HiddenGemSingle.css";
+import "./SingleTrip.css";
 import {
-  Button,
   Col,
   Form,
   Nav,
   NavDropdown,
   Navbar,
   Row,
-  Card,
   InputGroup,
+  Figure,
 } from "react-bootstrap";
 
-const HiddenGemSingle = () => {
+const SingleTrip = () => {
   return (
     <>
       <div>
@@ -72,14 +71,41 @@ const HiddenGemSingle = () => {
         <div className="single-secret-layout">
           <Row className="main-row-layout">
             <Col md={8}>
-              <div className="secret-single-image-div d-flex justify-content-center align-items-center">
-                <img
-                  className="secret-single-image"
-                  src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1121&q=80"
-                />
+              <div className="trip-single-div d-flex justify-content-center align-items-center mx-5">
+                <Row>
+                  <Col md={3}>
+                    <Figure className="pl-3 pt-3">
+                      <Figure.Image
+                        width={200}
+                        height={200}
+                        alt="171x180"
+                        src="https://images.unsplash.com/photo-1634926878768-2a5b3c42f139?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=756&q=80"
+                      />
+                    </Figure>
+                  </Col>
+                  <Col className="mt-2">
+                    <h2>Title: World trip from ocean to land to sky</h2>
+                    <p>
+                      with <span>Sam Ng</span>
+                    </p>
+                    <p>Destination: the Earth</p>
+                    <p>Starting Date: 1 June</p>
+                    <p>Looking for: Any</p>
+                    <p>Budget: £10000000</p>
+                    <p>Type of Travel: Leisure</p>
+                    <p>Split Cost: NO</p>
+                    <p>
+                      Details of your adventure: Lorem ipsum dolor sit amet
+                      consectetur adipisicing elit. Debitis optio, aspernatur,
+                      iure velit non dolorum perferendis esse est atque nesciunt
+                      quod eius illum, ab nam doloremque possimus laudantium
+                      voluptatem a.
+                    </p>
+                  </Col>
+                </Row>
               </div>
             </Col>
-            <Col className="post-text m-0">
+            {/* <Col className="post-text m-0">
               <div className="mt-4">
                 <p>
                   <img
@@ -160,7 +186,7 @@ const HiddenGemSingle = () => {
                   </Row>
                 </div>
               </div>
-            </Col>
+            </Col> */}
           </Row>
         </div>
       </div>
@@ -168,4 +194,4 @@ const HiddenGemSingle = () => {
   );
 };
 
-export default HiddenGemSingle;
+export default SingleTrip;

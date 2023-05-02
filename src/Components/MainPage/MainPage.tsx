@@ -13,12 +13,13 @@ import {
   Figure,
   Modal,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const MainPage = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const navigate = useNavigate();
   return (
     <>
       <div>
@@ -70,7 +71,14 @@ const MainPage = () => {
         </div>
         <div className=" main-content mx-5">
           <Row>
-            <Col md={6}>
+            <Col
+              md={6}
+              onClick={() => {
+                navigate(`/trips/abcd`);
+              }}
+            >
+              {/* need to change the id passing */}
+
               <div className="content-card m-3">
                 <Row>
                   <Col md={3} className="p-3">

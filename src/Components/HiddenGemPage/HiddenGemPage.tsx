@@ -26,7 +26,7 @@ const HiddenGemPage = () => {
         <Navbar style={{ height: "6vh" }} bg="dark" variant="dark" expand="lg">
           <div className="container-fluid mx-5">
             <Navbar.Brand>
-              <Link to={"/main"} className="text-decoration-none text-white">
+              <Link to={"/trips"} className="text-decoration-none text-white">
                 TravelOne?
               </Link>
             </Navbar.Brand>
