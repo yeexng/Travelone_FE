@@ -13,6 +13,7 @@ import {
   Figure,
   Modal,
 } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const MainPage = () => {
   const [show, setShow] = useState(false);
@@ -23,25 +24,17 @@ const MainPage = () => {
       <div>
         <Navbar style={{ height: "6vh" }} bg="dark" variant="dark" expand="lg">
           <div className="container-fluid mx-5">
-            <Navbar.Brand href="#home">TravelOne?</Navbar.Brand>
+            <Navbar.Brand>TravelOne?</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="mr-auto">
-                <Nav.Link href="#home">Home</Nav.Link>
+                <Nav.Link>
+                  {" "}
+                  <Link to={"/secret"} className="secret-link">
+                    Secret HideOuts
+                  </Link>
+                </Nav.Link>
                 <Nav.Link onClick={handleShow}>Create Trip</Nav.Link>
-                <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                  <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.2">
-                    Another action
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.3">
-                    Something
-                  </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action/3.4">
-                    Separated link
-                  </NavDropdown.Item>
-                </NavDropdown>
               </Nav>
               <Nav className="ml-auto">
                 <NavDropdown title="Username" id="basic-nav-dropdown">
@@ -65,10 +58,7 @@ const MainPage = () => {
           </div>
         </Navbar>
       </div>
-      <div
-        style={{ height: "94vh" }}
-        className="container-fluid main-layout p-0"
-      >
+      <div style={{ height: "94vh" }} className="container-fluid p-0">
         <div
           className="jumbotron-fluid d-flex align-items-center mb-5"
           style={{ height: "40vh" }}

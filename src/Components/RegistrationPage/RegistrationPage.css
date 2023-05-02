@@ -4,8 +4,13 @@
   background-size: cover;
 }
 
+.registration-form {
+  background-color: rgba(240, 248, 255, 0.836);
+  border-radius: 10px;
+}
+
 .registration-text {
-  color: white;
+  color: black;
 }
 
 .logout {

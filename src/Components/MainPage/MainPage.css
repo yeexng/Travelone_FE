@@ -9,6 +9,15 @@
   color: white;
 }
 
+.secret-link {
+  text-decoration: none;
+  color: rgba(245, 245, 245, 0.5);
+}
+
+.secret-link:hover {
+  color: white;
+}
+
 .logout {
   color: rgba(255, 19, 19, 0.911);
   border: solid 1px rgba(0, 0, 0, 0);
@@ -21,7 +30,7 @@
 }
 
 .content-card {
-  border: solid 1px rgba(0, 0, 0, 0.062);
+  border: solid 1px rgba(0, 0, 0, 0.116);
   border-radius: 10px;
 }
 

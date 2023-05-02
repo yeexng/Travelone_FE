@@ -28,3 +28,12 @@
   border: solid 1px red;
   border-color: red;
 }
+.text-center > .get-started-btn {
+  background-color: aliceblue;
+  opacity: 0.8;
+  color: black;
+}
+
+.text-center > .get-started-btn:hover {
+  transform: scale(1.2);
+}

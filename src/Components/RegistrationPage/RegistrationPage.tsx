@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./RegistrationPage.css";
 import {
   Button,
@@ -18,50 +19,14 @@ const RegistrationPage = () => {
           <div className="container-fluid mx-5">
             <Navbar.Brand href="#home">TravelOne?</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="mr-auto">
-                <Nav.Link href="#home">Home</Nav.Link>
-                <Nav.Link href="#link">Link</Nav.Link>
-                <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                  <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.2">
-                    Another action
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.3">
-                    Something
-                  </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action/3.4">
-                    Separated link
-                  </NavDropdown.Item>
-                </NavDropdown>
-              </Nav>
-              <Nav className="ml-auto">
-                <NavDropdown title="Username" id="basic-nav-dropdown">
-                  <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.2">
-                    Another action
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.3">
-                    Something
-                  </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action/3.4">
-                    Separated link
-                  </NavDropdown.Item>
-                </NavDropdown>
-              </Nav>
-              <Nav>
-                <Nav.Link className=" logout">Logout</Nav.Link>
-              </Nav>
-            </Navbar.Collapse>
+            <Navbar.Collapse id="basic-navbar-nav"></Navbar.Collapse>
           </div>
         </Navbar>
       </div>
       <div style={{ height: "94vh" }} className="container-fluid main-layout">
-        <Row className="justify-content-center align-items-center h-100">
-          <Col md={3}>
-            <h2 className="registration-text"> Ready to be Traveloner!? </h2>
+        <Row className="justify-content-center align-items-center h-100 ">
+          <Col md={3} className="registration-form py-2">
+            <h2 className="registration-text"> Ready to be a Traveloner!? </h2>
             <Form className="registration-text">
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>First Name</Form.Label>
@@ -113,7 +78,9 @@ const RegistrationPage = () => {
                 >
                   Register
                 </Button>
-                <Button>Back</Button>
+                <Link to={"/login"} className="btn btn-success">
+                  Back
+                </Link>
               </div>
             </Form>
           </Col>

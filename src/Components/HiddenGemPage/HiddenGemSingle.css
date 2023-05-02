@@ -1,0 +1,37 @@
+.single-secret-layout {
+  height: inherit;
+  background-color: #333333;
+}
+
+.main-row-layout {
+  background-color: black;
+  width: 99vw;
+}
+
+.post-text {
+  background-color: #333333;
+  color: white;
+  height: 94vh;
+}
+
+.post-date {
+  color: rgba(255, 255, 255, 0.466);
+  font-size: 12px;
+  font-style: italic;
+}
+
+hr {
+  background-color: white;
+}
+
+.single-comment {
+  border-bottom: rgba(245, 245, 245, 0.178) solid 1px;
+}
+
+.secret-single-image {
+  height: 80vh;
+}
+
+.secret-single-image-div {
+  height: 94vh;
+}
