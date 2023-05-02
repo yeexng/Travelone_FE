@@ -4,12 +4,14 @@ import RegistrationPage from "./Components/RegistrationPage/RegistrationPage";
 import LoginPage from "./Components/LoginPage/LoginPage";
 import MainPage from "./Components/MainPage/MainPage";
 import HiddenGemPage from "./Components/HiddenGemPage/HiddenGemPage";
+import HiddenGemSingle from "./Components/HiddenGemPage/HiddenGemSingle";
 
 function App() {
   return (
     <>
       <div>
-        <HiddenGemPage />
+        <HiddenGemSingle />
+        {/* <HiddenGemPage /> */}
         {/* <MainPage /> */}
         {/* <LoginPage /> */}
         {/* <RegistrationPage /> */}

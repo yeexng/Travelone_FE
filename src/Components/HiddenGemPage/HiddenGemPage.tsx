@@ -11,6 +11,7 @@ import {
   Figure,
   Modal,
   Card,
+  InputGroup,
 } from "react-bootstrap";
 
 const HiddenGemPage = () => {
@@ -73,8 +74,15 @@ const HiddenGemPage = () => {
           style={{ height: "40vh" }}
         >
           <div className="container">
-            <h1 className="jumbotron-title">Travelone? or Travel Alone?</h1>
-            <p className="jumbotron-title">Alone no more...</p>
+            <h1 className="jumbotron-title">
+              There will always be a special spot waiting for you to discover!
+            </h1>
+            <p className="jumbotron-title">
+              And above all, <br></br>watch with glittering eyes the whole world
+              around you because the greatest secrets are always hidden in the
+              most unlikely places.<br></br> Those who don't believe in magic
+              will never find it.
+            </p>
           </div>
         </div>
         <div className=" main-content mx-5">
@@ -291,7 +299,7 @@ const HiddenGemPage = () => {
           {/* Modal Page */}
           <Modal show={show} onHide={handleClose}>
             <Modal.Header>
-              <Modal.Title> Where's your next plan? 🏞🛤🏕🛣🏖🏜🏝 </Modal.Title>
+              <Modal.Title> Share your discovery? 🏞🛤🏕🛣🏖🏜🏝 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <Form>
@@ -299,64 +307,29 @@ const HiddenGemPage = () => {
                   <Form.Label className="m-0">Title</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="Give your trip a fun name"
+                    placeholder="What's the treasure?"
                   />
                 </Form.Group>
 
                 <Form.Group className="mb-2">
-                  <Form.Label className="m-0">Destination</Form.Label>
+                  <Form.Label className="m-0">Location</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="Enter a city or country name"
+                    placeholder="Where did you discover this treasure?"
                   />
                 </Form.Group>
 
                 <Form.Group className="mb-2">
-                  <Form.Label className="m-0">Starting Date</Form.Label>
-                  <Form.Control type="date" placeholder="1234 Main St" />
-                </Form.Group>
-
-                <Form.Group className="mb-2">
-                  <Form.Label className="m-0">Budget</Form.Label>
-                  <Form.Control />
-                </Form.Group>
-
-                <Form.Group className="mb-2">
-                  <Form.Label className="m-0">Looking For</Form.Label>
-                  <Form.Control as="select" defaultValue="Choose...">
-                    <option>Male</option>
-                    <option>Female</option>
-                    <option>Any</option>
-                  </Form.Control>
-                </Form.Group>
-
-                <Form.Group className="mb-2">
-                  <Form.Label className="m-0">Type of Travel</Form.Label>
-                  <Form.Control as="select" defaultValue="Choose...">
-                    <option>Backpacking</option>
-                    <option>Leisure</option>
-                    <option>Business Travel</option>
-                    <option>Visiting Friends or Relatives</option>
-                    <option>Other</option>
-                  </Form.Control>
-                </Form.Group>
-
-                <Form.Group className="mb-2">
-                  <Form.Label className="m-0">Split Cost</Form.Label>
-                  <Form.Control as="select" defaultValue="Choose...">
-                    <option>Yes</option>
-                    <option>No</option>
-                  </Form.Control>
-                </Form.Group>
-
-                <Form.Group className="mb-2">
-                  <Form.Label className="m-0">Add ons for the trip</Form.Label>
+                  <Form.Label className="m-0">Content</Form.Label>
                   <Form.Control
-                    placeholder="Provide more details about your trip"
+                    placeholder="What's the treasure?"
                     as="textarea"
                     rows={3}
                   />
                 </Form.Group>
+                <InputGroup className="mb-3">
+                  <input type="file" />
+                </InputGroup>
               </Form>
             </Modal.Body>
             <Modal.Footer>
