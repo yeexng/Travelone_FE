@@ -1,0 +1,43 @@
+.jumbotron-fluid {
+  background-image: url(https://images.unsplash.com/photo-1468186402854-9a641fd7a7c4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1469&q=80);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom;
+}
+
+.jumbotron-title {
+  color: white;
+}
+
+.logout {
+  color: rgba(255, 19, 19, 0.911);
+  border: solid 1px rgba(0, 0, 0, 0);
+}
+
+.logout:hover {
+  color: red;
+  border-bottom: solid 1px red;
+  border-color: red;
+}
+
+.content-secret-card {
+  border: solid 1px rgba(0, 0, 0, 0.062);
+  border-radius: 10px;
+}
+
+.content-secret-card:hover {
+  box-shadow: 0 0 10px rgb(61, 61, 61);
+  transform: scale(1.005);
+}
+
+.card-img {
+  width: inherit;
+  height: 28vh;
+  object-fit: cover;
+}
+
+.profile-img {
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+}
