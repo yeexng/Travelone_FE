@@ -32,32 +32,19 @@ const HiddenGemSingle = () => {
                     Secret HideOuts
                   </Link>
                 </Nav.Link>
-                <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                  <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.2">
-                    Another action
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.3">
-                    Something
-                  </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action/3.4">
-                    Separated link
-                  </NavDropdown.Item>
-                </NavDropdown>
               </Nav>
               <Nav className="ml-auto">
                 <NavDropdown title="Username" id="basic-nav-dropdown">
-                  <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.2">
-                    Another action
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.3">
-                    Something
+                  <NavDropdown.Item>
+                    <Link to={"/users/asdc"} className="mytrip-link">
+                      Profile
+                    </Link>
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action/3.4">
-                    Separated link
+                  <NavDropdown.Item>
+                    <Link to={"/trips/asdc"} className="mytrip-link">
+                      My Trip
+                    </Link>
                   </NavDropdown.Item>
                 </NavDropdown>
               </Nav>
