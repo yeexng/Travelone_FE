@@ -153,68 +153,55 @@ const ProfilePage = () => {
       {/* Edit Modal */}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header>
-          <Modal.Title> Edit your Trip </Modal.Title>
+          <Modal.Title> Your Details </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group className="mb-2">
-              <Form.Label className="m-0">Title</Form.Label>
+              <Form.Label className="m-0">First Name</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Give your trip a fun name"
+                placeholder="Your First Name"
+                id="first-name-change"
               />
             </Form.Group>
 
             <Form.Group className="mb-2">
-              <Form.Label className="m-0">Destination</Form.Label>
+              <Form.Label className="m-0">Last Name</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Enter a city or country name"
+                placeholder="Your Last Name"
+                id="last-name-change"
               />
             </Form.Group>
 
             <Form.Group className="mb-2">
-              <Form.Label className="m-0">Starting Date</Form.Label>
-              <Form.Control type="date" placeholder="1234 Main St" />
-            </Form.Group>
-
-            <Form.Group className="mb-2">
-              <Form.Label className="m-0">Budget</Form.Label>
-              <Form.Control />
-            </Form.Group>
-
-            <Form.Group className="mb-2">
-              <Form.Label className="m-0">Looking For</Form.Label>
-              <Form.Control as="select" defaultValue="Choose...">
+              <Form.Label className="m-0">Gender</Form.Label>
+              <Form.Control
+                as="select"
+                defaultValue="Choose"
+                placeholder="Male/Female"
+                id="gender-change"
+              >
+                {" "}
                 <option>Male</option>
                 <option>Female</option>
-                <option>Any</option>
               </Form.Control>
             </Form.Group>
 
             <Form.Group className="mb-2">
-              <Form.Label className="m-0">Type of Travel</Form.Label>
-              <Form.Control as="select" defaultValue="Choose...">
-                <option>Backpacking</option>
-                <option>Leisure</option>
-                <option>Business Travel</option>
-                <option>Visiting Friends or Relatives</option>
-                <option>Other</option>
-              </Form.Control>
-            </Form.Group>
-
-            <Form.Group className="mb-2">
-              <Form.Label className="m-0">Split Cost</Form.Label>
-              <Form.Control as="select" defaultValue="Choose...">
-                <option>Yes</option>
-                <option>No</option>
-              </Form.Control>
-            </Form.Group>
-
-            <Form.Group className="mb-2">
-              <Form.Label className="m-0">Add ons for the trip</Form.Label>
+              <Form.Label className="m-0">Emergency Contact</Form.Label>
               <Form.Control
-                placeholder="Provide more details about your trip"
+                placeholder="This is important!!"
+                id="emergency-change"
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-2">
+              <Form.Label className="m-0">About Me</Form.Label>
+              <Form.Control
+                id="about-change"
+                placeholder="Tell us more about you"
                 as="textarea"
                 rows={3}
               />
@@ -226,7 +213,7 @@ const ProfilePage = () => {
             Close
           </Button>
           <Button variant="success" onClick={handleClose}>
-            Add Trip
+            Edit...
           </Button>
         </Modal.Footer>
       </Modal>
