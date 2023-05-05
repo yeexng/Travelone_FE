@@ -1,17 +1,50 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./LoginPage.css";
-import {
-  Button,
-  Col,
-  Form,
-  Nav,
-  NavDropdown,
-  Navbar,
-  Row,
-  Container,
-} from "react-bootstrap";
+import { Button, Col, Form, Navbar, Row } from "react-bootstrap";
+import { FormEvent, useEffect, useState } from "react";
+import axios, { AxiosError, AxiosResponse } from "axios";
 
 const LoginPage = () => {
+  const baseEndpoint: String =
+    (process.env.REACT_APP_BE_URL as string) || "http://localhost:3005";
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: FormEvent) => {
+    try {
+      e.preventDefault();
+      await axios
+        .post(baseEndpoint + "/users/login", {
+          email,
+          password,
+        })
+        .then((res) => {
+          const { data } = res as AxiosResponse;
+          console.log("In Login Page:", data);
+          localStorage.setItem("accessToken", data.accessToken);
+          navigate("/trips");
+        })
+        .catch((err: Error | AxiosError) => {
+          if (axios.isAxiosError(err)) {
+            console.log(err.config);
+            console.log(err.request);
+            console.log(err.response);
+          } else {
+            console.log(err.message);
+          }
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    document.title = "Travelone | Login";
+    localStorage.clear();
+  }, []);
+
   return (
     <>
       <div>
@@ -27,13 +60,13 @@ const LoginPage = () => {
         <Row className="justify-content-center align-items-center h-100">
           <Col md={3} className="login-form py-2">
             <h2 className="login-text"> Adventure Time! </h2>
-            <Form className="login-text">
+            <Form className="login-text" onSubmit={handleSubmit}>
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
                   type="email"
                   placeholder="Enter email"
-                  //   onChange={(val) => setEmail(val.currentTarget.value)}
+                  onChange={(val) => setEmail(val.currentTarget.value)}
                 />
               </Form.Group>
 
@@ -42,7 +75,7 @@ const LoginPage = () => {
                 <Form.Control
                   type="password"
                   placeholder="Password"
-                  //   onChange={(val) => setPassword(val.currentTarget.value)}
+                  onChange={(val) => setPassword(val.currentTarget.value)}
                 />
               </Form.Group>
               <div className="d-flex justify-content-between">

@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import "./RegistrationPage.css";
 import { Button, Col, Form, Navbar, Row } from "react-bootstrap";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import axios from "axios";
 
 const RegistrationPage = () => {
@@ -29,10 +29,15 @@ const RegistrationPage = () => {
         dateOfBirth,
       });
       localStorage.setItem("accessToken", data.accessToken);
-      console.log(data);
+      console.log("In Register Page:", data);
       navigate("/trips");
     } catch (error) {}
   };
+
+  useEffect(() => {
+    document.title = "Travelone | Register";
+  }, []);
+
   return (
     <>
       <div>
