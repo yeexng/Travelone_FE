@@ -1,6 +1,9 @@
 import { Dispatch } from "redux";
 import { RootState } from "../../store/store";
+import axios from "axios";
+import { User } from "../../../interfaces/iUsers";
 
+export const ADD_USER = "ADD_USER"; //add new user
 export const GET_USER = "GET_USER"; //fetch owner's profile
 export const GET_USER_PROFILE = "GET_USER_PROFILE"; //fetch owner's profile
 export const GET_USER_ID = "GET_USER_ID"; //fetch one specific user
@@ -11,7 +14,22 @@ export const GET_ALL_PROFILE = "GET_ALL_PROFILE";
 const baseEndpoint: String =
   (process.env.REACT_APP_BE_URL as string) || "http://localhost:3005";
 
-//PROFILE
+//ADD NEW USER
+export const addNewUserAction = (user: User) => {
+  return async (dispatch: Dispatch) => {
+    try {
+      let res = await axios.post(baseEndpoint + "/users");
+      dispatch({
+        type: ADD_USER,
+        payload: { user: res.data },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+//GET PROFILE
 export const getUserProfile = (userId: String) => {
   return async (dispatch: Dispatch, getState: () => RootState) => {
     try {
