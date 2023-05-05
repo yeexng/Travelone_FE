@@ -8,18 +8,33 @@ import {
   NavDropdown,
   Navbar,
   Row,
-  Container,
-  NavLink,
   Figure,
   Modal,
 } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store/store";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { getUserProfile } from "../../redux/actions/userActions/action";
+import { useAppDispatch } from "../../redux/hooks/hooks";
 
 const MainPage = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const userProfileData = useSelector(
+    (state: RootState) => state.userData.stock
+  );
+
+  useEffect(() => {
+    dispatch(getUserProfile("645499c41179a6880e723d3f")); //need to pass the params here
+  }, []);
+
+  console.log(userProfileData);
+
   return (
     <>
       <div>
@@ -38,9 +53,15 @@ const MainPage = () => {
                 <Nav.Link onClick={handleShow}>Create Trip</Nav.Link>
               </Nav>
               <Nav className="ml-auto">
-                <NavDropdown title="Username" id="basic-nav-dropdown">
+                <NavDropdown
+                  title={userProfileData && userProfileData.firstName}
+                  id="basic-nav-dropdown"
+                >
                   <NavDropdown.Item>
-                    <Link to={"/users/asdc"} className="mytrip-link">
+                    <Link
+                      to={`/users/${userProfileData._id}`}
+                      className="mytrip-link"
+                    >
                       Profile
                     </Link>
                   </NavDropdown.Item>

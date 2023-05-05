@@ -14,12 +14,18 @@ import "./ProfilePage.css";
 import { useState } from "react";
 import { GiAirplaneDeparture } from "react-icons/gi";
 import { ImBarcode } from "react-icons/im";
+import { useAppSelector } from "../../redux/hooks/hooks";
+import { RootState } from "../../redux/store/store";
 
 const ProfilePage = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const userProfileData = useAppSelector(
+    (state: RootState) => state.userData.stock
+  );
 
+  console.log(userProfileData);
   return (
     <>
       <div>
@@ -42,7 +48,10 @@ const ProfilePage = () => {
                 <Nav.Link onClick={handleShow}>Edit Profile</Nav.Link>
               </Nav>
               <Nav className="ml-auto">
-                <NavDropdown title="Username" id="basic-nav-dropdown">
+                <NavDropdown
+                  title={userProfileData && userProfileData.firstName}
+                  id="basic-nav-dropdown"
+                >
                   <NavDropdown.Item>Profile</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item>
@@ -98,48 +107,56 @@ const ProfilePage = () => {
                     <Col md={4}>
                       <p className="">
                         FIRST NAME: <br></br>
-                        <span className="profile-detail">Sam</span>
+                        <span className="profile-detail">
+                          {userProfileData && userProfileData.firstName}
+                        </span>
                       </p>
                     </Col>
                     <Col md={8}>
                       <p>
                         LAST NAME: <br></br>
-                        <span className="profile-detail">Ng</span>
+                        <span className="profile-detail">
+                          {userProfileData && userProfileData.lastName}
+                        </span>
                       </p>
                     </Col>
                     <Col md={4}>
                       <p>
                         DATE OF BIRTH: <br></br>
-                        <span className="profile-detail">1 June 2008</span>
+                        <span className="profile-detail">
+                          {userProfileData && userProfileData.dateOfBirth}
+                        </span>
                       </p>
                     </Col>
                     <Col md={8}>
                       <p>
                         GENDER:<br></br>
-                        <span className="profile-detail">Male/Female</span>
+                        <span className="profile-detail">
+                          {userProfileData && userProfileData.gender}
+                        </span>
                       </p>
                     </Col>
                     <Col md={4}>
                       <p>
                         EMAIL: <br></br>
-                        <span className="profile-detail">test@test.com</span>
+                        <span className="profile-detail">
+                          {userProfileData && userProfileData.email}
+                        </span>
                       </p>
                     </Col>
                     <Col md={8}>
                       <p>
                         EMERGENCY CONTACT: <br></br>
-                        <span className="profile-detail">12345678</span>
+                        <span className="profile-detail">
+                          {userProfileData && userProfileData.emergencyContact}
+                        </span>
                       </p>
                     </Col>
                     <Col md={12}>
                       <p>
                         ABOUT ME: <br></br>
                         <span className="profile-detail-about">
-                          Lorem, ipsum dolor sit amet consectetur adipisicing
-                          elit. Alias doloribus delectus distinctio? Itaque
-                          maiores numquam temporibus officiis officia soluta
-                          blanditiis laudantium dignissimos necessitatibus
-                          laborum et, totam at ducimus rem deserunt.
+                          {userProfileData && userProfileData.aboutMe}
                         </span>
                       </p>
                     </Col>
@@ -161,7 +178,7 @@ const ProfilePage = () => {
               <Form.Label className="m-0">First Name</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Your First Name"
+                placeholder={userProfileData && userProfileData.firstName}
                 id="first-name-change"
               />
             </Form.Group>
@@ -170,7 +187,7 @@ const ProfilePage = () => {
               <Form.Label className="m-0">Last Name</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Your Last Name"
+                placeholder={userProfileData && userProfileData.lastName}
                 id="last-name-change"
               />
             </Form.Group>
@@ -180,7 +197,7 @@ const ProfilePage = () => {
               <Form.Control
                 as="select"
                 defaultValue="Choose"
-                placeholder="Male/Female"
+                placeholder={userProfileData && userProfileData.gender}
                 id="gender-change"
               >
                 {" "}
@@ -201,7 +218,7 @@ const ProfilePage = () => {
               <Form.Label className="m-0">About Me</Form.Label>
               <Form.Control
                 id="about-change"
-                placeholder="Tell us more about you"
+                placeholder={userProfileData && userProfileData.aboutMe}
                 as="textarea"
                 rows={3}
               />

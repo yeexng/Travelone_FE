@@ -16,7 +16,10 @@ const baseEndpoint: String =
 
 //ADD NEW USER
 export const addNewUserAction = (user: User) => {
-  return async (dispatch: Dispatch) => {
+  return async (
+    dispatch: Dispatch,
+    getState: () => RootState
+  ): Promise<void> => {
     try {
       let res = await axios.post(baseEndpoint + "/users");
       dispatch({
@@ -31,7 +34,10 @@ export const addNewUserAction = (user: User) => {
 
 //GET PROFILE
 export const getUserProfile = (userId: String) => {
-  return async (dispatch: Dispatch, getState: () => RootState) => {
+  return async (
+    dispatch: Dispatch,
+    getState: () => RootState
+  ): Promise<void> => {
     try {
       let res = await fetch(baseEndpoint + `/users/${userId}`);
       if (res.ok) {

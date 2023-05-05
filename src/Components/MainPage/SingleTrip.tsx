@@ -14,11 +14,20 @@ import {
   Modal,
 } from "react-bootstrap";
 import { useState } from "react";
+import { useAppDispatch } from "../../redux/hooks/hooks";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store/store";
 
 const SingleTrip = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const userProfileData = useSelector(
+    (state: RootState) => state.userData.stock
+  );
+
+  console.log(userProfileData);
 
   return (
     <>
@@ -42,9 +51,15 @@ const SingleTrip = () => {
                 <Nav.Link onClick={handleShow}>Edit Trip</Nav.Link>
               </Nav>
               <Nav className="ml-auto">
-                <NavDropdown title="Username" id="basic-nav-dropdown">
+                <NavDropdown
+                  title={userProfileData && userProfileData.firstName}
+                  id="basic-nav-dropdown"
+                >
                   <NavDropdown.Item>
-                    <Link to={"/users/asdc"} className="mytrip-link">
+                    <Link
+                      to={`/users/${userProfileData._id}`}
+                      className="mytrip-link"
+                    >
                       Profile
                     </Link>
                   </NavDropdown.Item>

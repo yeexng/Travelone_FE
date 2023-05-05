@@ -14,12 +14,18 @@ import {
   InputGroup,
 } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store/store";
 
 const HiddenGemPage = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const navigate = useNavigate();
+  const userProfileData = useSelector(
+    (state: RootState) => state.userData.stock
+  );
+
   return (
     <>
       <div>
@@ -36,9 +42,15 @@ const HiddenGemPage = () => {
                 <Nav.Link onClick={handleShow}>Add a Secret</Nav.Link>
               </Nav>
               <Nav className="ml-auto">
-                <NavDropdown title="Username" id="basic-nav-dropdown">
+                <NavDropdown
+                  title={userProfileData && userProfileData.firstName}
+                  id="basic-nav-dropdown"
+                >
                   <NavDropdown.Item>
-                    <Link to={"/users/asdc"} className="mytrip-link">
+                    <Link
+                      to={`/users/${userProfileData._id}`}
+                      className="mytrip-link"
+                    >
                       Profile
                     </Link>
                   </NavDropdown.Item>

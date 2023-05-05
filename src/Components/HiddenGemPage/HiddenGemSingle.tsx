@@ -11,8 +11,16 @@ import {
   Card,
   InputGroup,
 } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store/store";
 
 const HiddenGemSingle = () => {
+  const userProfileData = useSelector(
+    (state: RootState) => state.userData.stock
+  );
+
+  console.log(userProfileData);
+
   return (
     <>
       <div>
@@ -34,9 +42,15 @@ const HiddenGemSingle = () => {
                 </Nav.Link>
               </Nav>
               <Nav className="ml-auto">
-                <NavDropdown title="Username" id="basic-nav-dropdown">
+                <NavDropdown
+                  title={userProfileData && userProfileData.firstName}
+                  id="basic-nav-dropdown"
+                >
                   <NavDropdown.Item>
-                    <Link to={"/users/asdc"} className="mytrip-link">
+                    <Link
+                      to={`/users/${userProfileData._id}`}
+                      className="mytrip-link"
+                    >
                       Profile
                     </Link>
                   </NavDropdown.Item>
