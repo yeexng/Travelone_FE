@@ -1,17 +1,38 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./RegistrationPage.css";
-import {
-  Button,
-  Col,
-  Form,
-  Nav,
-  NavDropdown,
-  Navbar,
-  Row,
-  Container,
-} from "react-bootstrap";
+import { Button, Col, Form, Navbar, Row } from "react-bootstrap";
+import { FormEvent, useState } from "react";
+import axios from "axios";
 
 const RegistrationPage = () => {
+  const baseEndpoint: String =
+    (process.env.REACT_APP_BE_URL as string) || "http://localhost:3005";
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [gender, setGender] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [emergencyContact, setEmergencyContact] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: FormEvent) => {
+    try {
+      e.preventDefault();
+      const { data } = await axios.post(baseEndpoint + "/users/account", {
+        firstName,
+        lastName,
+        gender,
+        email,
+        password,
+        emergencyContact,
+        dateOfBirth,
+      });
+      localStorage.setItem("accessToken", data.accessToken);
+      console.log(data);
+      navigate("/trips");
+    } catch (error) {}
+  };
   return (
     <>
       <div>
@@ -27,31 +48,55 @@ const RegistrationPage = () => {
         <Row className="justify-content-center align-items-center h-100 ">
           <Col md={3} className="registration-form py-2">
             <h2 className="registration-text"> Ready to be a Traveloner!? </h2>
-            <Form className="registration-text">
+            <Form className="registration-text" onSubmit={handleSubmit}>
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>First Name</Form.Label>
-                <Form.Control type="text" placeholder="Enter your first name" />
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Family Name</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Enter your family name"
+                  placeholder="Enter your first name"
+                  onChange={(val) => setFirstName(val.currentTarget.value)}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Last Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter your last name"
+                  onChange={(val) => setLastName(val.currentTarget.value)}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Gender</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Male/Female"
+                  onChange={(val) => setGender(val.currentTarget.value)}
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" placeholder="Enter email" />
+                <Form.Control
+                  type="email"
+                  placeholder="Enter email"
+                  onChange={(val) => setEmail(val.currentTarget.value)}
+                />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" />
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  onChange={(val) => setPassword(val.currentTarget.value)}
+                />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Emergency Contact</Form.Label>
                 <Form.Control
-                  type="password"
+                  type="text"
                   placeholder="Please note that this is important for your safety reason!"
+                  onChange={(val) =>
+                    setEmergencyContact(val.currentTarget.value)
+                  }
                 />
               </Form.Group>
               <Form.Group controlId="duedate">
@@ -62,6 +107,7 @@ const RegistrationPage = () => {
                   placeholder="Due date"
                   // value={Date}
                   // onChange={(e) => setDate(e.target.value)}
+                  onChange={(val) => setDateOfBirth(val.currentTarget.value)}
                 />
               </Form.Group>
               <Form.Group controlId="formBasicCheckbox">
