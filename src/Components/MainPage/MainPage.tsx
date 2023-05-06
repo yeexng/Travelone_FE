@@ -14,10 +14,9 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
-import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { getUserProfile } from "../../redux/actions/userActions/action";
 import { useAppDispatch } from "../../redux/hooks/hooks";
+import { addTripAction } from "../../redux/actions/postActions/action";
 
 const MainPage = () => {
   const [show, setShow] = useState(false);
@@ -28,12 +27,19 @@ const MainPage = () => {
   const userProfileData = useSelector(
     (state: RootState) => state.userData.stock
   );
+  const [newTrip, setNewTrip] = useState({
+    user: `${userProfileData._id}`,
+    title: "",
+    destination: "",
+    date: "",
+    lookingFor: "",
+    typeOfJourney: "",
+    splitCost: "",
+    budget: "",
+    addOns: "",
+  });
 
-  // useEffect(() => {
-  //   dispatch(getUserProfile("645499c41179a6880e723d3f")); //need to pass the params here
-  // }, []);
-
-  console.log(userProfileData);
+  console.log("Main Page:", userProfileData);
 
   return (
     <>
@@ -247,7 +253,13 @@ const MainPage = () => {
               <Button variant="primary" onClick={handleClose}>
                 Close
               </Button>
-              <Button variant="success" onClick={handleClose}>
+              <Button
+                variant="success"
+                onClick={() => {
+                  dispatch(addTripAction(newTrip));
+                  dispatch(handleClose);
+                }}
+              >
                 Add Trip
               </Button>
             </Modal.Footer>
