@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import "./MainPage.css";
 import {
   Button,
@@ -14,10 +14,8 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { getUserProfile } from "../../redux/actions/userActions/action";
 import { useAppDispatch } from "../../redux/hooks/hooks";
+import axios from "axios";
 
 const MainPage = () => {
   const [show, setShow] = useState(false);
@@ -28,13 +26,42 @@ const MainPage = () => {
   const userProfileData = useSelector(
     (state: RootState) => state.userData.stock
   );
+  // console.log("Main Page:", userProfileData);
 
-  // useEffect(() => {
-  //   dispatch(getUserProfile("645499c41179a6880e723d3f")); //need to pass the params here
-  // }, []);
+  //Creating Trip
+  const baseEndpoint: String =
+    (process.env.REACT_APP_BE_URL as string) || "http://localhost:3005";
+  const [title, setTitle] = useState("");
+  const [destination, setDestination] = useState("");
+  const [date, setDate] = useState("");
+  const [budget, setBudget] = useState("");
+  const [lookingFor, setLookingFor] = useState("");
+  const [typeofJourney, setTypeOfJourney] = useState("");
+  const [splitCost, setSplitCost] = useState("");
+  const [addOns, setAddOns] = useState("");
+  const user = userProfileData._id;
 
-  console.log(userProfileData);
-
+  const handleSubmitTrip = async (e: FormEvent) => {
+    try {
+      e.preventDefault();
+      const { data } = await axios.post(baseEndpoint + "/trips", {
+        user,
+        title,
+        destination,
+        date,
+        budget,
+        lookingFor,
+        typeofJourney,
+        splitCost,
+        addOns,
+      });
+      console.log("Added new trip in Main Page:", data);
+      //need to add getTripAction here
+      dispatch({ handleClose });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <div>
@@ -178,12 +205,13 @@ const MainPage = () => {
               <Modal.Title> Where's your next plan? 🏞🛤🏕🛣🏖🏜🏝 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <Form>
+              <Form onSubmit={handleSubmitTrip}>
                 <Form.Group className="mb-2">
                   <Form.Label className="m-0">Title</Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="Give your trip a fun name"
+                    onChange={(val) => setTitle(val.currentTarget.value)}
                   />
                 </Form.Group>
 
@@ -192,22 +220,34 @@ const MainPage = () => {
                   <Form.Control
                     type="text"
                     placeholder="Enter a city or country name"
+                    onChange={(val) => setDestination(val.currentTarget.value)}
                   />
                 </Form.Group>
 
                 <Form.Group className="mb-2">
                   <Form.Label className="m-0">Starting Date</Form.Label>
-                  <Form.Control type="date" placeholder="1234 Main St" />
+                  <Form.Control
+                    type="date"
+                    onChange={(val) => setDate(val.currentTarget.value)}
+                  />
                 </Form.Group>
 
                 <Form.Group className="mb-2">
                   <Form.Label className="m-0">Budget</Form.Label>
-                  <Form.Control />
+                  <Form.Control
+                    type="number"
+                    placeholder="What's your budget"
+                    onChange={(val) => setBudget(val.currentTarget.value)}
+                  />
                 </Form.Group>
 
                 <Form.Group className="mb-2">
                   <Form.Label className="m-0">Looking For</Form.Label>
-                  <Form.Control as="select" defaultValue="Choose...">
+                  <Form.Control
+                    as="select"
+                    defaultValue="Choose..."
+                    onChange={(val) => setLookingFor(val.currentTarget.value)}
+                  >
                     <option>Male</option>
                     <option>Female</option>
                     <option>Any</option>
@@ -216,7 +256,13 @@ const MainPage = () => {
 
                 <Form.Group className="mb-2">
                   <Form.Label className="m-0">Type of Travel</Form.Label>
-                  <Form.Control as="select" defaultValue="Choose...">
+                  <Form.Control
+                    as="select"
+                    defaultValue="Choose..."
+                    onChange={(val) =>
+                      setTypeOfJourney(val.currentTarget.value)
+                    }
+                  >
                     <option>Backpacking</option>
                     <option>Leisure</option>
                     <option>Business Travel</option>
@@ -227,7 +273,11 @@ const MainPage = () => {
 
                 <Form.Group className="mb-2">
                   <Form.Label className="m-0">Split Cost</Form.Label>
-                  <Form.Control as="select" defaultValue="Choose...">
+                  <Form.Control
+                    as="select"
+                    defaultValue="Choose..."
+                    onChange={(val) => setSplitCost(val.currentTarget.value)}
+                  >
                     <option>Yes</option>
                     <option>No</option>
                   </Form.Control>
@@ -239,18 +289,17 @@ const MainPage = () => {
                     placeholder="Provide more details about your trip"
                     as="textarea"
                     rows={3}
+                    onChange={(val) => setAddOns(val.currentTarget.value)}
                   />
                 </Form.Group>
+                <Button variant="success" type="submit" onClick={handleClose}>
+                  Add Trip
+                </Button>
+                <Button variant="primary" onClick={handleClose}>
+                  Close
+                </Button>
               </Form>
             </Modal.Body>
-            <Modal.Footer>
-              <Button variant="primary" onClick={handleClose}>
-                Close
-              </Button>
-              <Button variant="success" onClick={handleClose}>
-                Add Trip
-              </Button>
-            </Modal.Footer>
           </Modal>
         </div>
       </div>

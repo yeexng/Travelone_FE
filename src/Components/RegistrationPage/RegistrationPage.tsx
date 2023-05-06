@@ -34,10 +34,13 @@ const RegistrationPage = () => {
         aboutMe,
       });
       localStorage.setItem("accessToken", data.accessToken);
+      //might need to add accessToken into module
       console.log("In Register Page:", data);
       navigate("/trips");
       dispatch(getUserProfile(data.user._id));
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
