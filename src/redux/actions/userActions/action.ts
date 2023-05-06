@@ -81,7 +81,7 @@ export const editUserProfile = (userId: String) => {
     emergencyContact: emergencyInput.value
       ? emergencyInput.value
       : emergencyInput.placeholder,
-    about: aboutInput.value ? aboutInput.value : aboutInput.placeholder,
+    aboutMe: aboutInput.value ? aboutInput.value : aboutInput.placeholder,
   };
 
   const option = {

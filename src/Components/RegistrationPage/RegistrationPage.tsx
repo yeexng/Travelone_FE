@@ -16,6 +16,7 @@ const RegistrationPage = () => {
   const [password, setPassword] = useState("");
   const [emergencyContact, setEmergencyContact] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
+  const [aboutMe] = useState("");
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -30,6 +31,7 @@ const RegistrationPage = () => {
         password,
         emergencyContact,
         dateOfBirth,
+        aboutMe,
       });
       localStorage.setItem("accessToken", data.accessToken);
       console.log("In Register Page:", data);

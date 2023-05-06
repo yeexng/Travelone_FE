@@ -3,7 +3,10 @@ import { persistStore, persistReducer } from "redux-persist";
 import localStorage from "redux-persist/es/storage";
 import getUserProfileReducer from "../reducers/userReducers/getUserProfileReducer";
 import editUserProfileReducer from "../reducers/userReducers/editUserProfileReducer";
+<<<<<<< HEAD
 import addTripReducer from "../reducers/tripReducers/addTripReducer";
+=======
+>>>>>>> Develop
 
 const persistConfig = {
   storage: localStorage,
@@ -12,8 +15,12 @@ const persistConfig = {
 
 const combinedReducer = combineReducers({
   userData: getUserProfileReducer, //fetch user data
+<<<<<<< HEAD
   editUserData: editUserProfileReducer, //edit user data
   newTripData: addTripReducer, // add new trip data
+=======
+  editUserData: editUserProfileReducer,
+>>>>>>> Develop
 });
 const persistedReducer = persistReducer(persistConfig, combinedReducer);
 
