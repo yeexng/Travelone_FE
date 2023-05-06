@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
 import localStorage from "redux-persist/es/storage";
 import getUserProfileReducer from "../reducers/userReducers/getUserProfileReducer";
+import editUserProfileReducer from "../reducers/userReducers/editUserProfileReducer";
 
 const persistConfig = {
   storage: localStorage,
@@ -10,6 +11,7 @@ const persistConfig = {
 
 const combinedReducer = combineReducers({
   userData: getUserProfileReducer, //fetch user data
+  editUserData: editUserProfileReducer,
 });
 const persistedReducer = persistReducer(persistConfig, combinedReducer);
 

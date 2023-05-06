@@ -14,8 +14,9 @@ import "./ProfilePage.css";
 import { useState } from "react";
 import { GiAirplaneDeparture } from "react-icons/gi";
 import { ImBarcode } from "react-icons/im";
-import { useAppSelector } from "../../redux/hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { RootState } from "../../redux/store/store";
+import { editUserProfile } from "../../redux/actions/userActions/action";
 
 const ProfilePage = () => {
   const [show, setShow] = useState(false);
@@ -24,6 +25,7 @@ const ProfilePage = () => {
   const userProfileData = useAppSelector(
     (state: RootState) => state.userData.stock
   );
+  const dispatch = useAppDispatch();
 
   console.log(userProfileData);
   return (
@@ -104,7 +106,7 @@ const ProfilePage = () => {
                 </Col>
                 <Col className="mt-3">
                   <Row className="mt-3">
-                    <Col md={4}>
+                    <Col md={5}>
                       <p className="">
                         FIRST NAME: <br></br>
                         <span className="profile-detail">
@@ -112,7 +114,7 @@ const ProfilePage = () => {
                         </span>
                       </p>
                     </Col>
-                    <Col md={8}>
+                    <Col md={7}>
                       <p>
                         LAST NAME: <br></br>
                         <span className="profile-detail">
@@ -120,7 +122,7 @@ const ProfilePage = () => {
                         </span>
                       </p>
                     </Col>
-                    <Col md={4}>
+                    <Col md={5}>
                       <p>
                         DATE OF BIRTH: <br></br>
                         <span className="profile-detail">
@@ -128,7 +130,7 @@ const ProfilePage = () => {
                         </span>
                       </p>
                     </Col>
-                    <Col md={8}>
+                    <Col md={7}>
                       <p>
                         GENDER:<br></br>
                         <span className="profile-detail">
@@ -136,7 +138,7 @@ const ProfilePage = () => {
                         </span>
                       </p>
                     </Col>
-                    <Col md={4}>
+                    <Col md={5}>
                       <p>
                         EMAIL: <br></br>
                         <span className="profile-detail">
@@ -144,7 +146,7 @@ const ProfilePage = () => {
                         </span>
                       </p>
                     </Col>
-                    <Col md={8}>
+                    <Col md={7}>
                       <p>
                         EMERGENCY CONTACT: <br></br>
                         <span className="profile-detail">
@@ -207,9 +209,13 @@ const ProfilePage = () => {
             </Form.Group>
 
             <Form.Group className="mb-2">
-              <Form.Label className="m-0">Emergency Contact</Form.Label>
+              <Form.Label className="m-0">
+                Emergency Contact (Phone no.)
+              </Form.Label>
               <Form.Control
-                placeholder="This is important!!"
+                placeholder={
+                  userProfileData && userProfileData.emergencyContact
+                }
                 id="emergency-change"
               />
             </Form.Group>
@@ -229,7 +235,14 @@ const ProfilePage = () => {
           <Button variant="primary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="success" onClick={handleClose}>
+          <Button
+            variant="success"
+            onClick={() => {
+              dispatch(editUserProfile(userProfileData._id));
+              dispatch(handleClose);
+              //can add successful message after
+            }}
+          >
             Edit...
           </Button>
         </Modal.Footer>
