@@ -3,6 +3,8 @@ import "./RegistrationPage.css";
 import { Button, Col, Form, Navbar, Row } from "react-bootstrap";
 import { FormEvent, useEffect, useState } from "react";
 import axios from "axios";
+import { useAppDispatch } from "../../redux/hooks/hooks";
+import { getUserProfile } from "../../redux/actions/userActions/action";
 
 const RegistrationPage = () => {
   const baseEndpoint: String =
@@ -15,6 +17,7 @@ const RegistrationPage = () => {
   const [emergencyContact, setEmergencyContact] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const handleSubmit = async (e: FormEvent) => {
     try {
@@ -31,6 +34,7 @@ const RegistrationPage = () => {
       localStorage.setItem("accessToken", data.accessToken);
       console.log("In Register Page:", data);
       navigate("/trips");
+      dispatch(getUserProfile(data.user._id));
     } catch (error) {}
   };
 

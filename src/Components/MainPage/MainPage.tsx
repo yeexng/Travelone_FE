@@ -29,9 +29,9 @@ const MainPage = () => {
     (state: RootState) => state.userData.stock
   );
 
-  useEffect(() => {
-    dispatch(getUserProfile("645499c41179a6880e723d3f")); //need to pass the params here
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getUserProfile("645499c41179a6880e723d3f")); //need to pass the params here
+  // }, []);
 
   console.log(userProfileData);
 

@@ -3,6 +3,10 @@ import "./LoginPage.css";
 import { Button, Col, Form, Navbar, Row } from "react-bootstrap";
 import { FormEvent, useEffect, useState } from "react";
 import axios, { AxiosError, AxiosResponse } from "axios";
+import { useAppDispatch } from "../../redux/hooks/hooks";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store/store";
+import { getUserProfile } from "../../redux/actions/userActions/action";
 
 const LoginPage = () => {
   const baseEndpoint: String =
@@ -11,6 +15,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const handleSubmit = async (e: FormEvent) => {
     try {
@@ -25,6 +30,7 @@ const LoginPage = () => {
           console.log("In Login Page:", data);
           localStorage.setItem("accessToken", data.accessToken);
           navigate("/trips");
+          dispatch(getUserProfile(data.user._id)); //need to pass the params here
         })
         .catch((err: Error | AxiosError) => {
           if (axios.isAxiosError(err)) {
@@ -41,7 +47,6 @@ const LoginPage = () => {
   };
 
   useEffect(() => {
-    document.title = "Travelone | Login";
     localStorage.clear();
   }, []);
 
