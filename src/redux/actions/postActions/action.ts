@@ -51,3 +51,64 @@ export const getTripByIdAction = (tripId: string) => {
     }
   };
 };
+
+//EDIT TRIP
+export const editTripByIdAction = (tripId: string) => {
+  const titleInput = document.getElementById(
+    "title-change"
+  ) as HTMLInputElement;
+  const destinationInput = document.getElementById(
+    "destination-change"
+  ) as HTMLInputElement;
+  const dateInput = document.getElementById("date-change") as HTMLInputElement;
+  const budgetInput = document.getElementById(
+    "budget-change"
+  ) as HTMLInputElement;
+  const lookingForInput = document.getElementById(
+    "lookingFor-change"
+  ) as HTMLInputElement;
+  const typeOfTravelInput = document.getElementById(
+    "typeOfTravel-change"
+  ) as HTMLInputElement;
+  const splitCostInput = document.getElementById(
+    "splitCost-change"
+  ) as HTMLInputElement;
+  const addOnsInput = document.getElementById(
+    "addOns-change"
+  ) as HTMLInputElement;
+
+  const editedData = {
+    titleInput: titleInput.value || titleInput.placeholder,
+    destinationInput: destinationInput.value || destinationInput.placeholder,
+    dateInput: dateInput.value || dateInput.placeholder,
+    budgetInput: budgetInput.value || budgetInput.placeholder,
+    lookingForInput: lookingForInput.value || lookingForInput.placeholder,
+    typeOfTravelInput: typeOfTravelInput.value || typeOfTravelInput.placeholder,
+    splitCostInput: splitCostInput.value || splitCostInput.placeholder,
+    addOnsInput: addOnsInput.value || addOnsInput.placeholder,
+  };
+
+  const option = {
+    method: "PUT",
+    headers: new Headers({
+      "Content-Type": "application/json",
+    }),
+    body: JSON.stringify(editedData),
+  };
+
+  return async (dispatch: any, getState: () => RootState) => {
+    try {
+      let res = await fetch(baseEndpoint + `/users/${tripId}`, option);
+      if (res.ok) {
+        let data = await res.json();
+        dispatch({
+          type: PUT_TRIP,
+          payload: data,
+        });
+        dispatch(getTripByIdAction(tripId)); //reload the user by calling the function again
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};

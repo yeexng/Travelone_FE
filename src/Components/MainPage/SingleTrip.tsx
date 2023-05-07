@@ -184,27 +184,48 @@ const SingleTrip = () => {
           <Form>
             <Form.Group className="mb-2">
               <Form.Label className="m-0">Title</Form.Label>
-              <Form.Control type="text" placeholder={oneTripData.title} />
+              <Form.Control
+                type="text"
+                placeholder={oneTripData && oneTripData.title}
+                id="title-change"
+              />
             </Form.Group>
 
             <Form.Group className="mb-2">
               <Form.Label className="m-0">Destination</Form.Label>
-              <Form.Control type="text" placeholder={oneTripData.destination} />
+              <Form.Control
+                type="text"
+                placeholder={oneTripData.destination}
+                id="destination-change"
+              />
             </Form.Group>
 
             <Form.Group className="mb-2">
               <Form.Label className="m-0">Starting Date</Form.Label>
-              <Form.Control type="date" placeholder={oneTripData.date} />
+              <Form.Control
+                type="date"
+                placeholder={oneTripData && oneTripData.date}
+                id="date-change"
+              />
             </Form.Group>
 
             <Form.Group className="mb-2">
               <Form.Label className="m-0">Budget</Form.Label>
-              <Form.Control type="number" placeholder={oneTripData.budget} />
+              <Form.Control
+                type="number"
+                placeholder={oneTripData.budget}
+                id="budget-change"
+              />
             </Form.Group>
 
             <Form.Group className="mb-2">
               <Form.Label className="m-0">Looking For</Form.Label>
-              <Form.Control as="select">
+              <Form.Control
+                as="select"
+                defaultValue={oneTripData.lookingFor}
+                placeholder={oneTripData.lookingFor}
+                id="lookingFor-change"
+              >
                 <option>Pick One...</option>
                 <option>Male</option>
                 <option>Female</option>
@@ -214,7 +235,11 @@ const SingleTrip = () => {
 
             <Form.Group className="mb-2">
               <Form.Label className="m-0">Type of Travel</Form.Label>
-              <Form.Control as="select">
+              <Form.Control
+                as="select"
+                defaultValue={oneTripData.typeOfJourney}
+                id="typeOfTravel-change"
+              >
                 <option>Pick One...</option>
                 <option>Backpacking</option>
                 <option>Leisure</option>
@@ -226,7 +251,11 @@ const SingleTrip = () => {
 
             <Form.Group className="mb-2">
               <Form.Label className="m-0">Split Cost</Form.Label>
-              <Form.Control as="select">
+              <Form.Control
+                as="select"
+                defaultValue={oneTripData.splitCost}
+                id="splitCost-change"
+              >
                 <option>Pick One...</option>
                 <option>Yes</option>
                 <option>No</option>
@@ -239,6 +268,7 @@ const SingleTrip = () => {
                 placeholder={oneTripData.addOns}
                 as="textarea"
                 rows={3}
+                id="addOns-change"
               />
             </Form.Group>
           </Form>

@@ -5,6 +5,7 @@ import getUserProfileReducer from "../reducers/userReducers/getUserProfileReduce
 import editUserProfileReducer from "../reducers/userReducers/editUserProfileReducer";
 import getTripReducer from "../reducers/tripReducers/getTripsReducer";
 import getTripByIdReducer from "../reducers/tripReducers/getTripByIdReducer";
+import editTripReducer from "../reducers/tripReducers/editTripReducer";
 
 const persistConfig = {
   storage: localStorage,
@@ -16,6 +17,7 @@ const combinedReducer = combineReducers({
   editUserData: editUserProfileReducer, // edited user Data
   tripData: getTripReducer, // fetch all the trip data
   oneTripData: getTripByIdReducer, // fetch one trip data
+  editTripData: editTripReducer, //edit one trip
 });
 const persistedReducer = persistReducer(persistConfig, combinedReducer);
 
