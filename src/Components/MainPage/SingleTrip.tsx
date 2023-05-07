@@ -17,11 +17,13 @@ import { useState } from "react";
 import { useAppDispatch } from "../../redux/hooks/hooks";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
+import { editTripByIdAction } from "../../redux/actions/postActions/action";
 
 const SingleTrip = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const dispatch = useAppDispatch();
 
   const userProfileData = useSelector(
     (state: RootState) => state.userData.stock
@@ -94,7 +96,7 @@ const SingleTrip = () => {
                         width={200}
                         height={200}
                         alt="171x180"
-                        src="https://images.unsplash.com/photo-1634926878768-2a5b3c42f139?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=756&q=80"
+                        src={oneTripData.user.avatar}
                       />
                     </Figure>
                   </Col>
@@ -277,7 +279,13 @@ const SingleTrip = () => {
           <Button variant="primary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="success" onClick={handleClose}>
+          <Button
+            variant="success"
+            onClick={() => {
+              dispatch(editTripByIdAction(oneTripData._id));
+              dispatch(handleClose);
+            }}
+          >
             Edit
           </Button>
         </Modal.Footer>

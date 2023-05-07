@@ -1,5 +1,6 @@
 import { Dispatch } from "redux";
 import { RootState } from "../../store/store";
+import { title } from "process";
 
 export const POST_TRIP = "POST_TRIP"; //add new trip
 export const GET_TRIPS = "GET_TRIPS"; //fetch all the trips
@@ -88,6 +89,29 @@ export const editTripByIdAction = (tripId: string) => {
     addOnsInput: addOnsInput.value || addOnsInput.placeholder,
   };
 
+  // const editedData = {
+  //   titleInput: titleInput.value ? titleInput.value : titleInput.placeholder,
+  //   destinationInput: destinationInput.value
+  //     ? destinationInput.value
+  //     : destinationInput.placeholder,
+  //   dateInput: dateInput.value ? dateInput.value : dateInput.defaultValue,
+  //   budgetInput: budgetInput.value
+  //     ? budgetInput.value
+  //     : budgetInput.placeholder,
+  //   lookingForInput: lookingForInput.value
+  //     ? lookingForInput.value
+  //     : lookingForInput.placeholder,
+  //   typeOfTravelInput: typeOfTravelInput.value
+  //     ? typeOfTravelInput.value
+  //     : typeOfTravelInput.placeholder,
+  //   splitCostInput: splitCostInput.value
+  //     ? splitCostInput.value
+  //     : splitCostInput.placeholder,
+  //   addOnsInput: addOnsInput.value
+  //     ? addOnsInput.value
+  //     : addOnsInput.placeholder,
+  // };
+
   const option = {
     method: "PUT",
     headers: new Headers({
@@ -98,7 +122,8 @@ export const editTripByIdAction = (tripId: string) => {
 
   return async (dispatch: any, getState: () => RootState) => {
     try {
-      let res = await fetch(baseEndpoint + `/users/${tripId}`, option);
+      console.log("TripID", tripId);
+      let res = await fetch(baseEndpoint + `/trips/${tripId}`, option);
       if (res.ok) {
         let data = await res.json();
         dispatch({
@@ -106,6 +131,8 @@ export const editTripByIdAction = (tripId: string) => {
           payload: data,
         });
         dispatch(getTripByIdAction(tripId)); //reload the user by calling the function again
+        console.log(editedData);
+        console.log(data);
       }
     } catch (error) {
       console.log(error);
