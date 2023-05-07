@@ -30,3 +30,24 @@ export const getTripAction = () => {
     }
   };
 };
+
+//GET ONE SPECIFIC TRIP
+export const getTripByIdAction = (tripId: string) => {
+  return async (
+    dispatch: Dispatch,
+    getState: () => RootState
+  ): Promise<void> => {
+    try {
+      let res = await fetch(baseEndpoint + `/trips/${tripId}`);
+      if (res.ok) {
+        let data = await res.json();
+        dispatch({
+          type: GET_TRIPS_WITH_ID,
+          payload: data,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};

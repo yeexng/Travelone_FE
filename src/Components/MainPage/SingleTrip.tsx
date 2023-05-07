@@ -27,7 +27,11 @@ const SingleTrip = () => {
     (state: RootState) => state.userData.stock
   );
 
-  console.log(userProfileData);
+  const oneTripData = useSelector(
+    (state: RootState) => state.oneTripData.stock
+  );
+
+  console.log("Single Trip", oneTripData);
 
   return (
     <>
@@ -95,23 +99,20 @@ const SingleTrip = () => {
                     </Figure>
                   </Col>
                   <Col className="mt-2">
-                    <h2>Title: World trip from ocean to land to sky</h2>
+                    <h2>{oneTripData.title}</h2>
                     <p>
-                      with <span>Sam Ng</span>
+                      with{" "}
+                      <span>
+                        {oneTripData.user.firstName} {oneTripData.user.lastName}
+                      </span>
                     </p>
-                    <p>Destination: the Earth</p>
-                    <p>Starting Date: 1 June</p>
-                    <p>Looking for: Any</p>
-                    <p>Budget: £10000000</p>
-                    <p>Type of Travel: Leisure</p>
-                    <p>Split Cost: NO</p>
-                    <p>
-                      Details of your adventure: Lorem ipsum dolor sit amet
-                      consectetur adipisicing elit. Debitis optio, aspernatur,
-                      iure velit non dolorum perferendis esse est atque nesciunt
-                      quod eius illum, ab nam doloremque possimus laudantium
-                      voluptatem a.
-                    </p>
+                    <p>Destination: {oneTripData.destination}</p>
+                    <p>Starting Date: {oneTripData.date}</p>
+                    <p>Looking for: {oneTripData.lookingFor}</p>
+                    <p>Budget: ${oneTripData.budget}</p>
+                    <p>Type of Travel: {oneTripData.typeOfJourney}</p>
+                    <p>Split Cost: {oneTripData.splitCost}</p>
+                    <p>{oneTripData.addOns}</p>
                     <Button variant="outline-danger">Connect</Button>
                   </Col>
                 </Row>
@@ -183,42 +184,38 @@ const SingleTrip = () => {
           <Form>
             <Form.Group className="mb-2">
               <Form.Label className="m-0">Title</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Give your trip a fun name"
-              />
+              <Form.Control type="text" placeholder={oneTripData.title} />
             </Form.Group>
 
             <Form.Group className="mb-2">
               <Form.Label className="m-0">Destination</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter a city or country name"
-              />
+              <Form.Control type="text" placeholder={oneTripData.destination} />
             </Form.Group>
 
             <Form.Group className="mb-2">
               <Form.Label className="m-0">Starting Date</Form.Label>
-              <Form.Control type="date" placeholder="1234 Main St" />
+              <Form.Control type="date" placeholder={oneTripData.date} />
             </Form.Group>
 
             <Form.Group className="mb-2">
               <Form.Label className="m-0">Budget</Form.Label>
-              <Form.Control />
+              <Form.Control type="number" placeholder={oneTripData.budget} />
             </Form.Group>
 
             <Form.Group className="mb-2">
               <Form.Label className="m-0">Looking For</Form.Label>
-              <Form.Control as="select" defaultValue="Choose...">
+              <Form.Control as="select">
+                <option>Pick One...</option>
                 <option>Male</option>
                 <option>Female</option>
-                <option>Any</option>
+                <option>Any</option>{" "}
               </Form.Control>
             </Form.Group>
 
             <Form.Group className="mb-2">
               <Form.Label className="m-0">Type of Travel</Form.Label>
-              <Form.Control as="select" defaultValue="Choose...">
+              <Form.Control as="select">
+                <option>Pick One...</option>
                 <option>Backpacking</option>
                 <option>Leisure</option>
                 <option>Business Travel</option>
@@ -229,7 +226,8 @@ const SingleTrip = () => {
 
             <Form.Group className="mb-2">
               <Form.Label className="m-0">Split Cost</Form.Label>
-              <Form.Control as="select" defaultValue="Choose...">
+              <Form.Control as="select">
+                <option>Pick One...</option>
                 <option>Yes</option>
                 <option>No</option>
               </Form.Control>
@@ -238,7 +236,7 @@ const SingleTrip = () => {
             <Form.Group className="mb-2">
               <Form.Label className="m-0">Add ons for the trip</Form.Label>
               <Form.Control
-                placeholder="Provide more details about your trip"
+                placeholder={oneTripData.addOns}
                 as="textarea"
                 rows={3}
               />
@@ -250,7 +248,7 @@ const SingleTrip = () => {
             Close
           </Button>
           <Button variant="success" onClick={handleClose}>
-            Add Trip
+            Edit
           </Button>
         </Modal.Footer>
       </Modal>

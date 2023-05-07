@@ -16,7 +16,10 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import { useAppDispatch } from "../../redux/hooks/hooks";
 import axios from "axios";
-import { getTripAction } from "../../redux/actions/postActions/action";
+import {
+  getTripAction,
+  getTripByIdAction,
+} from "../../redux/actions/postActions/action";
 
 const MainPage = () => {
   const [show, setShow] = useState(false);
@@ -37,7 +40,7 @@ const MainPage = () => {
   const [date, setDate] = useState("");
   const [budget, setBudget] = useState("");
   const [lookingFor, setLookingFor] = useState("");
-  const [typeofJourney, setTypeOfJourney] = useState("");
+  const [typeOfJourney, setTypeOfJourney] = useState("");
   const [splitCost, setSplitCost] = useState("");
   const [addOns, setAddOns] = useState("");
   const user = userProfileData._id;
@@ -52,13 +55,12 @@ const MainPage = () => {
         date,
         budget,
         lookingFor,
-        typeofJourney,
+        typeOfJourney,
         splitCost,
         addOns,
       });
-      // console.log("Added new trip in Main Page:", data);
       dispatch(getTripAction());
-      //need to add getTripAction here
+      console.log(data);
       dispatch({ handleClose });
     } catch (error) {
       console.log(error);
@@ -67,7 +69,7 @@ const MainPage = () => {
 
   useEffect(() => {
     dispatch(getTripAction());
-    console.log(tripsArray);
+    // console.log(tripsArray);
   }, []);
 
   const tripsArray = tripData.trips;
@@ -135,6 +137,8 @@ const MainPage = () => {
                   <Col
                     md={6}
                     onClick={() => {
+                      dispatch(getTripByIdAction(`${trips._id}`));
+                      //need to dispatch getSpecificTripAction and pass the ID
                       navigate(`/trips/${trips._id}`);
                     }}
                   >
