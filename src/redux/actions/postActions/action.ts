@@ -11,19 +11,22 @@ const baseEndpoint: String =
   (process.env.REACT_APP_BE_URL as string) || "http://localhost:3005";
 
 // GET TRIP
-export const getTripAction = () =>{
-  return async(dispatch: Dispatch, getState:()=> RootState): Promise<void> =>{
-    try{
-      let res = await fetch(baseEndpoint + `trips`);
-      if(res.ok){
+export const getTripAction = () => {
+  return async (
+    dispatch: Dispatch,
+    getState: () => RootState
+  ): Promise<void> => {
+    try {
+      let res = await fetch(baseEndpoint + `/trips`);
+      if (res.ok) {
         let data = await res.json();
         dispatch({
           type: GET_TRIPS,
           payload: data,
         });
       }
-    }catch(error){
-      console.log(error)
+    } catch (error) {
+      console.log(error);
     }
-  }
-}
+  };
+};

@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import "./MainPage.css";
 import {
   Button,
@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import { useAppDispatch } from "../../redux/hooks/hooks";
 import axios from "axios";
+import { getTripAction } from "../../redux/actions/postActions/action";
 
 const MainPage = () => {
   const [show, setShow] = useState(false);
@@ -26,7 +27,7 @@ const MainPage = () => {
   const userProfileData = useSelector(
     (state: RootState) => state.userData.stock
   );
-  // console.log("Main Page:", userProfileData);
+  const tripData = useSelector((state: RootState) => state.tripData.stock);
 
   //Creating Trip
   const baseEndpoint: String =
@@ -55,13 +56,22 @@ const MainPage = () => {
         splitCost,
         addOns,
       });
-      console.log("Added new trip in Main Page:", data);
+      // console.log("Added new trip in Main Page:", data);
+      dispatch(getTripAction());
       //need to add getTripAction here
       dispatch({ handleClose });
     } catch (error) {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    dispatch(getTripAction());
+    console.log(tripsArray);
+  }, []);
+
+  const tripsArray = tripData.trips;
+
   return (
     <>
       <div>
@@ -119,85 +129,43 @@ const MainPage = () => {
         </div>
         <div className=" main-content mx-5">
           <Row>
-            <Col
-              md={6}
-              onClick={() => {
-                navigate(`/trips/abcd`);
-              }}
-            >
-              {/* need to change the id passing */}
+            {tripsArray &&
+              tripsArray.map((trips: any) => {
+                return (
+                  <Col
+                    md={6}
+                    onClick={() => {
+                      navigate(`/trips/${trips._id}`);
+                    }}
+                  >
+                    {/* need to change the id passing */}
 
-              <div className="content-card m-3">
-                <Row>
-                  <Col md={3} className="p-3">
-                    <Figure className="pl-3 pt-3">
-                      <Figure.Image
-                        width={200}
-                        height={200}
-                        alt="171x180"
-                        src="https://images.unsplash.com/photo-1634926878768-2a5b3c42f139?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=756&q=80"
-                      />
-                      <Figure.Caption>Full Name </Figure.Caption>
-                    </Figure>
+                    <div className="content-card m-3">
+                      <Row>
+                        <Col md={3} className="p-3">
+                          <Figure className="pl-3 pt-3">
+                            <Figure.Image
+                              width={200}
+                              height={200}
+                              alt="171x180"
+                              src={trips.user.avatar}
+                            />
+                            <Figure.Caption>
+                              {trips.user.firstName} {trips.user.lastName}{" "}
+                            </Figure.Caption>
+                          </Figure>
+                        </Col>
+                        <Col className="p-3">
+                          <h3>{trips.title}</h3>
+                          <p>Destination: {trips.destination}</p>
+                          <p>Date: {trips.date}</p>
+                          <p>Looking For: {trips.lookingFor}</p>
+                        </Col>
+                      </Row>
+                    </div>
                   </Col>
-                  <Col className="p-3">
-                    <h3>Trip to Venezia</h3>
-                    <p>Destination:</p>
-                    <p>Date:</p>
-                    <p>Looking For:</p>
-                    <a href="#">More Details...</a>
-                  </Col>
-                </Row>
-              </div>
-            </Col>
-            <Col md={6}>
-              <div className="content-card m-3">
-                <Row>
-                  <Col md={3} className="p-3">
-                    <Figure className="pl-3 pt-3">
-                      <Figure.Image
-                        width={200}
-                        height={200}
-                        alt="171x180"
-                        src="https://images.unsplash.com/photo-1634926878768-2a5b3c42f139?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=756&q=80"
-                      />
-                      <Figure.Caption>Full Name </Figure.Caption>
-                    </Figure>
-                  </Col>
-                  <Col className="p-3">
-                    <h3>Trip to Venezia</h3>
-                    <p>Destination:</p>
-                    <p>Date:</p>
-                    <p>Looking For:</p>
-                    <a href="#">More Details...</a>
-                  </Col>
-                </Row>
-              </div>
-            </Col>
-            <Col md={6}>
-              <div className="content-card m-3">
-                <Row>
-                  <Col md={3} className="p-3">
-                    <Figure className="pl-3 pt-3">
-                      <Figure.Image
-                        width={200}
-                        height={200}
-                        alt="171x180"
-                        src="https://images.unsplash.com/photo-1634926878768-2a5b3c42f139?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=756&q=80"
-                      />
-                      <Figure.Caption>Full Name </Figure.Caption>
-                    </Figure>
-                  </Col>
-                  <Col className="p-3">
-                    <h3>Trip to Venezia</h3>
-                    <p>Destination:</p>
-                    <p>Date:</p>
-                    <p>Looking For:</p>
-                    <a href="#">More Details...</a>
-                  </Col>
-                </Row>
-              </div>
-            </Col>
+                );
+              })}
           </Row>
           {/* Modal Page */}
           <Modal show={show} onHide={handleClose}>
@@ -245,9 +213,9 @@ const MainPage = () => {
                   <Form.Label className="m-0">Looking For</Form.Label>
                   <Form.Control
                     as="select"
-                    defaultValue="Choose..."
                     onChange={(val) => setLookingFor(val.currentTarget.value)}
                   >
+                    <option>Pick One...</option>
                     <option>Male</option>
                     <option>Female</option>
                     <option>Any</option>
@@ -258,11 +226,11 @@ const MainPage = () => {
                   <Form.Label className="m-0">Type of Travel</Form.Label>
                   <Form.Control
                     as="select"
-                    defaultValue="Choose..."
                     onChange={(val) =>
                       setTypeOfJourney(val.currentTarget.value)
                     }
                   >
+                    <option>Pick One...</option>
                     <option>Backpacking</option>
                     <option>Leisure</option>
                     <option>Business Travel</option>
@@ -275,9 +243,9 @@ const MainPage = () => {
                   <Form.Label className="m-0">Split Cost</Form.Label>
                   <Form.Control
                     as="select"
-                    defaultValue="Choose..."
                     onChange={(val) => setSplitCost(val.currentTarget.value)}
                   >
+                    <option>Pick One...</option>
                     <option>Yes</option>
                     <option>No</option>
                   </Form.Control>
