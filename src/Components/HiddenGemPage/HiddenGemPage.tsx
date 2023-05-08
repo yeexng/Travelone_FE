@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import "./HiddenGemPage.css";
 import {
   Button,
@@ -16,15 +16,42 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
+import { useAppDispatch } from "../../redux/hooks/hooks";
+import axios from "axios";
 
 const HiddenGemPage = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const userProfileData = useSelector(
     (state: RootState) => state.userData.stock
   );
+
+  //Adding New Secret Post
+  const baseEndpoint: String =
+    (process.env.REACT_APP_BE_URL as string) || "http://localhost:3005";
+  const user = userProfileData._id;
+  const comments = [];
+  const [title, setTitle] = useState("");
+  const [locations, setLocations] = useState("");
+  const [details, setDetails] = useState("");
+
+  const handleSubmitSecret = async (e: FormEvent) => {
+    try {
+      e.preventDefault();
+      const { data } = await axios.post(baseEndpoint + "/posts", {
+        user,
+        title,
+        locations,
+        details,
+      });
+      console.log(data);
+      //add dispatch(getSecretPostAction());
+      dispatch({ handleClose });
+    } catch (error) {}
+  };
 
   return (
     <>
@@ -120,201 +147,20 @@ const HiddenGemPage = () => {
                 </Card>
               </div>
             </Col>
-            <Col md={3}>
-              <div className="content-secret-card m-3">
-                <Card>
-                  <Card.Img
-                    variant="top"
-                    src="https://plus.unsplash.com/premium_photo-1682403136717-77c9b41a52b8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                    className="card-img"
-                  />
-                  <Card.Body>
-                    <Card.Title>Title</Card.Title>
-                    <Card.Text>
-                      <Row className="mb-2">
-                        <Col md={2} className="pr-0">
-                          <img
-                            className="profile-img"
-                            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-                          ></img>
-                        </Col>
-                        <Col>Name</Col>
-                      </Row>
-                      <div>Location: Where</div>
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-              </div>
-            </Col>
-            <Col md={3}>
-              <div className="content-secret-card m-3">
-                <Card>
-                  <Card.Img
-                    variant="top"
-                    src="https://plus.unsplash.com/premium_photo-1682403136717-77c9b41a52b8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                    className="card-img"
-                  />
-                  <Card.Body>
-                    <Card.Title>Title</Card.Title>
-                    <Card.Text>
-                      <Row className="mb-2">
-                        <Col md={2} className="pr-0">
-                          <img
-                            className="profile-img"
-                            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-                          ></img>
-                        </Col>
-                        <Col>Name</Col>
-                      </Row>
-                      <div>Location: Where</div>
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-              </div>
-            </Col>
-            <Col md={3}>
-              <div className="content-secret-card m-3">
-                <Card>
-                  <Card.Img
-                    variant="top"
-                    src="https://plus.unsplash.com/premium_photo-1682403136717-77c9b41a52b8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                    className="card-img"
-                  />
-                  <Card.Body>
-                    <Card.Title>Title</Card.Title>
-                    <Card.Text>
-                      <Row className="mb-2">
-                        <Col md={2} className="pr-0">
-                          <img
-                            className="profile-img"
-                            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-                          ></img>
-                        </Col>
-                        <Col>Name</Col>
-                      </Row>
-                      <div>Location: Where</div>
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-              </div>
-            </Col>
-            <Col md={3}>
-              <div className="content-secret-card m-3">
-                <Card>
-                  <Card.Img
-                    variant="top"
-                    src="https://plus.unsplash.com/premium_photo-1682403136717-77c9b41a52b8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                    className="card-img"
-                  />
-                  <Card.Body>
-                    <Card.Title>Title</Card.Title>
-                    <Card.Text>
-                      <Row className="mb-2">
-                        <Col md={2} className="pr-0">
-                          <img
-                            className="profile-img"
-                            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-                          ></img>
-                        </Col>
-                        <Col>Name</Col>
-                      </Row>
-                      <div>Location: Where</div>
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-              </div>
-            </Col>
-            <Col md={3}>
-              <div className="content-secret-card m-3">
-                <Card>
-                  <Card.Img
-                    variant="top"
-                    src="https://plus.unsplash.com/premium_photo-1682403136717-77c9b41a52b8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                    className="card-img"
-                  />
-                  <Card.Body>
-                    <Card.Title>Title</Card.Title>
-                    <Card.Text>
-                      <Row className="mb-2">
-                        <Col md={2} className="pr-0">
-                          <img
-                            className="profile-img"
-                            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-                          ></img>
-                        </Col>
-                        <Col>Name</Col>
-                      </Row>
-                      <div>Location: Where</div>
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-              </div>
-            </Col>
-            <Col md={3}>
-              <div className="content-secret-card m-3">
-                <Card>
-                  <Card.Img
-                    variant="top"
-                    src="https://plus.unsplash.com/premium_photo-1682403136717-77c9b41a52b8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                    className="card-img"
-                  />
-                  <Card.Body>
-                    <Card.Title>Title</Card.Title>
-                    <Card.Text>
-                      <Row className="mb-2">
-                        <Col md={2} className="pr-0">
-                          <img
-                            className="profile-img"
-                            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-                          ></img>
-                        </Col>
-                        <Col>Name</Col>
-                      </Row>
-                      <div>Location: Where</div>
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-              </div>
-            </Col>
-            <Col md={3}>
-              <div className="content-secret-card m-3">
-                <Card>
-                  <Card.Img
-                    variant="top"
-                    src="https://plus.unsplash.com/premium_photo-1682403136717-77c9b41a52b8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                    className="card-img"
-                  />
-                  <Card.Body>
-                    <Card.Title>Title</Card.Title>
-                    <Card.Text>
-                      <Row className="mb-2">
-                        <Col md={2} className="pr-0">
-                          <img
-                            className="profile-img"
-                            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-                          ></img>
-                        </Col>
-                        <Col>Name</Col>
-                      </Row>
-                      <div>Location: Where</div>
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-              </div>
-            </Col>
           </Row>
           {/* Modal Page */}
           <Modal show={show} onHide={handleClose}>
             <Modal.Header>
-              <Modal.Title> Share your discovery? 🏞🛤🏕🛣🏖🏜🏝 </Modal.Title>
+              <Modal.Title> Share your discoveries? 🏞🛤🏕🛣🏖🏜🏝 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <Form>
+              <Form onSubmit={handleSubmitSecret}>
                 <Form.Group className="mb-2">
                   <Form.Label className="m-0">Title</Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="What's the treasure?"
+                    onChange={(val) => setTitle(val.currentTarget.value)}
                   />
                 </Form.Group>
 
@@ -323,6 +169,7 @@ const HiddenGemPage = () => {
                   <Form.Control
                     type="text"
                     placeholder="Where did you discover this treasure?"
+                    onChange={(val) => setLocations(val.currentTarget.value)}
                   />
                 </Form.Group>
 
@@ -332,21 +179,20 @@ const HiddenGemPage = () => {
                     placeholder="What's the treasure?"
                     as="textarea"
                     rows={3}
+                    onChange={(val) => setDetails(val.currentTarget.value)}
                   />
+                  <InputGroup className="mb-3">
+                    <input type="file" />
+                  </InputGroup>
+                  <Button variant="primary" onClick={handleClose}>
+                    Close
+                  </Button>
+                  <Button variant="success" type="submit" onClick={handleClose}>
+                    Add Trip
+                  </Button>
                 </Form.Group>
-                <InputGroup className="mb-3">
-                  <input type="file" />
-                </InputGroup>
               </Form>
             </Modal.Body>
-            <Modal.Footer>
-              <Button variant="primary" onClick={handleClose}>
-                Close
-              </Button>
-              <Button variant="success" onClick={handleClose}>
-                Add Trip
-              </Button>
-            </Modal.Footer>
           </Modal>
         </div>
       </div>
