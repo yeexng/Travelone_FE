@@ -1,14 +1,12 @@
 import { Link } from "react-router-dom";
 import "./HiddenGemSingle.css";
 import {
-  Button,
   Col,
   Form,
   Nav,
   NavDropdown,
   Navbar,
   Row,
-  Card,
   InputGroup,
 } from "react-bootstrap";
 import { useSelector } from "react-redux";
@@ -19,7 +17,11 @@ const HiddenGemSingle = () => {
     (state: RootState) => state.userData.stock
   );
 
-  console.log(userProfileData);
+  const oneSecretPostData = useSelector(
+    (state: RootState) => state.oneSecretPostData.stock
+  );
+
+  console.log("One Secret Data", oneSecretPostData);
 
   return (
     <>
@@ -37,7 +39,7 @@ const HiddenGemSingle = () => {
                 <Nav.Link>
                   {" "}
                   <Link to={"/secret"} className="secret-link">
-                    Secret HideOuts
+                    Back
                   </Link>
                 </Nav.Link>
               </Nav>
@@ -75,8 +77,9 @@ const HiddenGemSingle = () => {
             <Col md={8}>
               <div className="secret-single-image-div d-flex justify-content-center align-items-center">
                 <img
+                  alt="post image"
                   className="secret-single-image"
-                  src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1121&q=80"
+                  src={oneSecretPostData.image}
                 />
               </div>
             </Col>
@@ -84,23 +87,17 @@ const HiddenGemSingle = () => {
               <div className="mt-4">
                 <p>
                   <img
+                    alt="author image"
                     className="profile-img mr-3"
-                    src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
+                    src={oneSecretPostData.user.avatar}
                   ></img>
-                  Author
+                  {oneSecretPostData.user.firstName}{" "}
+                  {oneSecretPostData.user.lastName}
                 </p>
-                <h3>Title: Time to test this page</h3>
-                <p className="mb-0">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Accusamus beatae sit exercitationem tempore voluptates. Optio
-                  adipisci nemo dolore ducimus voluptate quo at error.
-                  Laboriosam cum perferendis consequatur voluptatibus quia
-                  expedita?Lorem ipsum dolor sit amet consectetur, adipisicing
-                  elit. Iure dignissimos earum dolor modi enim debitis autem
-                  dolores. Natus commodi, error vel voluptas nesciunt
-                  perspiciatis deleniti vitae porro? Nam, neque magnam!
-                </p>
-                <p className="mt-2 post-date">Post time</p>
+                <h3>{oneSecretPostData.title}</h3>
+                <p className="mb-0">{oneSecretPostData.locations}</p>
+                <p className="mb-0">{oneSecretPostData.details}</p>
+                <p className="mt-2 post-date">{oneSecretPostData.createdAt}</p>
               </div>
               <hr></hr>
               <div>
@@ -109,8 +106,9 @@ const HiddenGemSingle = () => {
                   <Row>
                     <Col md={1}>
                       <img
+                        alt="user avatar"
                         className="profile-img mr-3"
-                        src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
+                        src={userProfileData.avatar}
                       ></img>
                     </Col>
                     <Col>

@@ -29,3 +29,24 @@ export const getSecretPostAction = () => {
     }
   };
 };
+
+//GET ONE SPECIFIC SECRET POST
+export const getSecretPostByIdAction = (postId: String) => {
+  return async (
+    dispatch: Dispatch,
+    getState: () => RootState
+  ): Promise<void> => {
+    try {
+      let res = await fetch(baseEndpoint + `/posts/${postId}`);
+      if (res.ok) {
+        let data = await res.json();
+        dispatch({
+          type: GET_SECRET_POST_WITH_ID,
+          payload: data,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};

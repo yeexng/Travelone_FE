@@ -7,6 +7,7 @@ import getTripReducer from "../reducers/tripReducers/getTripsReducer";
 import getTripByIdReducer from "../reducers/tripReducers/getTripByIdReducer";
 import editTripReducer from "../reducers/tripReducers/editTripReducer";
 import getSecretPostReducer from "../reducers/secretReducers/getSecretPostReducer";
+import getSecretPostByIdReducer from "../reducers/secretReducers/getSecretPostByIdReducer";
 
 const persistConfig = {
   storage: localStorage,
@@ -20,6 +21,7 @@ const combinedReducer = combineReducers({
   oneTripData: getTripByIdReducer, // fetch one trip data
   editTripData: editTripReducer, //edit one trip
   secretPostData: getSecretPostReducer, // fetch secret posts
+  oneSecretPostData: getSecretPostByIdReducer, // fetch one posts data
 });
 const persistedReducer = persistReducer(persistConfig, combinedReducer);
 

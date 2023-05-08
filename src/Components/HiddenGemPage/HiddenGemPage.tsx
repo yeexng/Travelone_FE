@@ -18,7 +18,10 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import { useAppDispatch } from "../../redux/hooks/hooks";
 import axios from "axios";
-import { getSecretPostAction } from "../../redux/actions/secretActions/action";
+import {
+  getSecretPostAction,
+  getSecretPostByIdAction,
+} from "../../redux/actions/secretActions/action";
 
 const HiddenGemPage = () => {
   const [show, setShow] = useState(false);
@@ -132,6 +135,7 @@ const HiddenGemPage = () => {
                   <Col
                     md={3}
                     onClick={() => {
+                      dispatch(getSecretPostByIdAction(`${posts._id}`));
                       navigate(`/secret/${posts._id}`);
                     }}
                   >

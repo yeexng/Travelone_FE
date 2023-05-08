@@ -55,6 +55,11 @@ const SingleTrip = () => {
                   </Link>
                 </Nav.Link>
                 <Nav.Link onClick={handleShow}>Edit Trip</Nav.Link>
+                <Nav.Link>
+                  <Link to={"/trips"} className="secret-link">
+                    Back
+                  </Link>
+                </Nav.Link>
               </Nav>
               <Nav className="ml-auto">
                 <NavDropdown
