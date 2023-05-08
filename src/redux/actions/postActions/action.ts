@@ -1,6 +1,5 @@
 import { Dispatch } from "redux";
 import { RootState } from "../../store/store";
-import { title } from "process";
 
 export const POST_TRIP = "POST_TRIP"; //add new trip
 export const GET_TRIPS = "GET_TRIPS"; //fetch all the trips

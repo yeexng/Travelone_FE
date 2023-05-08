@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import "./HiddenGemPage.css";
 import {
   Button,
@@ -18,6 +18,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import { useAppDispatch } from "../../redux/hooks/hooks";
 import axios from "axios";
+import { getSecretPostAction } from "../../redux/actions/secretActions/action";
 
 const HiddenGemPage = () => {
   const [show, setShow] = useState(false);
@@ -27,6 +28,9 @@ const HiddenGemPage = () => {
   const dispatch = useAppDispatch();
   const userProfileData = useSelector(
     (state: RootState) => state.userData.stock
+  );
+  const secretPostData = useSelector(
+    (state: RootState) => state.secretPostData.stock
   );
 
   //Adding New Secret Post
@@ -48,10 +52,17 @@ const HiddenGemPage = () => {
         details,
       });
       console.log(data);
-      //add dispatch(getSecretPostAction());
+      dispatch(getSecretPostAction());
       dispatch({ handleClose });
     } catch (error) {}
   };
+
+  useEffect(() => {
+    dispatch(getSecretPostAction());
+  }, []);
+
+  const secretPostArray = secretPostData.posts;
+  console.log(secretPostArray);
 
   return (
     <>
