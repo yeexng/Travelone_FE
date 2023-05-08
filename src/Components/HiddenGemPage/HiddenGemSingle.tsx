@@ -8,11 +8,17 @@ import {
   Navbar,
   Row,
   InputGroup,
+  FormControl,
+  Button,
 } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
+import { useState } from "react";
+import { getSecretPostByIdAction } from "../../redux/actions/secretActions/action";
+import { useAppDispatch } from "../../redux/hooks/hooks";
 
 const HiddenGemSingle = () => {
+  const dispatch = useAppDispatch();
   const userProfileData = useSelector(
     (state: RootState) => state.userData.stock
   );
@@ -22,6 +28,30 @@ const HiddenGemSingle = () => {
   );
 
   console.log("One Secret Data", oneSecretPostData);
+
+  //ADDING COMMENTS
+  const [comments, setComments] = useState("");
+  const baseEndpoint: String =
+    (process.env.REACT_APP_BE_URL as string) || "http://localhost:3005";
+
+  const postComment = async (postId: String) => {
+    try {
+      const res = await fetch(baseEndpoint + `/posts/${postId}/comments`, {
+        method: "POST",
+        body: JSON.stringify({
+          comment: comments,
+          user: userProfileData._id,
+        }),
+        headers: { "Content-Type": "application/json" },
+      });
+      if (res.ok) {
+        setComments("");
+        dispatch(getSecretPostByIdAction(oneSecretPostData._id));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -112,52 +142,53 @@ const HiddenGemSingle = () => {
                       ></img>
                     </Col>
                     <Col>
-                      <InputGroup>
-                        <Form.Control placeholder="Show your appreciation here..." />
-                      </InputGroup>
+                      <div className="d-flex">
+                        <InputGroup className="mb-3">
+                          <FormControl
+                            placeholder="Show your appreciation here..."
+                            value={comments}
+                            onChange={(e) => setComments(e.target.value)}
+                          />
+                          <Button
+                            variant="outline-secondary"
+                            onClick={() => {
+                              postComment(oneSecretPostData._id);
+                            }}
+                          >
+                            Post
+                          </Button>
+                        </InputGroup>
+                      </div>
                     </Col>
                   </Row>
                 </p>
               </div>
               <div>
-                <div className="single-comment mt-4">
-                  <Row>
-                    <Col md={1} className="pr-0">
-                      <img
-                        className="profile-img"
-                        src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-                      ></img>
-                    </Col>
-                    <Col className="ml-1">
-                      <p>Sam Ng</p>
-                      <p>
-                        Lorem, ipsum dolor sit amet consectetur adipisicing
-                        elit. Vel adipisci in natus reiciendis rem pariatur
-                        voluptatem
-                      </p>
-                      <p className="mt-2 post-date">1 Nov 2022</p>
-                    </Col>
-                  </Row>
-                </div>
-                <div className="single-comment mt-4">
-                  <Row>
-                    <Col md={1} className="pr-0">
-                      <img
-                        className="profile-img"
-                        src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-                      ></img>
-                    </Col>
-                    <Col className="ml-1">
-                      <p>Sam Ng</p>
-                      <p>
-                        Lorem, ipsum dolor sit amet consectetur adipisicing
-                        elit. Vel adipisci in natus reiciendis rem pariatur
-                        voluptatem
-                      </p>
-                      <p className="mt-2 post-date">1 Nov 2022</p>
-                    </Col>
-                  </Row>
-                </div>
+                {oneSecretPostData.comments &&
+                  oneSecretPostData.comments.map((singleComment: any) => {
+                    return (
+                      <div className="single-comment mt-4">
+                        <Row>
+                          <Col md={1} className="pr-0">
+                            <img
+                              className="profile-img"
+                              src={singleComment.user.avatar}
+                            ></img>
+                          </Col>
+                          <Col className="ml-1">
+                            <p>
+                              {singleComment.user.firstName}{" "}
+                              {singleComment.user.lastName}
+                            </p>
+                            <p>{singleComment.comment}</p>
+                            <p className="mt-2 post-date">
+                              {singleComment.createdAt}
+                            </p>
+                          </Col>
+                        </Row>
+                      </div>
+                    );
+                  })}
               </div>
             </Col>
           </Row>
