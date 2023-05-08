@@ -126,38 +126,46 @@ const HiddenGemPage = () => {
         </div>
         <div className=" main-content mx-5">
           <Row>
-            <Col
-              md={3}
-              onClick={() => {
-                navigate(`/secret/abcd`);
-              }}
-            >
-              {/* need to change the id passing */}
-              <div className="content-secret-card m-3">
-                <Card>
-                  <Card.Img
-                    variant="top"
-                    src="https://plus.unsplash.com/premium_photo-1682403136717-77c9b41a52b8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                    className="card-img"
-                  />
-                  <Card.Body>
-                    <Card.Title>Title</Card.Title>
-                    <Card.Text>
-                      <Row className="mb-2">
-                        <Col md={2} className="pr-0">
-                          <img
-                            className="profile-img"
-                            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-                          ></img>
-                        </Col>
-                        <Col>Name</Col>
-                      </Row>
-                      <div>Location: Where</div>
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-              </div>
-            </Col>
+            {secretPostArray &&
+              secretPostArray.map((posts: any) => {
+                return (
+                  <Col
+                    md={3}
+                    onClick={() => {
+                      navigate(`/secret/${posts._id}`);
+                    }}
+                  >
+                    {/* need to change the id passing */}
+                    <div className="content-secret-card m-3">
+                      <Card>
+                        <Card.Img
+                          variant="top"
+                          src={posts.image}
+                          className="card-img"
+                        />
+                        <Card.Body>
+                          <Card.Title>{posts.title}</Card.Title>
+                          <Card.Text>
+                            <Row className="mb-2">
+                              <Col md={2} className="pr-0">
+                                <img
+                                  alt="profile pic"
+                                  className="profile-img"
+                                  src={posts.user.avatar}
+                                ></img>
+                              </Col>
+                              <Col>
+                                {posts.user.firstName} {posts.user.lastName}
+                              </Col>
+                            </Row>
+                            <div>Location: {posts.locations}</div>
+                          </Card.Text>
+                        </Card.Body>
+                      </Card>
+                    </div>
+                  </Col>
+                );
+              })}
           </Row>
           {/* Modal Page */}
           <Modal show={show} onHide={handleClose}>
