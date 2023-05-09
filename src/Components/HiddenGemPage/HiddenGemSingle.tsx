@@ -20,7 +20,9 @@ import {
   getSecretPostByIdAction,
 } from "../../redux/actions/secretActions/action";
 import { useAppDispatch } from "../../redux/hooks/hooks";
-import { BiEdit } from "react-icons/bi";
+import { BsTrashFill } from "react-icons/bs";
+import axios from "axios";
+import { getTripByIdAction } from "../../redux/actions/postActions/action";
 
 const HiddenGemSingle = () => {
   const [show, setShow] = useState(false);
@@ -43,7 +45,7 @@ const HiddenGemSingle = () => {
 
   //ADDING COMMENTS
   const [comments, setComments] = useState("");
-  const baseEndpoint: String =
+  const baseEndpoint: string =
     (process.env.REACT_APP_BE_URL as string) || "http://localhost:3005";
 
   const postComment = async (postId: String) => {
@@ -200,9 +202,28 @@ const HiddenGemSingle = () => {
                               <Col>
                                 <div
                                   className="my-1 btn edit-btn"
-                                  onClick={handleShowComment}
+                                  onClick={async () => {
+                                    try {
+                                      await axios.delete(
+                                        baseEndpoint +
+                                          `/posts/${oneSecretPostData._id}/comments/${singleComment._id}`
+                                      );
+                                      console.log(
+                                        `Comment with ID ${singleComment._id} has been deleted successfully.`
+                                      );
+                                      dispatch(
+                                        getSecretPostByIdAction(
+                                          oneSecretPostData._id
+                                        )
+                                      );
+                                    } catch (error) {
+                                      console.error(
+                                        `Error deleting Comment with ID ${singleComment._id}`
+                                      );
+                                    }
+                                  }}
                                 >
-                                  <BiEdit />
+                                  <BsTrashFill />
                                 </div>
                               </Col>
                               <Col md={12}>
