@@ -212,6 +212,7 @@ const SingleTrip = () => {
               <Form.Label className="m-0">Starting Date</Form.Label>
               <Form.Control
                 type="date"
+                defaultValue={oneTripData.date}
                 placeholder={oneTripData && oneTripData.date}
                 id="date-change"
               />

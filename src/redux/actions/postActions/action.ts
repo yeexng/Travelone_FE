@@ -1,5 +1,6 @@
 import { Dispatch } from "redux";
 import { RootState } from "../../store/store";
+import axios from "axios";
 
 export const POST_TRIP = "POST_TRIP"; //add new trip
 export const GET_TRIPS = "GET_TRIPS"; //fetch all the trips
@@ -78,61 +79,23 @@ export const editTripByIdAction = (tripId: string) => {
   ) as HTMLInputElement;
 
   const editedData = {
-    titleInput: titleInput.value || titleInput.placeholder,
-    destinationInput: destinationInput.value || destinationInput.placeholder,
-    dateInput: dateInput.value || dateInput.placeholder,
-    budgetInput: budgetInput.value || budgetInput.placeholder,
-    lookingForInput: lookingForInput.value || lookingForInput.placeholder,
-    typeOfTravelInput: typeOfTravelInput.value || typeOfTravelInput.placeholder,
-    splitCostInput: splitCostInput.value || splitCostInput.placeholder,
-    addOnsInput: addOnsInput.value || addOnsInput.placeholder,
+    //must be same with the BE module name
+    title: titleInput.value || titleInput.placeholder,
+    destination: destinationInput.value || destinationInput.placeholder,
+    date: dateInput.value ? dateInput.value : dateInput.defaultValue,
+    budget: budgetInput.value || budgetInput.placeholder,
+    lookingFor: lookingForInput.value || lookingForInput.defaultValue,
+    typeOfJourney: typeOfTravelInput.value || typeOfTravelInput.defaultValue,
+    splitCost: splitCostInput.value || splitCostInput.defaultValue,
+    addOns: addOnsInput.value || addOnsInput.placeholder,
   };
-
-  // const editedData = {
-  //   titleInput: titleInput.value ? titleInput.value : titleInput.placeholder,
-  //   destinationInput: destinationInput.value
-  //     ? destinationInput.value
-  //     : destinationInput.placeholder,
-  //   dateInput: dateInput.value ? dateInput.value : dateInput.defaultValue,
-  //   budgetInput: budgetInput.value
-  //     ? budgetInput.value
-  //     : budgetInput.placeholder,
-  //   lookingForInput: lookingForInput.value
-  //     ? lookingForInput.value
-  //     : lookingForInput.placeholder,
-  //   typeOfTravelInput: typeOfTravelInput.value
-  //     ? typeOfTravelInput.value
-  //     : typeOfTravelInput.placeholder,
-  //   splitCostInput: splitCostInput.value
-  //     ? splitCostInput.value
-  //     : splitCostInput.placeholder,
-  //   addOnsInput: addOnsInput.value
-  //     ? addOnsInput.value
-  //     : addOnsInput.placeholder,
-  // };
-
-  const option = {
-    method: "PUT",
-    headers: new Headers({
-      "Content-Type": "application/json",
-    }),
-    body: JSON.stringify(editedData),
-  };
-
-  return async (dispatch: any, getState: () => RootState) => {
+  return async (dispatch: any) => {
     try {
-      console.log("TripID", tripId);
-      let res = await fetch(baseEndpoint + `/trips/${tripId}`, option);
-      if (res.ok) {
-        let data = await res.json();
-        dispatch({
-          type: PUT_TRIP,
-          payload: data,
-        });
-        dispatch(getTripByIdAction(tripId)); //reload the user by calling the function again
-        console.log(editedData);
-        console.log(data);
-      }
+      const response = await axios.put(
+        baseEndpoint + `/trips/${tripId}`,
+        editedData
+      );
+      dispatch(getTripByIdAction(tripId)); //reload the user by calling the function again    } catch (error) {
     } catch (error) {
       console.log(error);
     }

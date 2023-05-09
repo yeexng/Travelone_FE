@@ -23,8 +23,7 @@ const editTripReducer = (state = initialState, action: any) => {
               ? //return action payload (modified item) instead of
                 //  original item when item id is updated item id
                 action.payload
-              : stockElement, //ids not the same, return original item
-          console.log("sucessful", action.payload.id)
+              : stockElement //ids not the same, return original item
         ),
       };
     default:
