@@ -20,11 +20,15 @@ import {
   getSecretPostByIdAction,
 } from "../../redux/actions/secretActions/action";
 import { useAppDispatch } from "../../redux/hooks/hooks";
+import { BiEdit } from "react-icons/bi";
 
 const HiddenGemSingle = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [showComment, setShowComment] = useState(false);
+  const handleCloseComment = () => setShowComment(false);
+  const handleShowComment = () => setShowComment(true);
 
   const dispatch = useAppDispatch();
   const userProfileData = useSelector(
@@ -181,19 +185,37 @@ const HiddenGemSingle = () => {
                         <Row>
                           <Col md={1} className="pr-0">
                             <img
-                              className="profile-img"
+                              className="profile-img mt-2"
                               src={singleComment.user.avatar}
                             ></img>
                           </Col>
                           <Col className="ml-1">
-                            <p>
-                              {singleComment.user.firstName}{" "}
-                              {singleComment.user.lastName}
-                            </p>
-                            <p>{singleComment.comment}</p>
-                            <p className="mt-2 post-date">
-                              {singleComment.createdAt}
-                            </p>
+                            <Row>
+                              <Col md={10}>
+                                <p className="my-1">
+                                  {singleComment.user.firstName}{" "}
+                                  {singleComment.user.lastName}
+                                </p>
+                              </Col>
+                              <Col>
+                                <div
+                                  className="my-1 btn edit-btn"
+                                  onClick={handleShowComment}
+                                >
+                                  <BiEdit />
+                                </div>
+                              </Col>
+                              <Col md={12}>
+                                <p className="mb-0 mt-0">
+                                  {singleComment.comment}
+                                </p>
+                              </Col>
+                              <Col md={12}>
+                                <p className="mt-1 post-date">
+                                  {singleComment.createdAt}
+                                </p>
+                              </Col>
+                            </Row>
                           </Col>
                         </Row>
                       </div>
@@ -249,6 +271,38 @@ const HiddenGemSingle = () => {
             onClick={() => {
               dispatch(editSecretPostByIdAction(oneSecretPostData._id));
               dispatch(handleClose);
+            }}
+          >
+            Edit
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/*Edit Comment Modal*/}
+      <Modal show={showComment} onHide={handleCloseComment}>
+        <Modal.Header>
+          <Modal.Title> Edit Your Comment </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-2">
+              <Form.Control
+                type="text"
+                // placeholder={oneSecretPostData && oneSecretPostData.title}
+                id="title-change"
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleCloseComment}>
+            Close
+          </Button>
+          <Button
+            variant="success"
+            onClick={() => {
+              // dispatch(editSecretPostByIdAction(oneSecretPostData._id));
+              dispatch(handleCloseComment);
             }}
           >
             Edit

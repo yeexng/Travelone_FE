@@ -35,3 +35,7 @@ hr {
 .secret-single-image-div {
   height: 94vh;
 }
+
+.edit-btn:hover {
+  color: red;
+}
