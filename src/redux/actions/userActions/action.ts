@@ -77,32 +77,20 @@ export const editUserProfile = (userId: String) => {
     lastName: lastNameInput.value
       ? lastNameInput.value
       : lastNameInput.placeholder,
-    gender: genderInput.value ? genderInput.value : genderInput.placeholder,
+    gender: genderInput.value ? genderInput.value : genderInput.defaultValue,
     emergencyContact: emergencyInput.value
       ? emergencyInput.value
       : emergencyInput.placeholder,
     aboutMe: aboutInput.value ? aboutInput.value : aboutInput.placeholder,
   };
 
-  const option = {
-    method: "PUT",
-    headers: new Headers({
-      "Content-Type": "application/json",
-    }),
-    body: JSON.stringify(editedData),
-  };
-
-  return async (dispatch: any, getState: () => RootState) => {
+  return async (dispatch: any) => {
     try {
-      let res = await fetch(baseEndpoint + `/users/${userId}`, option);
-      if (res.ok) {
-        let data = await res.json();
-        dispatch({
-          type: PUT_USER_ID,
-          payload: data,
-        });
-        dispatch(getUserProfile(userId)); //reload the user by calling the function again
-      }
+      const response = await axios.put(
+        baseEndpoint + `/users/${userId}`,
+        editedData
+      );
+      dispatch(getUserProfile(userId));
     } catch (error) {
       console.log(error);
     }

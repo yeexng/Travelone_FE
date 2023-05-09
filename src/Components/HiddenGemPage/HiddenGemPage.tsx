@@ -144,25 +144,25 @@ const HiddenGemPage = () => {
                       <Card>
                         <Card.Img
                           variant="top"
-                          src={posts.image}
+                          src={posts?.image}
                           className="card-img"
                         />
                         <Card.Body>
-                          <Card.Title>{posts.title}</Card.Title>
+                          <Card.Title>{posts?.title}</Card.Title>
                           <Card.Text>
                             <Row className="mb-2">
                               <Col md={2} className="pr-0">
                                 <img
                                   alt="profile pic"
                                   className="profile-img"
-                                  src={posts.user.avatar}
+                                  src={posts.user?.avatar}
                                 ></img>
                               </Col>
                               <Col>
-                                {posts.user.firstName} {posts.user.lastName}
+                                {posts.user?.firstName} {posts.user?.lastName}
                               </Col>
                             </Row>
-                            <div>Location: {posts.locations}</div>
+                            <div>Location: {posts?.locations}</div>
                           </Card.Text>
                         </Card.Body>
                       </Card>

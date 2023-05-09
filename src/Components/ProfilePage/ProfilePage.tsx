@@ -93,7 +93,7 @@ const ProfilePage = () => {
                       width={200}
                       height={200}
                       alt="171x180"
-                      src="https://images.unsplash.com/photo-1634926878768-2a5b3c42f139?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=756&q=80"
+                      src={userProfileData.avatar}
                     />
                   </Figure>
                   <div className="bar-code ml-4">
@@ -198,11 +198,11 @@ const ProfilePage = () => {
               <Form.Label className="m-0">Gender</Form.Label>
               <Form.Control
                 as="select"
-                defaultValue="Choose"
-                placeholder={userProfileData && userProfileData.gender}
+                defaultValue={userProfileData.gender}
                 id="gender-change"
               >
                 {" "}
+                <option>Pick One...</option>
                 <option>Male</option>
                 <option>Female</option>
               </Form.Control>
