@@ -10,14 +10,22 @@ import {
   InputGroup,
   FormControl,
   Button,
+  Modal,
 } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import { useState } from "react";
-import { getSecretPostByIdAction } from "../../redux/actions/secretActions/action";
+import {
+  editSecretPostByIdAction,
+  getSecretPostByIdAction,
+} from "../../redux/actions/secretActions/action";
 import { useAppDispatch } from "../../redux/hooks/hooks";
 
 const HiddenGemSingle = () => {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   const dispatch = useAppDispatch();
   const userProfileData = useSelector(
     (state: RootState) => state.userData.stock
@@ -66,6 +74,8 @@ const HiddenGemSingle = () => {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="mr-auto">
+                <Nav.Link onClick={handleShow}>Edit Post</Nav.Link>
+
                 <Nav.Link>
                   {" "}
                   <Link to={"/secret"} className="secret-link">
@@ -194,6 +204,57 @@ const HiddenGemSingle = () => {
           </Row>
         </div>
       </div>
+      {/* Modal Page */}
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header>
+          <Modal.Title> Edit Your Trip </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-2">
+              <Form.Label className="m-0">Title</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder={oneSecretPostData && oneSecretPostData.title}
+                id="title-change"
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-2">
+              <Form.Label className="m-0">Location</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder={oneSecretPostData.locations}
+                id="locations-change"
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-2">
+              <Form.Label className="m-0">Details</Form.Label>
+              <Form.Control
+                placeholder={oneSecretPostData.details}
+                as="textarea"
+                rows={3}
+                id="details-change"
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button
+            variant="success"
+            onClick={() => {
+              dispatch(editSecretPostByIdAction(oneSecretPostData._id));
+              dispatch(handleClose);
+            }}
+          >
+            Edit
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };

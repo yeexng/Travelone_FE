@@ -95,7 +95,8 @@ export const editTripByIdAction = (tripId: string) => {
         baseEndpoint + `/trips/${tripId}`,
         editedData
       );
-      dispatch(getTripByIdAction(tripId)); //reload the user by calling the function again    } catch (error) {
+      dispatch(getTripByIdAction(tripId));
+      //reload the user by calling the function again    } catch (error) {
     } catch (error) {
       console.log(error);
     }
