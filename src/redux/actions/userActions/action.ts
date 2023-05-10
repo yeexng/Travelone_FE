@@ -10,6 +10,7 @@ export const GET_USER_ID = "GET_USER_ID"; //fetch one specific user
 export const PUT_USER_ID = "PUT_USER_ID"; // edit current user profile
 export const GET_SEARCH_RESULT = "GET_SEARCH_RESULT";
 export const GET_ALL_PROFILE = "GET_ALL_PROFILE";
+export const ADD_USER_AVATAR = "ADD_USER_AVATAR";
 
 const baseEndpoint: String =
   (process.env.REACT_APP_BE_URL as string) || "http://localhost:3005";
@@ -110,6 +111,34 @@ export const getUserById = (userId: string) => {
           payload: data,
         });
       }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+//ADD Profile Avatar
+
+export const editProfileAvatar = (userId: string, file: any) => {
+  return async (dispatch: any) => {
+    try {
+      const response = await axios.post(
+        baseEndpoint + `users/${userId}/avatar`,
+        {
+          file,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      const data = response.data;
+      console.log(data);
+      dispatch({
+        type: ADD_USER_AVATAR,
+        payload: data,
+      });
+      dispatch(getUserProfile(userId));
+      return data;
     } catch (error) {
       console.log(error);
     }

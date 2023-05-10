@@ -135,6 +135,7 @@ const MainPage = () => {
               tripsArray.map((trips: any) => {
                 return (
                   <Col
+                    key={trips._id}
                     md={6}
                     onClick={() => {
                       dispatch(getTripByIdAction(`${trips._id}`));

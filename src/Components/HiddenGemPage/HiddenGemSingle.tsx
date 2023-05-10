@@ -18,11 +18,11 @@ import { useState } from "react";
 import {
   editSecretPostByIdAction,
   getSecretPostByIdAction,
+  postImageToSecretPost,
 } from "../../redux/actions/secretActions/action";
-import { useAppDispatch } from "../../redux/hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { BsTrashFill } from "react-icons/bs";
 import axios from "axios";
-import { getTripByIdAction } from "../../redux/actions/postActions/action";
 
 const HiddenGemSingle = () => {
   const [show, setShow] = useState(false);
@@ -36,10 +36,26 @@ const HiddenGemSingle = () => {
   const userProfileData = useSelector(
     (state: RootState) => state.userData.stock
   );
-
   const oneSecretPostData = useSelector(
     (state: RootState) => state.oneSecretPostData.stock
   );
+  // // EDITING IMAGE
+  // const tripImage = useAppSelector(
+  //   (state) => state.postImageToSecretPost.stock
+  // );
+  // const [file, setFile] = useState<File | null>(null); // Initialize file state to null
+
+  // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (event.target.files != null) {
+  //     setFile(event.target.files[0]);
+  //   }
+  // };
+  // const handleSubmitImage = (event: React.FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault();
+  //   if (file !== null) {
+  //     dispatch(postImageToSecretPost(oneSecretPostData._id, file));
+  //   }
+  // };
 
   console.log("One Secret Data", oneSecretPostData);
 
@@ -253,7 +269,9 @@ const HiddenGemSingle = () => {
           <Modal.Title> Edit Your Trip </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form
+          // onSubmit={handleSubmitImage}
+          >
             <Form.Group className="mb-2">
               <Form.Label className="m-0">Title</Form.Label>
               <Form.Control
@@ -281,6 +299,12 @@ const HiddenGemSingle = () => {
                 id="details-change"
               />
             </Form.Group>
+            <Form.Group>
+              <input
+                type="file"
+                // onChange={handleFileChange}
+              />
+            </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
@@ -288,6 +312,7 @@ const HiddenGemSingle = () => {
             Close
           </Button>
           <Button
+            type="submit"
             variant="success"
             onClick={() => {
               dispatch(editSecretPostByIdAction(oneSecretPostData._id));

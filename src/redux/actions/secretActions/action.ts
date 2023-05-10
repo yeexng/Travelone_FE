@@ -6,6 +6,7 @@ export const GET_SECRET_POST = "GET_SECRET_POST";
 export const GET_SECRET_POST_WITH_ID = "GET_SECRET_POST_WITH_ID";
 export const EDIT_SECRET_POST = "EDIT_SECRET_POST";
 export const ADD_SECRET_POST_IMAGE = "ADD_SECRET_POST_IMAGE";
+export const POST_TRIP_IMAGE = "POST_TRIP_IMAGE"; //edit post image
 
 const baseEndpoint: String =
   (process.env.REACT_APP_BE_URL as string) || "http://localhost:3005";
@@ -78,6 +79,33 @@ export const editSecretPostByIdAction = (postId: string) => {
       );
       dispatch(getSecretPostByIdAction(postId));
       //reload the user by calling the function again    } catch (error) {
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+//UPLOAD IMAGES INTO THE SECRET POST
+export const postImageToSecretPost = (postId: string, file: any) => {
+  return async (dispatch: any) => {
+    try {
+      const response = await axios.post(
+        baseEndpoint + `posts/${postId}/image`,
+        file,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      const data = response.data;
+      console.log(data);
+      dispatch({
+        type: POST_TRIP_IMAGE,
+        payload: data,
+      });
+      dispatch(getSecretPostByIdAction(postId));
+      return data;
     } catch (error) {
       console.log(error);
     }
