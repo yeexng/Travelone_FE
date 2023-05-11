@@ -40,7 +40,6 @@ const HiddenGemPage = () => {
   const baseEndpoint: String =
     (process.env.REACT_APP_BE_URL as string) || "http://localhost:3005";
   const user = userProfileData._id;
-  const comments = [];
   const [title, setTitle] = useState("");
   const [locations, setLocations] = useState("");
   const [details, setDetails] = useState("");
@@ -60,12 +59,13 @@ const HiddenGemPage = () => {
     } catch (error) {}
   };
 
+  //ADDING IMAGE
+
   useEffect(() => {
     dispatch(getSecretPostAction());
   }, []);
 
   const secretPostArray = secretPostData.posts;
-  console.log(secretPostArray);
 
   return (
     <>
@@ -207,8 +207,8 @@ const HiddenGemPage = () => {
                   <InputGroup className="mb-3">
                     <input type="file" />
                   </InputGroup>
-                  <Button variant="primary" onClick={handleClose}>
-                    Close
+                  <Button variant="danger" onClick={handleClose}>
+                    Cancel
                   </Button>
                   <Button variant="success" type="submit" onClick={handleClose}>
                     Add Trip

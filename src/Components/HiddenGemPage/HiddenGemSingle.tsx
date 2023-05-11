@@ -36,13 +36,14 @@ const HiddenGemSingle = () => {
   const oneSecretPostData = useSelector(
     (state: RootState) => state.oneSecretPostData.stock
   );
+
   // EDITING IMAGE
   const tripImage = useAppSelector(
     (state) => state.postImageToSecretPost.stock
   );
   const [file, setFile] = useState<File | null>(null); // Initialize file state to null
 
-  console.log("One Secret Data", oneSecretPostData);
+  // console.log("One Secret Data", oneSecretPostData);
 
   //ADDING COMMENTS
   const [comments, setComments] = useState("");
@@ -292,8 +293,8 @@ const HiddenGemSingle = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleClose}>
-            Close
+          <Button variant="danger" onClick={handleClose}>
+            Cancel
           </Button>
           <Button
             type="submit"
@@ -301,13 +302,12 @@ const HiddenGemSingle = () => {
             onClick={() => {
               if (file) {
                 dispatch(postImageToSecretPost(oneSecretPostData._id, file));
-                console.log("here");
               }
               dispatch(editSecretPostByIdAction(oneSecretPostData._id));
               dispatch(handleClose);
             }}
           >
-            Edit
+            Save Changes
           </Button>
         </Modal.Footer>
       </Modal>
