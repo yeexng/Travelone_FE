@@ -16,7 +16,10 @@ import { GiAirplaneDeparture } from "react-icons/gi";
 import { ImBarcode } from "react-icons/im";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { RootState } from "../../redux/store/store";
-import { editUserProfile } from "../../redux/actions/userActions/action";
+import {
+  editProfileAvatar,
+  editUserProfile,
+} from "../../redux/actions/userActions/action";
 
 const ProfilePage = () => {
   const [show, setShow] = useState(false);
@@ -27,7 +30,10 @@ const ProfilePage = () => {
   );
   const dispatch = useAppDispatch();
 
-  console.log(userProfileData);
+  //EDIT PROFILE AVATAR
+  const [file, setFile] = useState<File | null>(null);
+
+  // console.log(userProfileData);
   return (
     <>
       <div>
@@ -229,21 +235,32 @@ const ProfilePage = () => {
                 rows={3}
               />
             </Form.Group>
+            <Form.Label>Profile Picture</Form.Label>
+            <Form.Group>
+              <input
+                type="file"
+                onChange={(event) => setFile(event.target.files?.[0] ?? null)}
+              />
+            </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleClose}>
-            Close
+          <Button variant="danger" onClick={handleClose}>
+            Cancel
           </Button>
           <Button
-            variant="success"
+            type="submit"
+            variant="primary"
             onClick={() => {
+              if (file) {
+                dispatch(editProfileAvatar(userProfileData._id, file));
+              }
               dispatch(editUserProfile(userProfileData._id));
               dispatch(handleClose);
               //can add successful message after
             }}
           >
-            Edit...
+            Save Changes
           </Button>
         </Modal.Footer>
       </Modal>

@@ -42,18 +42,6 @@ const HiddenGemSingle = () => {
   );
   const [file, setFile] = useState<File | null>(null); // Initialize file state to null
 
-  // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (event.target.files != null) {
-  //     setFile(event.target.files[0]);
-  //   }
-  // };
-  // const handleSubmitImage = (event: React.FormEvent<HTMLFormElement>) => {
-  //   event.preventDefault();
-  //   if (file !== null) {
-  //     dispatch(postImageToSecretPost(oneSecretPostData._id, file));
-  //   }
-  // };
-
   console.log("One Secret Data", oneSecretPostData);
 
   //ADDING COMMENTS

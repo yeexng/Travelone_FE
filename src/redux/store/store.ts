@@ -10,6 +10,7 @@ import getSecretPostReducer from "../reducers/secretReducers/getSecretPostReduce
 import getSecretPostByIdReducer from "../reducers/secretReducers/getSecretPostByIdReducer";
 import editSecretPostReducer from "../reducers/secretReducers/editSecretPostByIdReducer";
 import postImageToSecretPostReducer from "../reducers/secretReducers/postImageToSecretPostReducer";
+import addProfileAvatarReducer from "../reducers/userReducers/postProfileAvatar";
 
 const persistConfig = {
   storage: localStorage,
@@ -25,7 +26,8 @@ const combinedReducer = combineReducers({
   secretPostData: getSecretPostReducer, // fetch secret posts
   oneSecretPostData: getSecretPostByIdReducer, // fetch one posts data
   editSecretPostData: editSecretPostReducer, //edit one secret post
-  postImageToSecretPost: postImageToSecretPostReducer, //add image to secret post
+  postImageToSecretPost: postImageToSecretPostReducer, //edit image to secret post
+  postProfileAvatar: addProfileAvatarReducer, //edit image to profile
 });
 const persistedReducer = persistReducer(persistConfig, combinedReducer);
 

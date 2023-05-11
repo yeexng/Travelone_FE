@@ -120,12 +120,14 @@ export const getUserById = (userId: string) => {
 //ADD Profile Avatar
 
 export const editProfileAvatar = (userId: string, file: any) => {
+  const formData = new FormData();
+  formData.append("avatar", file);
   return async (dispatch: any) => {
     try {
-      const response = await axios.post(
-        baseEndpoint + `users/${userId}/avatar`,
+      const response = await axios.put(
+        baseEndpoint + `/users/${userId}/avatar`,
+        formData,
         {
-          file,
           headers: {
             "Content-Type": "multipart/form-data",
           },
