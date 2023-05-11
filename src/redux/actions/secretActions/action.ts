@@ -87,11 +87,13 @@ export const editSecretPostByIdAction = (postId: string) => {
 
 //UPLOAD IMAGES INTO THE SECRET POST
 export const postImageToSecretPost = (postId: string, file: any) => {
+  const formData = new FormData();
+  formData.append("post", file);
   return async (dispatch: any) => {
     try {
-      const response = await axios.post(
-        baseEndpoint + `posts/${postId}/image`,
-        file,
+      const response = await axios.put(
+        baseEndpoint + `/posts/${postId}/image`,
+        formData,
         {
           headers: {
             "Content-Type": "multipart/form-data",

@@ -28,9 +28,6 @@ const HiddenGemSingle = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [showComment, setShowComment] = useState(false);
-  const handleCloseComment = () => setShowComment(false);
-  const handleShowComment = () => setShowComment(true);
 
   const dispatch = useAppDispatch();
   const userProfileData = useSelector(
@@ -39,11 +36,11 @@ const HiddenGemSingle = () => {
   const oneSecretPostData = useSelector(
     (state: RootState) => state.oneSecretPostData.stock
   );
-  // // EDITING IMAGE
-  // const tripImage = useAppSelector(
-  //   (state) => state.postImageToSecretPost.stock
-  // );
-  // const [file, setFile] = useState<File | null>(null); // Initialize file state to null
+  // EDITING IMAGE
+  const tripImage = useAppSelector(
+    (state) => state.postImageToSecretPost.stock
+  );
+  const [file, setFile] = useState<File | null>(null); // Initialize file state to null
 
   // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   //   if (event.target.files != null) {
@@ -269,9 +266,7 @@ const HiddenGemSingle = () => {
           <Modal.Title> Edit Your Trip </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form
-          // onSubmit={handleSubmitImage}
-          >
+          <Form>
             <Form.Group className="mb-2">
               <Form.Label className="m-0">Title</Form.Label>
               <Form.Control
@@ -299,10 +294,11 @@ const HiddenGemSingle = () => {
                 id="details-change"
               />
             </Form.Group>
+            <Form.Label>Image</Form.Label>
             <Form.Group>
               <input
                 type="file"
-                // onChange={handleFileChange}
+                onChange={(event) => setFile(event.target.files?.[0] ?? null)}
               />
             </Form.Group>
           </Form>
@@ -315,40 +311,12 @@ const HiddenGemSingle = () => {
             type="submit"
             variant="success"
             onClick={() => {
+              if (file) {
+                dispatch(postImageToSecretPost(oneSecretPostData._id, file));
+                console.log("here");
+              }
               dispatch(editSecretPostByIdAction(oneSecretPostData._id));
               dispatch(handleClose);
-            }}
-          >
-            Edit
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
-      {/*Edit Comment Modal*/}
-      <Modal show={showComment} onHide={handleCloseComment}>
-        <Modal.Header>
-          <Modal.Title> Edit Your Comment </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-2">
-              <Form.Control
-                type="text"
-                // placeholder={oneSecretPostData && oneSecretPostData.title}
-                id="title-change"
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" onClick={handleCloseComment}>
-            Close
-          </Button>
-          <Button
-            variant="success"
-            onClick={() => {
-              // dispatch(editSecretPostByIdAction(oneSecretPostData._id));
-              dispatch(handleCloseComment);
             }}
           >
             Edit
