@@ -46,14 +46,18 @@ const SingleTrip = () => {
   const [chatHistory, setChatHistory] = useState<
     { sender: string; text: string; createdAt: string }[]
   >([]);
+  const chatMessages = document.querySelector(".chat-history");
 
-  useEffect(() => {
+  const enterChat = () => {
+    // useEffect(() => {
     socket.on("welcome", (welcomeMessage) => {
       console.log(welcomeMessage);
     });
     socket.on("message", (message) => {
       console.log(message);
+      setChatHistory((chatHistory) => [...chatHistory, message]);
     });
+
     socket.on("newMessage", (newMessage) => {
       console.log(newMessage);
       // setChatHistory([...chatHistory, newMessage.message])
@@ -62,7 +66,8 @@ const SingleTrip = () => {
       // this is going to give us the possibility to access to the CURRENT state of the component (chat history filled with some messages)
       setChatHistory((chatHistory) => [...chatHistory, newMessage.message]);
     });
-  }, []);
+    // }, []);
+  };
 
   const sendMessage = () => {
     const newMessage = {
@@ -159,7 +164,9 @@ const SingleTrip = () => {
                     <p>Type of Travel: {oneTripData.typeOfJourney}</p>
                     <p>Split Cost: {oneTripData.splitCost}</p>
                     <p>{oneTripData.addOns}</p>
-                    <Button variant="outline-danger">Connect</Button>
+                    <Button variant="outline-danger" onClick={enterChat}>
+                      Connect
+                    </Button>
                   </Col>
                 </Row>
               </div>
@@ -177,20 +184,9 @@ const SingleTrip = () => {
               </div>
               <div className="chat-history mb-3">
                 {/* Chat Bubble */}
-                {chatHistory.map((message, index) =>
-                  message.sender === userProfileData.firstName ? (
-                    <div className="bubble alt mr-2">
-                      <div className="txt">
-                        <p className="name alt">
-                          You<span> ~ {userProfileData.firstName}</span>
-                        </p>
-                        <p className="message">{message.text}</p>
-                        <span className="timestamp">{message.createdAt}</span>
-                      </div>
-                      <div className="bubble-arrow alt"></div>
-                    </div>
-                  ) : (
-                    <div className="speech-wrapper">
+                {chatHistory.map((message, index) => {
+                  return message.sender !== userProfileData.firstName ? (
+                    <div className="speech-wrapper" key={index}>
                       <div className="bubble">
                         <div className="txt">
                           <p className="name">{message.sender}</p>
@@ -199,17 +195,29 @@ const SingleTrip = () => {
                         </div>
                         <div className="bubble-arrow"></div>
                       </div>
-                      {/* Speech Bubble alternative */}
                     </div>
-                  )
-                )}
+                  ) : (
+                    <div className="speech-wrapper">
+                      <div className="bubble alt mr-2">
+                        <div className="txt">
+                          <p className="name alt">
+                            You<span> ~ {message.sender}</span>
+                          </p>
+                          <p className="message">{message.text}</p>
+                          <span className="timestamp">{message.createdAt}</span>
+                        </div>
+                        <div className="bubble-arrow alt"></div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
               <div>
                 <Row className="chat-input mt-2">
                   <Col md={1}>
                     <img
                       className="profile-img mr-3"
-                      src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
+                      src={userProfileData.avatar}
                     ></img>
                   </Col>
                   <Col>
