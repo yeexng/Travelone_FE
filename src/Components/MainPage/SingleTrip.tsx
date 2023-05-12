@@ -13,11 +13,16 @@ import {
   Button,
   Modal,
 } from "react-bootstrap";
-import { useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useAppDispatch } from "../../redux/hooks/hooks";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import { editTripByIdAction } from "../../redux/actions/postActions/action";
+import { io } from "socket.io-client";
+
+const socket = io(`${process.env.REACT_APP_BE_URL}`, {
+  transports: ["websocket"],
+});
 
 const SingleTrip = () => {
   const [show, setShow] = useState(false);
@@ -34,6 +39,40 @@ const SingleTrip = () => {
   );
 
   console.log("Single Trip", oneTripData);
+
+  //Socket.io
+  const [message, setMessage] = useState("");
+  const username = userProfileData.firstName;
+  const [chatHistory, setChatHistory] = useState<
+    { sender: string; text: string; createdAt: string }[]
+  >([]);
+
+  useEffect(() => {
+    socket.on("welcome", (welcomeMessage) => {
+      console.log(welcomeMessage);
+    });
+    socket.on("message", (message) => {
+      console.log(message);
+    });
+    socket.on("newMessage", (newMessage) => {
+      console.log(newMessage);
+      // setChatHistory([...chatHistory, newMessage.message])
+      // if we set the state just by passing a value, the new message will be appended to the INITIAL state of the component (empty chat history [])
+      // since we don't want that, we should use the set state function by passing a callback function instead
+      // this is going to give us the possibility to access to the CURRENT state of the component (chat history filled with some messages)
+      setChatHistory((chatHistory) => [...chatHistory, newMessage.message]);
+    });
+  }, []);
+
+  const sendMessage = () => {
+    const newMessage = {
+      sender: username,
+      text: message,
+      createdAt: new Date().toLocaleString("en-US"),
+    };
+    socket.emit("sendMessage", { message: newMessage });
+    setChatHistory([...chatHistory, newMessage]); // setChatHistory([...chatHistory, newMessage]);
+  };
 
   return (
     <>
@@ -133,36 +172,37 @@ const SingleTrip = () => {
                     className="profile-img mr-3"
                     src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
                   ></img>
-                  Sam Ng
+                  {oneTripData.user.firstName} {oneTripData.user.lastName}
                 </p>
               </div>
               <div className="chat-history mb-3">
                 {/* Chat Bubble */}
-                <div className="speech-wrapper">
-                  <div className="bubble">
-                    <div className="txt">
-                      <p className="name">Sam Ng</p>
-                      <p className="message">
-                        Hey, check out this Pure CSS speech bubble...
-                      </p>
-                      <span className="timestamp">10:20 pm</span>
+                {chatHistory.map((message, index) =>
+                  message.sender === userProfileData.firstName ? (
+                    <div className="bubble alt mr-2">
+                      <div className="txt">
+                        <p className="name alt">
+                          You<span> ~ {userProfileData.firstName}</span>
+                        </p>
+                        <p className="message">{message.text}</p>
+                        <span className="timestamp">{message.createdAt}</span>
+                      </div>
+                      <div className="bubble-arrow alt"></div>
                     </div>
-                    <div className="bubble-arrow"></div>
-                  </div>
-                  {/* Speech Bubble alternative */}
-                  <div className="bubble alt mr-2">
-                    <div className="txt">
-                      <p className="name alt">
-                        You<span> ~ Xuan Ng</span>
-                      </p>
-                      <p className="message">
-                        Nice... this will work great for my new project.
-                      </p>
-                      <span className="timestamp">10:22 pm</span>
+                  ) : (
+                    <div className="speech-wrapper">
+                      <div className="bubble">
+                        <div className="txt">
+                          <p className="name">{message.sender}</p>
+                          <p className="message">{message.text}</p>
+                          <span className="timestamp">{message.createdAt}</span>
+                        </div>
+                        <div className="bubble-arrow"></div>
+                      </div>
+                      {/* Speech Bubble alternative */}
                     </div>
-                    <div className="bubble-arrow alt"></div>
-                  </div>
-                </div>
+                  )
+                )}
               </div>
               <div>
                 <Row className="chat-input mt-2">
@@ -173,9 +213,24 @@ const SingleTrip = () => {
                     ></img>
                   </Col>
                   <Col>
-                    <InputGroup>
-                      <Form.Control placeholder="Show your appreciation here..." />
-                    </InputGroup>
+                    <Form
+                      id="chat-form"
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        sendMessage();
+                      }}
+                    >
+                      <InputGroup>
+                        <Form.Control
+                          placeholder="Enter Message"
+                          value={message}
+                          onChange={(e) => setMessage(e.currentTarget.value)}
+                        />
+                      </InputGroup>
+                      <Button variant="success" type="submit">
+                        Send
+                      </Button>
+                    </Form>
                   </Col>
                 </Row>
               </div>
