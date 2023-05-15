@@ -10,3 +10,14 @@ export interface User {
   trips: [];
   googleId: string;
 }
+
+export type Adventurer = {
+  username: string;
+  socketId: string;
+};
+
+export type Message = {
+  sender: string;
+  text: string;
+  createdAt: string;
+};

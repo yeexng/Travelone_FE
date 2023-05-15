@@ -19,10 +19,15 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import { editTripByIdAction } from "../../redux/actions/postActions/action";
 import { io } from "socket.io-client";
+import { Adventurer, Message } from "../../interfaces/iUsers";
+import axios from "axios";
 
 const socket = io(`${process.env.REACT_APP_BE_URL}`, {
   transports: ["websocket"],
 });
+
+const baseEndpoint: string =
+  (process.env.REACT_APP_BE_URL as string) || "http://localhost:3005";
 
 const SingleTrip = () => {
   const [show, setShow] = useState(false);
@@ -41,21 +46,43 @@ const SingleTrip = () => {
   console.log("Single Trip", oneTripData);
 
   //Socket.io
+  const [username, setUserName] = useState("");
   const [message, setMessage] = useState("");
-  const username = userProfileData.firstName;
-  const [chatHistory, setChatHistory] = useState<
-    { sender: string; text: string; createdAt: string }[]
-  >([]);
-  const chatMessages = document.querySelector(".chat-history");
+  const [adventurersList, setAdventurersList] = useState<Adventurer[]>([]);
+  const [chatHistory, setChatHistory] = useState<Message[]>([]);
+
+  // Adding to DB
+  const [texts, setTexts] = useState("");
+  const addChatToDB = async (tripId: string) => {
+    try {
+      const res = await axios.post(
+        `${baseEndpoint}/trips/${tripId}/chats`,
+        {
+          text: texts,
+          sender: userProfileData._id,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      if (res.status === 200) {
+        setTexts("");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const enterChat = () => {
-    // useEffect(() => {
     socket.on("welcome", (welcomeMessage) => {
       console.log(welcomeMessage);
     });
-    socket.on("message", (message) => {
-      console.log(message);
-      setChatHistory((chatHistory) => [...chatHistory, message]);
+    //join room
+    socket.emit("joinRoom", oneTripData._id);
+    socket.emit("setUsername", userProfileData.firstName);
+    socket.on("loggedIn", (adventurersList) => {
+      console.log(adventurersList);
+      setAdventurersList(adventurersList);
     });
 
     socket.on("newMessage", (newMessage) => {
@@ -66,17 +93,16 @@ const SingleTrip = () => {
       // this is going to give us the possibility to access to the CURRENT state of the component (chat history filled with some messages)
       setChatHistory((chatHistory) => [...chatHistory, newMessage.message]);
     });
-    // }, []);
   };
 
   const sendMessage = () => {
     const newMessage = {
-      sender: username,
+      sender: userProfileData.firstName,
       text: message,
       createdAt: new Date().toLocaleString("en-US"),
     };
     socket.emit("sendMessage", { message: newMessage });
-    setChatHistory([...chatHistory, newMessage]); // setChatHistory([...chatHistory, newMessage]);
+    setChatHistory([...chatHistory, newMessage]);
   };
 
   return (
@@ -145,7 +171,7 @@ const SingleTrip = () => {
                         width={200}
                         height={200}
                         alt="171x180"
-                        src={oneTripData.user.avatar}
+                        src={oneTripData.user?.avatar}
                       />
                     </Figure>
                   </Col>
@@ -173,13 +199,23 @@ const SingleTrip = () => {
             </Col>
             <Col className="post-text m-0">
               <div className="mt-4">
+                <div>
+                  Connected User:
+                  {adventurersList.length === 0 && (
+                    <p>Log in to check who's online!</p>
+                  )}
+                  {adventurersList.map((user) => (
+                    <p key={user.socketId}>{user.username}</p>
+                  ))}{" "}
+                </div>
                 <p>
                   <img
                     alt="user-avatar"
                     className="profile-img mr-3"
                     src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
                   ></img>
-                  {oneTripData.user.firstName} {oneTripData.user.lastName}
+                  {oneTripData.title} started by {oneTripData.user.firstName}{" "}
+                  {oneTripData.user.lastName}
                 </p>
               </div>
               <div className="chat-history mb-3">
@@ -217,7 +253,7 @@ const SingleTrip = () => {
                   <Col md={1}>
                     <img
                       className="profile-img mr-3"
-                      src={userProfileData.avatar}
+                      src={userProfileData?.avatar}
                     ></img>
                   </Col>
                   <Col>
@@ -232,10 +268,19 @@ const SingleTrip = () => {
                         <Form.Control
                           placeholder="Enter Message"
                           value={message}
-                          onChange={(e) => setMessage(e.currentTarget.value)}
+                          onChange={(e) => {
+                            setMessage(e.currentTarget.value);
+                            setTexts(e.currentTarget.value);
+                          }}
                         />
                       </InputGroup>
-                      <Button variant="success" type="submit">
+                      <Button
+                        variant="success"
+                        type="submit"
+                        onClick={() => {
+                          addChatToDB(oneTripData._id);
+                        }}
+                      >
                         Send
                       </Button>
                     </Form>
