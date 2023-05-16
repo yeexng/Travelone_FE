@@ -17,7 +17,10 @@ import { FormEvent, useEffect, useState } from "react";
 import { useAppDispatch } from "../../redux/hooks/hooks";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
-import { editTripByIdAction } from "../../redux/actions/postActions/action";
+import {
+  editTripByIdAction,
+  getTripByIdAction,
+} from "../../redux/actions/postActions/action";
 import { io } from "socket.io-client";
 import { Adventurer, Message } from "../../interfaces/iUsers";
 import axios from "axios";
@@ -105,6 +108,23 @@ const SingleTrip = () => {
     setChatHistory([...chatHistory, newMessage]);
   };
 
+  // //Adding User to the User Array
+  // const adventurers = userProfileData._id;
+  // const addUserToArray = async (tripId: String) => {
+  //   try {
+  //     const { data } = await axios.post(
+  //       baseEndpoint + `/trips/${tripId}/adventurerList`,
+  //       {
+  //         adventurers,
+  //       }
+  //     );
+  //     dispatch(getTripByIdAction(oneTripData._id));
+  //     console.log(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
   return (
     <>
       <div>
@@ -190,7 +210,14 @@ const SingleTrip = () => {
                     <p>Type of Travel: {oneTripData.typeOfJourney}</p>
                     <p>Split Cost: {oneTripData.splitCost}</p>
                     <p>{oneTripData.addOns}</p>
-                    <Button variant="outline-danger" onClick={enterChat}>
+                    <Button
+                      variant="outline-danger"
+                      onClick={() => {
+                        dispatch(enterChat);
+                        // dispatch(addUserToArray(oneTripData._id));
+                        dispatch(getTripByIdAction(oneTripData._id));
+                      }}
+                    >
                       Connect
                     </Button>
                   </Col>
@@ -200,7 +227,10 @@ const SingleTrip = () => {
             <Col className="post-text m-0">
               <div className="mt-4">
                 <div>
-                  Connected User:
+                  In the Gig:{" "}
+                  {oneTripData?.adventurers.map((user: any) => {
+                    return <span>{user.firstName}, </span>;
+                  })}
                   {adventurersList.length === 0 && (
                     <p>Log in to check who's online!</p>
                   )}
@@ -219,6 +249,35 @@ const SingleTrip = () => {
                 </p>
               </div>
               <div className="chat-history mb-3">
+                {/* Chat History */}
+                {oneTripData?.chatHistory.map((message: any) => {
+                  return message.sender.firstName !==
+                    userProfileData.firstName ? (
+                    <div className="speech-wrapper" key={message._id}>
+                      <div className="bubble">
+                        <div className="txt">
+                          <p className="name">{message.sender.firstName}</p>
+                          <p className="message">{message.text}</p>
+                          <span className="timestamp">{message.createdAt}</span>
+                        </div>
+                        <div className="bubble-arrow"></div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="speech-wrapper">
+                      <div className="bubble alt mr-2">
+                        <div className="txt">
+                          <p className="name alt">
+                            You<span> ~ {message.sender.firstName}</span>
+                          </p>
+                          <p className="message">{message.text}</p>
+                          <span className="timestamp">{message.createdAt}</span>
+                        </div>
+                        <div className="bubble-arrow alt"></div>
+                      </div>
+                    </div>
+                  );
+                })}
                 {/* Chat Bubble */}
                 {chatHistory.map((message, index) => {
                   return message.sender !== userProfileData.firstName ? (
