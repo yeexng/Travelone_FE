@@ -109,21 +109,21 @@ const SingleTrip = () => {
   };
 
   // //Adding User to the User Array
-  const adventurers = [userProfileData._id];
-  const addUserToArray = async (tripId: String) => {
-    try {
-      const { data } = await axios.post(
-        baseEndpoint + `/trips/${tripId}/adventurerList`,
-        {
-          adventurers,
-        }
-      );
-      dispatch(getTripByIdAction(oneTripData._id));
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const adventurers = [userProfileData._id];
+  // const addUserToArray = async (tripId: String) => {
+  //   try {
+  //     const { data } = await axios.post(
+  //       baseEndpoint + `/trips/${tripId}/adventurerList`,
+  //       {
+  //         adventurers,
+  //       }
+  //     );
+  //     dispatch(getTripByIdAction(oneTripData._id));
+  //     console.log(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <>
@@ -214,7 +214,7 @@ const SingleTrip = () => {
                       variant="outline-danger"
                       onClick={() => {
                         dispatch(enterChat);
-                        dispatch(addUserToArray(oneTripData._id));
+                        // dispatch(addUserToArray(oneTripData._id));
                         dispatch(getTripByIdAction(oneTripData._id));
                       }}
                     >

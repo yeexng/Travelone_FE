@@ -10,6 +10,7 @@ import {
   Row,
   Figure,
   Modal,
+  FormControl,
 } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -69,10 +70,18 @@ const MainPage = () => {
 
   useEffect(() => {
     dispatch(getTripAction());
-    // console.log(tripsArray);
   }, []);
 
   const tripsArray = tripData.trips;
+
+  //Search Features
+  const [searchTerm, setSearchTerm] = useState("");
+  const filteredTripsArray = tripsArray.filter((trip: any) => {
+    return (
+      trip.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      trip.destination.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  });
 
   return (
     <>
@@ -131,15 +140,28 @@ const MainPage = () => {
         </div>
         <div className=" main-content mx-5">
           <Row>
-            {tripsArray &&
-              tripsArray.map((trips: any) => {
+            <Form>
+              <i className="bi bi-search"></i>
+              <FormControl
+                type="text"
+                placeholder="Search"
+                className="mr-sm-2 show-search"
+                //   value={query}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </Form>
+          </Row>
+
+          <Row>
+            {filteredTripsArray &&
+              filteredTripsArray.map((trips: any) => {
                 return (
                   <Col
                     key={trips._id}
                     md={6}
                     onClick={() => {
                       dispatch(getTripByIdAction(`${trips._id}`));
-                      //need to dispatch getSpecificTripAction and pass the ID
                       navigate(`/trips/${trips._id}`);
                     }}
                   >

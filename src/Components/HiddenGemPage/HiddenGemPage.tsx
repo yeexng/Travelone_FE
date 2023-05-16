@@ -12,6 +12,7 @@ import {
   Modal,
   Card,
   InputGroup,
+  FormControl,
 } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -67,6 +68,16 @@ const HiddenGemPage = () => {
 
   const secretPostArray = secretPostData.posts;
 
+  //Search Features
+  const [searchTerm, setSearchTerm] = useState("");
+  const filteredSecretPostArray = secretPostArray.filter((post: any) => {
+    return (
+      (post.title &&
+        post.title.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (post.locations &&
+        post.locations.toLowerCase().includes(searchTerm.toLowerCase()))
+    );
+  });
   return (
     <>
       <div>
@@ -129,8 +140,22 @@ const HiddenGemPage = () => {
         </div>
         <div className=" main-content mx-5">
           <Row>
-            {secretPostArray &&
-              secretPostArray.map((posts: any) => {
+            <Form>
+              <i className="bi bi-search"></i>
+              <FormControl
+                type="text"
+                placeholder="Search"
+                className="mr-sm-2 show-search"
+                //   value={query}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </Form>
+          </Row>
+
+          <Row>
+            {filteredSecretPostArray &&
+              filteredSecretPostArray.map((posts: any) => {
                 return (
                   <Col
                     md={3}
