@@ -175,18 +175,18 @@ const MainPage = () => {
                               width={200}
                               height={200}
                               alt="171x180"
-                              src={trips.user.avatar}
+                              src={trips.user?.avatar}
                             />
                             <Figure.Caption>
-                              {trips.user.firstName} {trips.user.lastName}{" "}
+                              {trips.user?.firstName} {trips.user?.lastName}{" "}
                             </Figure.Caption>
                           </Figure>
                         </Col>
                         <Col className="p-3">
-                          <h3>{trips.title}</h3>
-                          <p>Destination: {trips.destination}</p>
-                          <p>Date: {trips.date}</p>
-                          <p>Looking For: {trips.lookingFor}</p>
+                          <h3>{trips?.title}</h3>
+                          <p>Destination: {trips?.destination}</p>
+                          <p>Date: {trips?.date}</p>
+                          <p>Looking For: {trips?.lookingFor}</p>
                         </Col>
                       </Row>
                     </div>

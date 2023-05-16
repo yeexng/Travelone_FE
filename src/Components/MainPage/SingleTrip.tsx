@@ -108,22 +108,22 @@ const SingleTrip = () => {
     setChatHistory([...chatHistory, newMessage]);
   };
 
-  // //Adding User to the User Array
-  // const adventurers = [userProfileData._id];
-  // const addUserToArray = async (tripId: String) => {
-  //   try {
-  //     const { data } = await axios.post(
-  //       baseEndpoint + `/trips/${tripId}/adventurerList`,
-  //       {
-  //         adventurers,
-  //       }
-  //     );
-  //     dispatch(getTripByIdAction(oneTripData._id));
-  //     console.log(data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  //Adding User to the User Array
+  const adventurers = [userProfileData._id];
+  const addUserToArray = async (tripId: String) => {
+    try {
+      const { data } = await axios.post(
+        baseEndpoint + `/trips/${tripId}/adventurerList`,
+        {
+          adventurers,
+        }
+      );
+      dispatch(getTripByIdAction(oneTripData._id));
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -196,25 +196,26 @@ const SingleTrip = () => {
                     </Figure>
                   </Col>
                   <Col className="mt-2">
-                    <h2>{oneTripData.title}</h2>
+                    <h2>{oneTripData?.title}</h2>
                     <p>
                       with{" "}
                       <span>
-                        {oneTripData.user.firstName} {oneTripData.user.lastName}
+                        {oneTripData.user?.firstName}{" "}
+                        {oneTripData.user?.lastName}
                       </span>
                     </p>
-                    <p>Destination: {oneTripData.destination}</p>
-                    <p>Starting Date: {oneTripData.date}</p>
-                    <p>Looking for: {oneTripData.lookingFor}</p>
-                    <p>Budget: ${oneTripData.budget}</p>
-                    <p>Type of Travel: {oneTripData.typeOfJourney}</p>
-                    <p>Split Cost: {oneTripData.splitCost}</p>
-                    <p>{oneTripData.addOns}</p>
+                    <p>Destination: {oneTripData?.destination}</p>
+                    <p>Starting Date: {oneTripData?.date}</p>
+                    <p>Looking for: {oneTripData?.lookingFor}</p>
+                    <p>Budget: ${oneTripData?.budget}</p>
+                    <p>Type of Travel: {oneTripData?.typeOfJourney}</p>
+                    <p>Split Cost: {oneTripData?.splitCost}</p>
+                    <p>{oneTripData?.addOns}</p>
                     <Button
                       variant="outline-danger"
                       onClick={() => {
                         dispatch(enterChat);
-                        // dispatch(addUserToArray(oneTripData._id));
+                        dispatch(addUserToArray(oneTripData._id));
                         dispatch(getTripByIdAction(oneTripData._id));
                       }}
                     >

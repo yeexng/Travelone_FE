@@ -137,7 +137,7 @@ const HiddenGemSingle = () => {
                   <img
                     alt="author image"
                     className="profile-img mr-3"
-                    src={oneSecretPostData.user.avatar}
+                    src={oneSecretPostData.user?.avatar}
                   ></img>
                   {oneSecretPostData.user.firstName}{" "}
                   {oneSecretPostData.user.lastName}
@@ -156,7 +156,7 @@ const HiddenGemSingle = () => {
                       <img
                         alt="user avatar"
                         className="profile-img mr-3"
-                        src={userProfileData.avatar}
+                        src={userProfileData?.avatar}
                       ></img>
                     </Col>
                     <Col>
@@ -190,7 +190,7 @@ const HiddenGemSingle = () => {
                           <Col md={1} className="pr-0">
                             <img
                               className="profile-img mt-2"
-                              src={singleComment.user.avatar}
+                              src={singleComment.user?.avatar}
                             ></img>
                           </Col>
                           <Col className="ml-1">
