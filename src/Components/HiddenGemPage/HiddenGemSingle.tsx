@@ -37,6 +37,8 @@ const HiddenGemSingle = () => {
     (state: RootState) => state.oneSecretPostData.stock
   );
 
+  console.log("Data in hidden", oneSecretPostData);
+
   // EDITING IMAGE
   const tripImage = useAppSelector(
     (state) => state.postImageToSecretPost.stock
@@ -72,11 +74,11 @@ const HiddenGemSingle = () => {
   return (
     <>
       <div>
-        <Navbar style={{ height: "6vh" }} bg="dark" variant="dark" expand="lg">
+        <Navbar style={{ height: "8vh" }} bg="dark" variant="dark" expand="lg">
           <div className="container-fluid mx-5">
             <Navbar.Brand>
               <Link to={"/trips"} className="text-decoration-none text-white">
-                TravelOne?
+                <img className="logo-img" src="/assets/Travelone-Logo.png" />
               </Link>
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -93,12 +95,12 @@ const HiddenGemSingle = () => {
               </Nav>
               <Nav className="ml-auto">
                 <NavDropdown
-                  title={userProfileData && userProfileData.firstName}
+                  title={userProfileData && userProfileData?.firstName}
                   id="basic-nav-dropdown"
                 >
                   <NavDropdown.Item>
                     <Link
-                      to={`/users/${userProfileData._id}`}
+                      to={`/users/${userProfileData?._id}`}
                       className="mytrip-link"
                     >
                       Profile
@@ -119,7 +121,7 @@ const HiddenGemSingle = () => {
           </div>
         </Navbar>
       </div>
-      <div style={{ height: "94vh" }}>
+      <div style={{ height: "92vh" }}>
         <div className="single-secret-layout">
           <Row className="main-row-layout">
             <Col md={8}>
@@ -127,7 +129,7 @@ const HiddenGemSingle = () => {
                 <img
                   alt="post image"
                   className="secret-single-image"
-                  src={oneSecretPostData.image}
+                  src={oneSecretPostData?.image}
                 />
               </div>
             </Col>
@@ -139,17 +141,17 @@ const HiddenGemSingle = () => {
                     className="profile-img mr-3"
                     src={oneSecretPostData.user?.avatar}
                   ></img>
-                  {oneSecretPostData.user.firstName}{" "}
-                  {oneSecretPostData.user.lastName}
+                  {oneSecretPostData.user?.firstName}{" "}
+                  {oneSecretPostData.user?.lastName}
                 </p>
-                <h3>{oneSecretPostData.title}</h3>
-                <p className="mb-0">{oneSecretPostData.locations}</p>
-                <p className="mb-0">{oneSecretPostData.details}</p>
-                <p className="mt-2 post-date">{oneSecretPostData.createdAt}</p>
+                <h3>{oneSecretPostData?.title}</h3>
+                <p className="mb-0">{oneSecretPostData?.locations}</p>
+                <p className="mb-0">{oneSecretPostData?.details}</p>
+                <p className="mt-2 post-date">{oneSecretPostData?.createdAt}</p>
               </div>
               <hr></hr>
               <div>
-                <p>90 Comments</p>
+                <p>{oneSecretPostData.comments.length} comments</p>
                 <p>
                   <Row>
                     <Col md={1}>
@@ -182,8 +184,8 @@ const HiddenGemSingle = () => {
                 </p>
               </div>
               <div>
-                {oneSecretPostData.comments &&
-                  oneSecretPostData.comments.map((singleComment: any) => {
+                {oneSecretPostData?.comments &&
+                  oneSecretPostData?.comments.map((singleComment: any) => {
                     return (
                       <div className="single-comment mt-4">
                         <Row>
@@ -197,8 +199,8 @@ const HiddenGemSingle = () => {
                             <Row>
                               <Col md={10}>
                                 <p className="my-1">
-                                  {singleComment.user.firstName}{" "}
-                                  {singleComment.user.lastName}
+                                  {singleComment.user?.firstName}{" "}
+                                  {singleComment.user?.lastName}
                                 </p>
                               </Col>
                               <Col>
@@ -230,12 +232,12 @@ const HiddenGemSingle = () => {
                               </Col>
                               <Col md={12}>
                                 <p className="mb-0 mt-0">
-                                  {singleComment.comment}
+                                  {singleComment?.comment}
                                 </p>
                               </Col>
                               <Col md={12}>
                                 <p className="mt-1 post-date">
-                                  {singleComment.createdAt}
+                                  {singleComment?.createdAt}
                                 </p>
                               </Col>
                             </Row>
@@ -260,7 +262,7 @@ const HiddenGemSingle = () => {
               <Form.Label className="m-0">Title</Form.Label>
               <Form.Control
                 type="text"
-                placeholder={oneSecretPostData && oneSecretPostData.title}
+                placeholder={oneSecretPostData && oneSecretPostData?.title}
                 id="title-change"
               />
             </Form.Group>
@@ -269,7 +271,7 @@ const HiddenGemSingle = () => {
               <Form.Label className="m-0">Location</Form.Label>
               <Form.Control
                 type="text"
-                placeholder={oneSecretPostData.locations}
+                placeholder={oneSecretPostData?.locations}
                 id="locations-change"
               />
             </Form.Group>
@@ -277,7 +279,7 @@ const HiddenGemSingle = () => {
             <Form.Group className="mb-2">
               <Form.Label className="m-0">Details</Form.Label>
               <Form.Control
-                placeholder={oneSecretPostData.details}
+                placeholder={oneSecretPostData?.details}
                 as="textarea"
                 rows={3}
                 id="details-change"

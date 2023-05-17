@@ -50,53 +50,53 @@ const SingleTrip = () => {
   console.log("Single Trip", oneTripData);
 
   //Socket.io
-  const [username, setUserName] = useState("");
-  const [message, setMessage] = useState("");
-  const [adventurersList, setAdventurersList] = useState<Adventurer[]>([]);
-  const [chatHistory, setChatHistory] = useState<Message[]>([]);
+  // const [username, setUserName] = useState("");
+  // const [message, setMessage] = useState("");
+  // const [adventurersList, setAdventurersList] = useState<Adventurer[]>([]);
+  // const [chatHistory, setChatHistory] = useState<Message[]>([]);
 
   // Adding to DB
-  const [texts, setTexts] = useState("");
-  const addChatToDB = async (tripId: string) => {
-    try {
-      const res = await axios.post(
-        `${baseEndpoint}/trips/${tripId}/chats`,
-        {
-          text: texts,
-          sender: userProfileData._id,
-        },
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-      if (res.status === 200) {
-        setTexts("");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const [texts, setTexts] = useState("");
+  // const addChatToDB = async (tripId: string) => {
+  //   try {
+  //     const res = await axios.post(
+  //       `${baseEndpoint}/trips/${tripId}/chats`,
+  //       {
+  //         text: texts,
+  //         sender: userProfileData._id,
+  //       },
+  //       {
+  //         headers: { "Content-Type": "application/json" },
+  //       }
+  //     );
+  //     if (res.status === 200) {
+  //       setTexts("");
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const enterChat = () => {
-    socket.on("welcome", (welcomeMessage) => {
-      console.log(welcomeMessage);
-    });
-    //join room
-    socket.emit("joinRoom", oneTripData._id);
-    socket.emit("setUsername", userProfileData.firstName);
-    socket.on("loggedIn", (adventurersList) => {
-      console.log(adventurersList);
-      setAdventurersList(adventurersList);
-    });
+    // socket.on("welcome", (welcomeMessage) => {
+    //   console.log(welcomeMessage);
+    // });
+    // //join room
+    // socket.emit("joinRoom", oneTripData._id);
+    // socket.emit("setUsername", userProfileData.firstName);
+    // socket.on("loggedIn", (adventurersList) => {
+    //   console.log(adventurersList);
+    //   setAdventurersList(adventurersList);
+    // });
 
-    socket.on("newMessage", (newMessage) => {
-      console.log(newMessage);
-      // setChatHistory([...chatHistory, newMessage.message])
-      // if we set the state just by passing a value, the new message will be appended to the INITIAL state of the component (empty chat history [])
-      // since we don't want that, we should use the set state function by passing a callback function instead
-      // this is going to give us the possibility to access to the CURRENT state of the component (chat history filled with some messages)
-      setChatHistory((chatHistory) => [...chatHistory, newMessage.message]);
-    });
+    // socket.on("newMessage", (newMessage) => {
+    //   console.log(newMessage);
+    //   // setChatHistory([...chatHistory, newMessage.message])
+    //   // if we set the state just by passing a value, the new message will be appended to the INITIAL state of the component (empty chat history [])
+    //   // since we don't want that, we should use the set state function by passing a callback function instead
+    //   // this is going to give us the possibility to access to the CURRENT state of the component (chat history filled with some messages)
+    //   setChatHistory((chatHistory) => [...chatHistory, newMessage.message]);
+    // });
 
     // //Adding User to the User Array
     const adventurerId = [userProfileData._id];
@@ -121,43 +121,27 @@ const SingleTrip = () => {
         // Handle any errors that occurred during the request
         console.error(error);
       });
-    // const addUserToArray = async (tripId: String) => {
-    //   try {
-    //     const { data } = await axios.post(
-    //       baseEndpoint + `/trips/${tripId}/adventurerList`,
-    //       {
-    //         adventurers,
-    //       }
-    //     );
-    //     dispatch(getTripByIdAction(oneTripData._id));
-    //     console.log(data);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // };
-
-    // dispatch(addUserToArray(oneTripData._id));
   };
 
-  const sendMessage = () => {
-    const newMessage = {
-      sender: userProfileData.firstName,
-      text: message,
-      createdAt: new Date().toLocaleString("en-US"),
-    };
-    socket.emit("sendMessage", { message: newMessage });
-    setChatHistory([...chatHistory, newMessage]);
-    setMessage("");
-  };
+  // const sendMessage = () => {
+  //   const newMessage = {
+  //     sender: userProfileData.firstName,
+  //     text: message,
+  //     createdAt: new Date().toLocaleString("en-US"),
+  //   };
+  //   socket.emit("sendMessage", { message: newMessage });
+  //   setChatHistory([...chatHistory, newMessage]);
+  //   setMessage("");
+  // };
 
   return (
     <>
       <div>
-        <Navbar style={{ height: "6vh" }} bg="dark" variant="dark" expand="lg">
+        <Navbar style={{ height: "8vh" }} bg="dark" variant="dark" expand="lg">
           <div className="container-fluid mx-5">
             <Navbar.Brand>
               <Link to={"/trips"} className="text-decoration-none text-white">
-                TravelOne?
+                <img className="logo-img" src="/assets/Travelone-Logo.png" />
               </Link>
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -204,7 +188,8 @@ const SingleTrip = () => {
           </div>
         </Navbar>
       </div>
-      <div style={{ height: "94vh" }}>
+      {/* Body Part */}
+      <div style={{ height: "92vh" }}>
         <div className="single-trip-layout">
           <Row className="main-row-layout">
             <Col md={8}>
@@ -250,8 +235,9 @@ const SingleTrip = () => {
                 </Row>
               </div>
             </Col>
-            <Col className="post-text m-0">
-              <div className="mt-4">
+            {/* Chat Part */}
+            {/* <Col className="post-text m-0"> */}
+            {/* <div className="mt-4">
                 <div>
                   In the Gig:{" "}
                   {oneTripData?.adventurers.map((user: any) => {
@@ -273,10 +259,10 @@ const SingleTrip = () => {
                   {oneTripData.title} started by {oneTripData.user.firstName}{" "}
                   {oneTripData.user.lastName}
                 </p>
-              </div>
-              <div className="chat-history mb-3">
-                {/* Chat History */}
-                {oneTripData?.chatHistory.map((message: any) => {
+              </div> */}
+            {/* <div className="chat-history mb-3"> */}
+            {/* Chat History */}
+            {/* {oneTripData?.chatHistory.map((message: any) => {
                   return message.sender.firstName !==
                     userProfileData.firstName ? (
                     <div className="speech-wrapper" key={message._id}>
@@ -303,9 +289,9 @@ const SingleTrip = () => {
                       </div>
                     </div>
                   );
-                })}
-                {/* Chat Bubble */}
-                {chatHistory.map((message, index) => {
+                })} */}
+            {/* Chat Bubble */}
+            {/* {chatHistory.map((message, index) => {
                   return message.sender !== userProfileData.firstName ? (
                     <div className="speech-wrapper" key={index}>
                       <div className="bubble">
@@ -331,9 +317,9 @@ const SingleTrip = () => {
                       </div>
                     </div>
                   );
-                })}
-              </div>
-              <div className="mb-2">
+                })} */}
+            {/* </div> */}
+            {/* <div className="mb-2">
                 <Row className="chat-input mt-2">
                   <Col md={1}>
                     <img
@@ -373,8 +359,8 @@ const SingleTrip = () => {
                     </Form>
                   </Col>
                 </Row>
-              </div>
-            </Col>
+              </div> */}
+            {/* </Col> */}
           </Row>
         </div>
       </div>

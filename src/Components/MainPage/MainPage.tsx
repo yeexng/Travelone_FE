@@ -76,7 +76,7 @@ const MainPage = () => {
 
   //Search Features
   const [searchTerm, setSearchTerm] = useState("");
-  const filteredTripsArray = tripsArray.filter((trip: any) => {
+  const filteredTripsArray = tripsArray?.filter((trip: any) => {
     return (
       trip.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       trip.destination.toLowerCase().includes(searchTerm.toLowerCase())
@@ -85,10 +85,12 @@ const MainPage = () => {
 
   return (
     <>
-      <div>
-        <Navbar style={{ height: "6vh" }} bg="dark" variant="dark" expand="lg">
+      <div className="sticky-navbar">
+        <Navbar style={{ height: "8vh" }} bg="dark" variant="dark" expand="lg">
           <div className="container-fluid mx-5">
-            <Navbar.Brand>TravelOne?</Navbar.Brand>
+            <Navbar.Brand>
+              <img className="logo-img" src="/assets/Travelone-Logo.png" />
+            </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="mr-auto">
@@ -128,10 +130,11 @@ const MainPage = () => {
           </div>
         </Navbar>
       </div>
-      <div style={{ height: "94vh" }} className="container-fluid p-0">
+      <div className="container-fluid p-0">
         <div
-          className="jumbotron-fluid d-flex align-items-center mb-5"
-          style={{ height: "40vh" }}
+          className="jumbotron-fluid main-jumbotron d-flex align-items-center mb-5"
+          id="main-jumbotron"
+          style={{ height: "83vh" }}
         >
           <div className="container">
             <h1 className="jumbotron-title">Travelone? or Travel Alone?</h1>
@@ -155,7 +158,7 @@ const MainPage = () => {
 
           <Row>
             {filteredTripsArray &&
-              filteredTripsArray.map((trips: any) => {
+              filteredTripsArray?.map((trips: any) => {
                 return (
                   <Col
                     key={trips._id}

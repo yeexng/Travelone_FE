@@ -70,7 +70,7 @@ const HiddenGemPage = () => {
 
   //Search Features
   const [searchTerm, setSearchTerm] = useState("");
-  const filteredSecretPostArray = secretPostArray.filter((post: any) => {
+  const filteredSecretPostArray = secretPostArray?.filter((post: any) => {
     return (
       (post.title &&
         post.title.toLowerCase().includes(searchTerm.toLowerCase())) ||
@@ -80,12 +80,12 @@ const HiddenGemPage = () => {
   });
   return (
     <>
-      <div>
-        <Navbar style={{ height: "6vh" }} bg="dark" variant="dark" expand="lg">
+      <div className="sticky-navbar">
+        <Navbar style={{ height: "8vh" }} bg="dark" variant="dark" expand="lg">
           <div className="container-fluid mx-5">
             <Navbar.Brand>
               <Link to={"/trips"} className="text-decoration-none text-white">
-                TravelOne?
+                <img className="logo-img" src="/assets/Travelone-Logo.png" />
               </Link>
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -121,7 +121,7 @@ const HiddenGemPage = () => {
           </div>
         </Navbar>
       </div>
-      <div style={{ height: "94vh" }} className="container-fluid p-0">
+      <div className="container-fluid p-0">
         <div
           className="jumbotron-fluid d-flex align-items-center mb-5"
           style={{ height: "40vh" }}
@@ -155,7 +155,7 @@ const HiddenGemPage = () => {
 
           <Row>
             {filteredSecretPostArray &&
-              filteredSecretPostArray.map((posts: any) => {
+              filteredSecretPostArray?.map((posts: any) => {
                 return (
                   <Col
                     md={3}
