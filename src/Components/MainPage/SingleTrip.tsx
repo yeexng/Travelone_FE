@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./SingleTrip.css";
 import "./ChatBubble.scss";
 import {
@@ -13,7 +13,7 @@ import {
   Button,
   Modal,
 } from "react-bootstrap";
-import { FormEvent, useEffect, useState } from "react";
+import { useState } from "react";
 import { useAppDispatch } from "../../redux/hooks/hooks";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
@@ -37,6 +37,7 @@ const SingleTrip = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const userProfileData = useSelector(
     (state: RootState) => state.userData.stock
@@ -96,6 +97,25 @@ const SingleTrip = () => {
       // this is going to give us the possibility to access to the CURRENT state of the component (chat history filled with some messages)
       setChatHistory((chatHistory) => [...chatHistory, newMessage.message]);
     });
+
+    // //Adding User to the User Array
+    // const adventurers = [userProfileData._id];
+    // const addUserToArray = async (tripId: String) => {
+    //   try {
+    //     const { data } = await axios.post(
+    //       baseEndpoint + `/trips/${tripId}/adventurerList`,
+    //       {
+    //         adventurers,
+    //       }
+    //     );
+    //     dispatch(getTripByIdAction(oneTripData._id));
+    //     console.log(data);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // };
+
+    // dispatch(addUserToArray(oneTripData._id));
   };
 
   const sendMessage = () => {
@@ -106,23 +126,7 @@ const SingleTrip = () => {
     };
     socket.emit("sendMessage", { message: newMessage });
     setChatHistory([...chatHistory, newMessage]);
-  };
-
-  //Adding User to the User Array
-  const adventurers = [userProfileData._id];
-  const addUserToArray = async (tripId: String) => {
-    try {
-      const { data } = await axios.post(
-        baseEndpoint + `/trips/${tripId}/adventurerList`,
-        {
-          adventurers,
-        }
-      );
-      dispatch(getTripByIdAction(oneTripData._id));
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
+    setMessage("");
   };
 
   return (
@@ -215,11 +219,11 @@ const SingleTrip = () => {
                       variant="outline-danger"
                       onClick={() => {
                         dispatch(enterChat);
-                        dispatch(addUserToArray(oneTripData._id));
-                        dispatch(getTripByIdAction(oneTripData._id));
+                        navigate(`/trips/${oneTripData._id}/chat`);
+                        // dispatch(addUserToArray(oneTripData._id));
                       }}
                     >
-                      Connect
+                      Join the Party
                     </Button>
                   </Col>
                 </Row>
@@ -308,7 +312,7 @@ const SingleTrip = () => {
                   );
                 })}
               </div>
-              <div>
+              <div className="mb-2">
                 <Row className="chat-input mt-2">
                   <Col md={1}>
                     <img
@@ -324,25 +328,27 @@ const SingleTrip = () => {
                         sendMessage();
                       }}
                     >
-                      <InputGroup>
-                        <Form.Control
-                          placeholder="Enter Message"
-                          value={message}
-                          onChange={(e) => {
-                            setMessage(e.currentTarget.value);
-                            setTexts(e.currentTarget.value);
+                      <div className="d-flex">
+                        <InputGroup>
+                          <Form.Control
+                            placeholder="Enter Message"
+                            value={message}
+                            onChange={(e) => {
+                              setMessage(e.currentTarget.value);
+                              setTexts(e.currentTarget.value);
+                            }}
+                          />
+                        </InputGroup>
+                        <Button
+                          variant="success"
+                          type="submit"
+                          onClick={() => {
+                            addChatToDB(oneTripData._id);
                           }}
-                        />
-                      </InputGroup>
-                      <Button
-                        variant="success"
-                        type="submit"
-                        onClick={() => {
-                          addChatToDB(oneTripData._id);
-                        }}
-                      >
-                        Send
-                      </Button>
+                        >
+                          Send
+                        </Button>
+                      </div>
                     </Form>
                   </Col>
                 </Row>

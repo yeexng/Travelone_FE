@@ -8,6 +8,7 @@ import HiddenGemPage from "./Components/HiddenGemPage/HiddenGemPage";
 import HiddenGemSingle from "./Components/HiddenGemPage/HiddenGemSingle";
 import SingleTrip from "./Components/MainPage/SingleTrip";
 import ProfilePage from "./Components/ProfilePage/ProfilePage";
+import ConnectionPage from "./Components/MainPage/ConnectionPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route element={<ProfilePage />} path="/users/:userId" />
         <Route element={<MainPage />} path="/trips" />
         <Route element={<SingleTrip />} path="/trips/:tripId" />
+        <Route element={<ConnectionPage />} path="/trips/:tripId/chat" />
         <Route element={<HiddenGemPage />} path="/secret" />
         <Route element={<HiddenGemSingle />} path="/secret/:secretId" />
       </Routes>
