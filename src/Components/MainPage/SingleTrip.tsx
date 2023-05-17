@@ -99,7 +99,28 @@ const SingleTrip = () => {
     });
 
     // //Adding User to the User Array
-    // const adventurers = [userProfileData._id];
+    const adventurerId = [userProfileData._id];
+    const data = {
+      adventurers: [adventurerId],
+    };
+    fetch(baseEndpoint + `/trips/${oneTripData._id}/adventurerList`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        // Handle the response from the server
+        dispatch(getTripByIdAction(oneTripData._id));
+
+        console.log(result); // Assuming the server responds with the updated trip object
+      })
+      .catch((error) => {
+        // Handle any errors that occurred during the request
+        console.error(error);
+      });
     // const addUserToArray = async (tripId: String) => {
     //   try {
     //     const { data } = await axios.post(

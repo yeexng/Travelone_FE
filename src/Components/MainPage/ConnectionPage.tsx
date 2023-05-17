@@ -47,9 +47,9 @@ const ConnectionPage = () => {
     }
   };
 
-  useEffect(() => {
-    dispatch(addUserToArray(oneTripData._id));
-  }, []);
+  //   useEffect(() => {
+  //     dispatch(addUserToArray(oneTripData._id));
+  //   }, []);
 
   return (
     <>
