@@ -23,6 +23,7 @@ import {
   getSecretPostAction,
   getSecretPostByIdAction,
 } from "../../redux/actions/secretActions/action";
+import Masonry from "react-masonry-css";
 
 const HiddenGemPage = () => {
   const [show, setShow] = useState(false);
@@ -115,7 +116,9 @@ const HiddenGemPage = () => {
                 </NavDropdown>
               </Nav>
               <Nav>
-                <Nav.Link className=" logout">Logout</Nav.Link>
+                <Link to={`/login`} className=" logout-link">
+                  Logout
+                </Link>
               </Nav>
             </Navbar.Collapse>
           </div>
@@ -123,14 +126,14 @@ const HiddenGemPage = () => {
       </div>
       <div className="container-fluid p-0">
         <div
-          className="jumbotron-fluid d-flex align-items-center mb-5"
-          style={{ height: "40vh" }}
+          className="jumbotron-fluid d-flex align-items-center mb-4"
+          style={{ height: "83vh" }}
         >
-          <div className="container">
-            <h1 className="jumbotron-title">
+          <div className="container jumbotron-title">
+            <h1 className="secret-text">
               There will always be a special spot waiting for you to discover!
             </h1>
-            <p className="jumbotron-title">
+            <p className="secret-text-small">
               And above all, <br></br>watch with glittering eyes the whole world
               around you because the greatest secrets are always hidden in the
               most unlikely places.<br></br> Those who don't believe in magic
@@ -145,57 +148,59 @@ const HiddenGemPage = () => {
               <FormControl
                 type="text"
                 placeholder="Search"
-                className="mr-sm-2 show-search"
+                className="mr-sm-2 show-search ml-5"
                 //   value={query}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </Form>
           </Row>
-
-          <Row>
+          <Masonry
+            breakpointCols={{ default: 4, 1100: 3, 900: 2, 700: 1 }}
+            className="my-masonry-grid mt-3"
+            columnClassName="my-masonry-grid_column"
+          >
             {filteredSecretPostArray &&
               filteredSecretPostArray?.map((posts: any) => {
                 return (
-                  <Col
-                    md={3}
+                  <div
+                    key={posts._id}
+                    className="content-secret-card my-masonry-grid_item p-0 mb-4"
                     onClick={() => {
                       dispatch(getSecretPostByIdAction(`${posts._id}`));
                       navigate(`/secret/${posts._id}`);
                     }}
                   >
-                    {/* need to change the id passing */}
-                    <div className="content-secret-card m-3">
-                      <Card>
-                        <Card.Img
-                          variant="top"
-                          src={posts?.image}
-                          className="card-img"
-                        />
-                        <Card.Body>
-                          <Card.Title>{posts?.title}</Card.Title>
-                          <Card.Text>
-                            <Row className="mb-2">
-                              <Col md={2} className="pr-0">
-                                <img
-                                  alt="profile pic"
-                                  className="profile-img"
-                                  src={posts.user?.avatar}
-                                ></img>
-                              </Col>
-                              <Col>
-                                {posts.user?.firstName} {posts.user?.lastName}
-                              </Col>
-                            </Row>
-                            <div>Location: {posts?.locations}</div>
-                          </Card.Text>
-                        </Card.Body>
-                      </Card>
-                    </div>
-                  </Col>
+                    <Card className="card-no-border">
+                      <Card.Img
+                        variant="top"
+                        src={posts?.image}
+                        className="card-img"
+                      />
+                      <Card.Body>
+                        <Card.Title>{posts?.title}</Card.Title>
+                        <Card.Text>
+                          <Row className="mb-2">
+                            <Col md={2} className="pr-0">
+                              <img
+                                alt="profile pic"
+                                className="profile-img"
+                                src={posts.user?.avatar}
+                              />
+                            </Col>
+                            <Col>
+                              {posts.user?.firstName} {posts.user?.lastName}
+                            </Col>
+                          </Row>
+                          <div>Location: {posts?.locations}</div>
+                        </Card.Text>
+                      </Card.Body>
+                    </Card>
+                  </div>
                 );
               })}
-          </Row>
+          </Masonry>
+
           {/* Modal Page */}
           <Modal show={show} onHide={handleClose}>
             <Modal.Header>

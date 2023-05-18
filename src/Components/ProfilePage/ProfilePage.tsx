@@ -70,7 +70,9 @@ const ProfilePage = () => {
                 </NavDropdown>
               </Nav>
               <Nav>
-                <Nav.Link className=" logout">Logout</Nav.Link>
+                <Link to={`/login`} className=" logout-link">
+                  Logout
+                </Link>
               </Nav>
             </Navbar.Collapse>
           </div>

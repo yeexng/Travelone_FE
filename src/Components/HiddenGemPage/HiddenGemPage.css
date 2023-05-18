@@ -1,12 +1,23 @@
 .jumbotron-fluid {
-  background-image: url(https://images.unsplash.com/photo-1468186402854-9a641fd7a7c4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1469&q=80);
+  background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.7),
+      rgba(0, 0, 0, 0.4)
+    ),
+    url(https://images.unsplash.com/photo-1584967918940-a7d51b064268?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80);
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: bottom;
+  background-position: center;
 }
 
 .jumbotron-title {
-  color: black;
+  color: aliceblue;
+}
+.jumbotron-title > .secret-text {
+  font-size: 60px;
+}
+.jumbotron-title > .secret-text-small {
+  font-size: 30px;
 }
 
 .logout {
@@ -21,19 +32,24 @@
 }
 
 .content-secret-card {
-  border: solid 1px rgba(0, 0, 0, 0.062);
   border-radius: 10px;
+  background-color: #ffffff;
+  padding: 20px;
+}
+.card-no-border {
+  border: none !important;
+  border-radius: 10px 10px 0 0;
 }
 
 .content-secret-card:hover {
   box-shadow: 0 0 10px rgb(61, 61, 61);
-  transform: scale(1.005);
+  transform: scale(1.05);
 }
 
 .card-img {
-  width: inherit;
-  height: 28vh;
-  object-fit: cover;
+  width: 100%;
+  height: auto;
+  border-radius: 10px 10px 0 0;
 }
 
 .profile-img {
@@ -41,4 +57,29 @@
   width: 35px;
   height: 35px;
   object-fit: cover;
+}
+
+.my-masonry-grid {
+  display: flex;
+  margin-left: -20px; /* Adjust as needed */
+  width: auto;
+}
+
+.my-masonry-grid_column {
+  padding-left: 20px; /* Adjust as needed */
+  background-clip: padding-box;
+}
+
+.my-masonry-grid_item {
+  margin-bottom: 0px; /* Adjust as needed */
+}
+
+.logout-link {
+  text-decoration: none;
+  color: rgba(240, 248, 255, 0.527);
+}
+
+.logout-link:hover {
+  text-decoration: none;
+  color: red;
 }
