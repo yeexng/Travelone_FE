@@ -8,7 +8,6 @@ import {
   NavDropdown,
   Navbar,
   Row,
-  InputGroup,
   Figure,
   Button,
   Modal,
@@ -21,13 +20,7 @@ import {
   editTripByIdAction,
   getTripByIdAction,
 } from "../../redux/actions/postActions/action";
-import { io } from "socket.io-client";
-import { Adventurer, Message } from "../../interfaces/iUsers";
-import axios from "axios";
-
-const socket = io(`${process.env.REACT_APP_BE_URL}`, {
-  transports: ["websocket"],
-});
+import { format } from "date-fns";
 
 const baseEndpoint: string =
   (process.env.REACT_APP_BE_URL as string) || "http://localhost:3005";
@@ -49,55 +42,7 @@ const SingleTrip = () => {
 
   console.log("Single Trip", oneTripData);
 
-  //Socket.io
-  // const [username, setUserName] = useState("");
-  // const [message, setMessage] = useState("");
-  // const [adventurersList, setAdventurersList] = useState<Adventurer[]>([]);
-  // const [chatHistory, setChatHistory] = useState<Message[]>([]);
-
-  // Adding to DB
-  // const [texts, setTexts] = useState("");
-  // const addChatToDB = async (tripId: string) => {
-  //   try {
-  //     const res = await axios.post(
-  //       `${baseEndpoint}/trips/${tripId}/chats`,
-  //       {
-  //         text: texts,
-  //         sender: userProfileData._id,
-  //       },
-  //       {
-  //         headers: { "Content-Type": "application/json" },
-  //       }
-  //     );
-  //     if (res.status === 200) {
-  //       setTexts("");
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   const enterChat = () => {
-    // socket.on("welcome", (welcomeMessage) => {
-    //   console.log(welcomeMessage);
-    // });
-    // //join room
-    // socket.emit("joinRoom", oneTripData._id);
-    // socket.emit("setUsername", userProfileData.firstName);
-    // socket.on("loggedIn", (adventurersList) => {
-    //   console.log(adventurersList);
-    //   setAdventurersList(adventurersList);
-    // });
-
-    // socket.on("newMessage", (newMessage) => {
-    //   console.log(newMessage);
-    //   // setChatHistory([...chatHistory, newMessage.message])
-    //   // if we set the state just by passing a value, the new message will be appended to the INITIAL state of the component (empty chat history [])
-    //   // since we don't want that, we should use the set state function by passing a callback function instead
-    //   // this is going to give us the possibility to access to the CURRENT state of the component (chat history filled with some messages)
-    //   setChatHistory((chatHistory) => [...chatHistory, newMessage.message]);
-    // });
-
     // //Adding User to the User Array
     const adventurerId = [userProfileData._id];
     const data = {
@@ -123,20 +68,13 @@ const SingleTrip = () => {
       });
   };
 
-  // const sendMessage = () => {
-  //   const newMessage = {
-  //     sender: userProfileData.firstName,
-  //     text: message,
-  //     createdAt: new Date().toLocaleString("en-US"),
-  //   };
-  //   socket.emit("sendMessage", { message: newMessage });
-  //   setChatHistory([...chatHistory, newMessage]);
-  //   setMessage("");
-  // };
+  const formattedDate = oneTripData?.date
+    ? format(new Date(oneTripData.date), "dd/MM/yyyy")
+    : "";
 
   return (
     <>
-      <div>
+      <div className="sticky-navbar">
         <Navbar style={{ height: "8vh" }} bg="dark" variant="dark" expand="lg">
           <div className="container-fluid mx-5">
             <Navbar.Brand>
@@ -192,10 +130,11 @@ const SingleTrip = () => {
       <div style={{ height: "92vh" }}>
         <div className="single-trip-layout">
           <Row className="main-row-layout">
-            <Col md={8}>
+            <Col>
               <div className="trip-single-div d-flex justify-content-center align-items-center mx-5">
-                <Row>
-                  <Col md={3}>
+                <Row className="postcard-div">
+                  <div className="postcard-overlay"></div>
+                  <div className="postcard-photo">
                     <Figure className="pl-3 pt-3">
                       <Figure.Image
                         width={200}
@@ -204,163 +143,81 @@ const SingleTrip = () => {
                         src={oneTripData.user?.avatar}
                       />
                     </Figure>
-                  </Col>
-                  <Col className="mt-2">
+                  </div>
+                  <img
+                    className="postcard-stamp"
+                    src="/assets/stamp.png"
+                    alt="stamp"
+                  />
+                  <div className="mt-2 postcard-text ml-3">
                     <h2>{oneTripData?.title}</h2>
                     <p>
                       with{" "}
-                      <span>
+                      <span className="mr-3">
                         {oneTripData.user?.firstName}{" "}
                         {oneTripData.user?.lastName}
                       </span>
+                      to <span> {oneTripData?.destination}</span>
                     </p>
-                    <p>Destination: {oneTripData?.destination}</p>
-                    <p>Starting Date: {oneTripData?.date}</p>
-                    <p>Looking for: {oneTripData?.lookingFor}</p>
-                    <p>Budget: ${oneTripData?.budget}</p>
-                    <p>Type of Travel: {oneTripData?.typeOfJourney}</p>
-                    <p>Split Cost: {oneTripData?.splitCost}</p>
-                    <p>{oneTripData?.addOns}</p>
-                    <Button
-                      variant="outline-danger"
-                      onClick={() => {
-                        dispatch(enterChat);
-                        navigate(`/trips/${oneTripData._id}/chat`);
-                        // dispatch(addUserToArray(oneTripData._id));
-                      }}
-                    >
-                      Join the Party
-                    </Button>
-                  </Col>
+                    <div className="row ">
+                      {/* <p className="col- postcard-text-data">
+                        Destination: <br />
+                      </p> */}
+                      <p className=" col-4 postcard-text-data">
+                        Starting Date: <br />
+                        <span className="trip-details">
+                          {formattedDate}
+                        </span>{" "}
+                      </p>
+                      <p className="col-7 postcard-text-data">
+                        Looking for: <br />
+                        <span className="trip-details">
+                          {oneTripData?.lookingFor}
+                        </span>
+                      </p>
+
+                      <p className="col-4 postcard-text-data">
+                        Type of Travel: <br />
+                        <span className="trip-details">
+                          {oneTripData?.typeOfJourney}
+                        </span>
+                      </p>
+                      <p className="col-3 postcard-text-data">
+                        Budget:
+                        <br />
+                        <span className="trip-details">
+                          {" "}
+                          ${oneTripData?.budget}
+                        </span>
+                      </p>
+                      <p className="col-3 postcard-text-data">
+                        Split Cost: <br />
+                        <span className="trip-details">
+                          {oneTripData?.splitCost}
+                        </span>
+                      </p>
+                      <p className="col-11 postcard-text-data">
+                        Trip Details: <br />
+                        <span className="trip-details">
+                          {oneTripData?.addOns}
+                        </span>
+                      </p>
+                      <Button
+                        variant="primary"
+                        className="ml-3 mt-2"
+                        onClick={() => {
+                          dispatch(enterChat);
+                          navigate(`/trips/${oneTripData._id}/chat`);
+                          // dispatch(addUserToArray(oneTripData._id));
+                        }}
+                      >
+                        Join the Party
+                      </Button>
+                    </div>
+                  </div>
                 </Row>
               </div>
             </Col>
-            {/* Chat Part */}
-            {/* <Col className="post-text m-0"> */}
-            {/* <div className="mt-4">
-                <div>
-                  In the Gig:{" "}
-                  {oneTripData?.adventurers.map((user: any) => {
-                    return <span>{user.firstName}, </span>;
-                  })}
-                  {adventurersList.length === 0 && (
-                    <p>Log in to check who's online!</p>
-                  )}
-                  {adventurersList.map((user) => (
-                    <p key={user.socketId}>{user.username}</p>
-                  ))}{" "}
-                </div>
-                <p>
-                  <img
-                    alt="user-avatar"
-                    className="profile-img mr-3"
-                    src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-                  ></img>
-                  {oneTripData.title} started by {oneTripData.user.firstName}{" "}
-                  {oneTripData.user.lastName}
-                </p>
-              </div> */}
-            {/* <div className="chat-history mb-3"> */}
-            {/* Chat History */}
-            {/* {oneTripData?.chatHistory.map((message: any) => {
-                  return message.sender.firstName !==
-                    userProfileData.firstName ? (
-                    <div className="speech-wrapper" key={message._id}>
-                      <div className="bubble">
-                        <div className="txt">
-                          <p className="name">{message.sender.firstName}</p>
-                          <p className="message">{message.text}</p>
-                          <span className="timestamp">{message.createdAt}</span>
-                        </div>
-                        <div className="bubble-arrow"></div>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="speech-wrapper">
-                      <div className="bubble alt mr-2">
-                        <div className="txt">
-                          <p className="name alt">
-                            You<span> ~ {message.sender.firstName}</span>
-                          </p>
-                          <p className="message">{message.text}</p>
-                          <span className="timestamp">{message.createdAt}</span>
-                        </div>
-                        <div className="bubble-arrow alt"></div>
-                      </div>
-                    </div>
-                  );
-                })} */}
-            {/* Chat Bubble */}
-            {/* {chatHistory.map((message, index) => {
-                  return message.sender !== userProfileData.firstName ? (
-                    <div className="speech-wrapper" key={index}>
-                      <div className="bubble">
-                        <div className="txt">
-                          <p className="name">{message.sender}</p>
-                          <p className="message">{message.text}</p>
-                          <span className="timestamp">{message.createdAt}</span>
-                        </div>
-                        <div className="bubble-arrow"></div>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="speech-wrapper">
-                      <div className="bubble alt mr-2">
-                        <div className="txt">
-                          <p className="name alt">
-                            You<span> ~ {message.sender}</span>
-                          </p>
-                          <p className="message">{message.text}</p>
-                          <span className="timestamp">{message.createdAt}</span>
-                        </div>
-                        <div className="bubble-arrow alt"></div>
-                      </div>
-                    </div>
-                  );
-                })} */}
-            {/* </div> */}
-            {/* <div className="mb-2">
-                <Row className="chat-input mt-2">
-                  <Col md={1}>
-                    <img
-                      className="profile-img mr-3"
-                      src={userProfileData?.avatar}
-                    ></img>
-                  </Col>
-                  <Col>
-                    <Form
-                      id="chat-form"
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        sendMessage();
-                      }}
-                    >
-                      <div className="d-flex">
-                        <InputGroup>
-                          <Form.Control
-                            placeholder="Enter Message"
-                            value={message}
-                            onChange={(e) => {
-                              setMessage(e.currentTarget.value);
-                              setTexts(e.currentTarget.value);
-                            }}
-                          />
-                        </InputGroup>
-                        <Button
-                          variant="success"
-                          type="submit"
-                          onClick={() => {
-                            addChatToDB(oneTripData._id);
-                          }}
-                        >
-                          Send
-                        </Button>
-                      </div>
-                    </Form>
-                  </Col>
-                </Row>
-              </div> */}
-            {/* </Col> */}
           </Row>
         </div>
       </div>

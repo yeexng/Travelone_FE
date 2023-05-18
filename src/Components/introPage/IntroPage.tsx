@@ -6,15 +6,17 @@ const IntroPage = () => {
   return (
     <>
       <div>
-        <Navbar style={{ height: "6vh" }} bg="dark" variant="dark" expand="lg">
+        <Navbar style={{ height: "8vh" }} bg="dark" variant="dark" expand="lg">
           <div className="container-fluid mx-5">
-            <Navbar.Brand href="#home">TravelOne?</Navbar.Brand>
+            <Navbar.Brand>
+              <img className="logo-img" src="/assets/Travelone-Logo.png" />
+            </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav"></Navbar.Collapse>
           </div>
         </Navbar>
       </div>
-      <div style={{ height: "94vh" }} className="container-fluid main-layout">
+      <div style={{ height: "92vh" }} className="container-fluid main-layout">
         <Row className="justify-content-center align-items-center h-100">
           <Col className="text-center">
             <h1 className="main-text my-5">Travel One? Travel Alone?</h1>

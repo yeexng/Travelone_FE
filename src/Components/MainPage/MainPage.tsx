@@ -21,6 +21,7 @@ import {
   getTripAction,
   getTripByIdAction,
 } from "../../redux/actions/postActions/action";
+import { format } from "date-fns";
 
 const MainPage = () => {
   const [show, setShow] = useState(false);
@@ -136,9 +137,9 @@ const MainPage = () => {
           id="main-jumbotron"
           style={{ height: "83vh" }}
         >
-          <div className="container">
-            <h1 className="jumbotron-title">Travelone? or Travel Alone?</h1>
-            <p className="jumbotron-title">Alone no more...</p>
+          <div className="container jumbotron-title">
+            <h1 className="">Travelone? or Travel Alone?</h1>
+            <p>Alone no more...</p>
           </div>
         </div>
         <div className=" main-content mx-5">
@@ -148,7 +149,6 @@ const MainPage = () => {
                 type="text"
                 placeholder="Search"
                 className="mr-sm-2 show-search ml-5"
-                //   value={query}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -173,7 +173,7 @@ const MainPage = () => {
                       <div
                         className="background-overlay"
                         style={{
-                          backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.3)), url(${trips.user?.avatar})`,
+                          backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0)), url(${trips.user?.avatar})`,
                         }}
                       ></div>
                       <Row>
@@ -190,10 +190,12 @@ const MainPage = () => {
                             </Figure.Caption>
                           </Figure>
                         </Col>
-                        <Col className="p-3">
+                        <Col className="p-3 content-card-text">
                           <h3>{trips?.title}</h3>
                           <p>Destination: {trips?.destination}</p>
-                          <p>Date: {trips?.date}</p>
+                          <p>
+                            Date: {format(new Date(trips?.date), "dd/MM/yyyy")}
+                          </p>
                           <p>Looking For: {trips?.lookingFor}</p>
                         </Col>
                       </Row>

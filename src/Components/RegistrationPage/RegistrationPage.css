@@ -8,6 +8,9 @@
   background-color: rgba(240, 248, 255, 0.836);
   border-radius: 10px;
 }
+.registration-form > h2 {
+  font-size: 30px;
+}
 
 .registration-text {
   color: black;
