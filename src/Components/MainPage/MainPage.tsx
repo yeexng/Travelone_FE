@@ -132,7 +132,7 @@ const MainPage = () => {
       </div>
       <div className="container-fluid p-0">
         <div
-          className="jumbotron-fluid main-jumbotron d-flex align-items-center mb-5"
+          className="jumbotron-fluid main-jumbotron d-flex align-items-center mb-4"
           id="main-jumbotron"
           style={{ height: "83vh" }}
         >
@@ -144,11 +144,10 @@ const MainPage = () => {
         <div className=" main-content mx-5">
           <Row>
             <Form>
-              <i className="bi bi-search"></i>
               <FormControl
                 type="text"
                 placeholder="Search"
-                className="mr-sm-2 show-search"
+                className="mr-sm-2 show-search ml-5"
                 //   value={query}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -171,6 +170,12 @@ const MainPage = () => {
                     {/* need to change the id passing */}
 
                     <div className="content-card m-3">
+                      <div
+                        className="background-overlay"
+                        style={{
+                          backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.3)), url(${trips.user?.avatar})`,
+                        }}
+                      ></div>
                       <Row>
                         <Col md={3} className="p-3">
                           <Figure className="pl-3 pt-3">
