@@ -92,7 +92,7 @@ const SingleTrip = () => {
                     Secret HideOuts
                   </Link>
                 </Nav.Link>
-                {oneTripData.user._id === userProfileData._id ? (
+                {oneTripData.user?._id === userProfileData?._id ? (
                   <Nav.Link onClick={handleShow}>Edit Trip</Nav.Link>
                 ) : (
                   ""

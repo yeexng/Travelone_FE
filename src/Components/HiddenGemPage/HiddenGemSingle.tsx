@@ -210,7 +210,7 @@ const HiddenGemSingle = () => {
                               </Col>
                               <Col>
                                 {singleComment.user?._id ===
-                                userProfileData._id ? (
+                                userProfileData?._id ? (
                                   <div
                                     className="my-1 btn edit-btn"
                                     onClick={async () => {

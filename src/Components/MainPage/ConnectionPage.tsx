@@ -19,6 +19,9 @@ import { getTripByIdAction } from "../../redux/actions/postActions/action";
 import { io } from "socket.io-client";
 import { Adventurer, Message } from "../../interfaces/iUsers";
 import axios from "axios";
+import { GiAirplaneDeparture } from "react-icons/gi";
+import { ImBarcode } from "react-icons/im";
+import { format } from "date-fns";
 
 const socket = io(`${process.env.REACT_APP_BE_URL}`, {
   transports: ["websocket"],
@@ -36,6 +39,8 @@ const ConnectionPage = () => {
   );
   const dispatch = useAppDispatch();
 
+  console.log("connection", oneTripData);
+
   useEffect(() => {
     dispatch(getTripByIdAction(oneTripData._id));
     socket.on("welcome", (welcomeMessage) => {
@@ -45,12 +50,12 @@ const ConnectionPage = () => {
     socket.emit("joinRoom", oneTripData._id);
     socket.emit("setUsername", userProfileData.firstName);
     socket.on("loggedIn", (adventurersList) => {
-      console.log(adventurersList);
+      // console.log(adventurersList);
       setAdventurersList(adventurersList);
     });
 
     socket.on("newMessage", (newMessage) => {
-      console.log(newMessage);
+      // console.log(newMessage);
       // setChatHistory([...chatHistory, newMessage.message])
       // if we set the state just by passing a value, the new message will be appended to the INITIAL state of the component (empty chat history [])
       // since we don't want that, we should use the set state function by passing a callback function instead
@@ -58,7 +63,7 @@ const ConnectionPage = () => {
       setChatHistory((chatHistory) => [...chatHistory, newMessage.message]);
     });
 
-    console.log("In connection:", oneTripData);
+    // console.log("In connection:", oneTripData);
   }, []);
 
   // Socket.io & Chat
@@ -162,47 +167,102 @@ const ConnectionPage = () => {
       <div style={{ height: "92vh" }}>
         <div className="single-trip-layout">
           <Row className="main-row-layout">
+            {/* left div */}
             <Col md={8}>
-              <div className="trip-single-div d-flex justify-content-center align-items-center mx-5">
-                <Row>
-                  <Col md={3}>
-                    <Figure className="pl-3 pt-3">
-                      <Figure.Image
-                        width={200}
-                        height={200}
-                        alt="171x180"
-                        src={oneTripData.user?.avatar}
-                      />
-                    </Figure>
-                  </Col>
-                  <Col className="mt-2">
-                    <h2>{oneTripData?.title}</h2>
-                    <p>
-                      with{" "}
-                      <span>
-                        {oneTripData.user?.firstName}{" "}
-                        {oneTripData.user?.lastName}
-                      </span>
-                    </p>
-                    <p>Destination: {oneTripData?.destination}</p>
-                    <p>Starting Date: {oneTripData?.date}</p>
-                    <p>Looking for: {oneTripData?.lookingFor}</p>
-                    <p>Budget: ${oneTripData?.budget}</p>
-                    <p>Type of Travel: {oneTripData?.typeOfJourney}</p>
-                    <p>Split Cost: {oneTripData?.splitCost}</p>
-                    <p>{oneTripData?.addOns}</p>
-                    <Button
-                      variant="outline-danger"
-                      onClick={() => {
-                        // dispatch(enterChat);
-                        // navigate(`/trips/${oneTripData._id}/chat`);
-                        // dispatch(addUserToArray(oneTripData._id));
-                      }}
-                    >
-                      Join the Party
-                    </Button>
-                  </Col>
-                </Row>
+              <div className="left-connection-div">
+                <div className="trip-single-div d-flex justify-content-center align-items-center mx-5">
+                  <Row className="left-profile-card ">
+                    <Col md={12} className="left-travel-pass-text ">
+                      <h3 className="mt-4 ml-4">
+                        Your Travel Partner Details:{" "}
+                        <span className="plane-emoji">
+                          {" "}
+                          <GiAirplaneDeparture />
+                        </span>
+                      </h3>
+                    </Col>
+                    <Col md={3} className="profile-card-image">
+                      <Figure className="pl-4 pt-3 mt-3">
+                        <Figure.Image
+                          width={200}
+                          height={200}
+                          alt="171x180"
+                          src={oneTripData.user?.avatar}
+                        />
+                      </Figure>
+                      <div className="bar-code ml-4">
+                        <ImBarcode />
+                        <ImBarcode />
+                        <ImBarcode />
+                        <ImBarcode />
+                        <ImBarcode />
+                      </div>
+                    </Col>
+                    <Col className="mt-3">
+                      <Row className="mt-3">
+                        <Col md={5}>
+                          <p className="">
+                            FIRST NAME: <br></br>
+                            <span className="profile-detail">
+                              {oneTripData.user?.firstName}
+                            </span>
+                          </p>
+                        </Col>
+                        <Col md={7}>
+                          <p>
+                            LAST NAME: <br></br>
+                            <span className="profile-detail">
+                              {oneTripData.user?.lastName}{" "}
+                            </span>
+                          </p>
+                        </Col>
+                        <Col md={5}>
+                          <p>
+                            DATE OF BIRTH: <br></br>
+                            <span className="profile-detail">
+                              {format(
+                                new Date(oneTripData.user?.dateOfBirth),
+                                "dd/MM/yyyy"
+                              )}{" "}
+                            </span>
+                          </p>
+                        </Col>
+                        <Col md={7}>
+                          <p>
+                            GENDER:<br></br>
+                            <span className="profile-detail">
+                              {oneTripData.user?.gender}{" "}
+                            </span>
+                          </p>
+                        </Col>
+                        <Col md={5}>
+                          <p>
+                            EMAIL: <br></br>
+                            <span className="profile-detail">
+                              {oneTripData.user?.email}{" "}
+                            </span>
+                          </p>
+                        </Col>
+                        <Col md={7}>
+                          <p>
+                            EMERGENCY CONTACT: <br></br>
+                            <span className="profile-detail">
+                              {oneTripData.user?.emergencyContact}{" "}
+                            </span>
+                          </p>
+                        </Col>
+                        <Col md={12}>
+                          <p>
+                            ABOUT ME: <br></br>
+                            <span className="profile-detail-about">
+                              {oneTripData.user?.aboutMe}{" "}
+                            </span>
+                          </p>
+                        </Col>
+                      </Row>
+                    </Col>
+                  </Row>
+                </div>
               </div>
             </Col>
 

@@ -20,6 +20,7 @@ import {
   editProfileAvatar,
   editUserProfile,
 } from "../../redux/actions/userActions/action";
+import { format } from "date-fns";
 
 const ProfilePage = () => {
   const [show, setShow] = useState(false);
@@ -134,7 +135,10 @@ const ProfilePage = () => {
                       <p>
                         DATE OF BIRTH: <br></br>
                         <span className="profile-detail">
-                          {userProfileData && userProfileData.dateOfBirth}
+                          {format(
+                            new Date(userProfileData?.dateOfBirth),
+                            "dd/MM/yyyy"
+                          )}
                         </span>
                       </p>
                     </Col>
