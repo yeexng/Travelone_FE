@@ -38,11 +38,11 @@ const ProfilePage = () => {
   return (
     <>
       <div>
-        <Navbar style={{ height: "6vh" }} bg="dark" variant="dark" expand="lg">
+        <Navbar style={{ height: "8vh" }} bg="dark" variant="dark" expand="lg">
           <div className="container-fluid mx-5">
             <Navbar.Brand>
               <Link to={"/trips"} className="text-decoration-none text-white">
-                TravelOne?
+                <img className="logo-img" src="/assets/Travelone-Logo.png" />
               </Link>
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -79,10 +79,10 @@ const ProfilePage = () => {
           </div>
         </Navbar>
       </div>
-      <div style={{ height: "94vh" }} className="profile-background">
+      <div style={{ height: "92vh" }} className="profile-background">
         <div>
           <Row
-            style={{ height: "94vh" }}
+            style={{ height: "92vh" }}
             className="justify-content-center align-items-center mx profile-row"
           >
             <Col md={8} className="travel-pass">

@@ -84,7 +84,7 @@ const HiddenGemSingle = () => {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="mr-auto">
-                {oneSecretPostData.user._id === userProfileData._id ? (
+                {oneSecretPostData.user?._id === userProfileData?._id ? (
                   <Nav.Link onClick={handleShow}>Edit Post</Nav.Link>
                 ) : (
                   ""

@@ -83,8 +83,6 @@ const HiddenGemPage = () => {
     }
   };
 
-  //ADDING IMAGE
-
   useEffect(() => {
     dispatch(getSecretPostAction());
   }, []);
