@@ -116,7 +116,7 @@ const ConnectionPage = () => {
               </Link>
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
+            <Navbar.Collapse id="basic-navbar-nav" className="font-s">
               <Nav className="mr-auto">
                 <Nav.Link>
                   {" "}
@@ -168,12 +168,12 @@ const ConnectionPage = () => {
         <div className="single-trip-layout">
           <Row className="main-row-layout">
             {/* left div */}
-            <Col md={8}>
+            <Col md={7}>
               <div className="left-connection-div">
                 <div className="trip-single-div d-flex justify-content-center align-items-center mx-5">
                   <Row className="left-profile-card ">
                     <Col md={12} className="left-travel-pass-text ">
-                      <h3 className="mt-4 ml-4">
+                      <h3 className="mt-4 ml-4 font-s">
                         Your Travel Partner Details:{" "}
                         <span className="plane-emoji">
                           {" "}
@@ -190,7 +190,7 @@ const ConnectionPage = () => {
                           src={oneTripData.user?.avatar}
                         />
                       </Figure>
-                      <div className="bar-code ml-4">
+                      <div className="bar-code-in-connection ml-4">
                         <ImBarcode />
                         <ImBarcode />
                         <ImBarcode />
@@ -201,25 +201,25 @@ const ConnectionPage = () => {
                     <Col className="mt-3">
                       <Row className="mt-3">
                         <Col md={5}>
-                          <p className="">
+                          <p className="font-s">
                             FIRST NAME: <br></br>
-                            <span className="profile-detail">
+                            <span className="profile-detail font-p">
                               {oneTripData.user?.firstName}
                             </span>
                           </p>
                         </Col>
                         <Col md={7}>
-                          <p>
+                          <p className="font-s">
                             LAST NAME: <br></br>
-                            <span className="profile-detail">
+                            <span className="profile-detail font-p">
                               {oneTripData.user?.lastName}{" "}
                             </span>
                           </p>
                         </Col>
                         <Col md={5}>
-                          <p>
+                          <p className="font-s">
                             DATE OF BIRTH: <br></br>
-                            <span className="profile-detail">
+                            <span className="profile-detail font-p">
                               {format(
                                 new Date(oneTripData.user?.dateOfBirth),
                                 "dd/MM/yyyy"
@@ -228,33 +228,33 @@ const ConnectionPage = () => {
                           </p>
                         </Col>
                         <Col md={7}>
-                          <p>
+                          <p className="font-s">
                             GENDER:<br></br>
-                            <span className="profile-detail">
+                            <span className="profile-detail font-p">
                               {oneTripData.user?.gender}{" "}
                             </span>
                           </p>
                         </Col>
                         <Col md={5}>
-                          <p>
+                          <p className="font-s">
                             EMAIL: <br></br>
-                            <span className="profile-detail">
+                            <span className="profile-detail font-p">
                               {oneTripData.user?.email}{" "}
                             </span>
                           </p>
                         </Col>
                         <Col md={7}>
-                          <p>
+                          <p className="font-s">
                             EMERGENCY CONTACT: <br></br>
-                            <span className="profile-detail">
+                            <span className="profile-detail font-p">
                               {oneTripData.user?.emergencyContact}{" "}
                             </span>
                           </p>
                         </Col>
                         <Col md={12}>
-                          <p>
+                          <p className="font-s">
                             ABOUT ME: <br></br>
-                            <span className="profile-detail-about">
+                            <span className="profile-detail-about font-p">
                               {oneTripData.user?.aboutMe}{" "}
                             </span>
                           </p>
@@ -269,7 +269,7 @@ const ConnectionPage = () => {
             {/* Chat Part */}
             <Col className="post-text m-0">
               <div className="mt-4">
-                <h5>{oneTripData.title} </h5>
+                <h5 className="font-s">{oneTripData.title} </h5>
                 <div className="mb-2">
                   Your Adventure Buddies:{" "}
                   {oneTripData?.adventurers.map((user: any) => {
@@ -296,11 +296,16 @@ const ConnectionPage = () => {
                     <div className="speech-wrapper">
                       <div className="bubble alt mr-2">
                         <div className="txt">
-                          <p className="name alt">
+                          <p className="name alt font-s">
                             You<span> ~ {message.sender.firstName}</span>
                           </p>
                           <p className="message">{message.text}</p>
-                          <span className="timestamp">{message.createdAt}</span>
+                          <span className="timestamp">
+                            {format(
+                              new Date(message.createdAt),
+                              "dd/MM/yyyy HH:mm:ss"
+                            )}
+                          </span>
                         </div>
                         <div className="bubble-arrow alt"></div>
                       </div>
@@ -313,7 +318,7 @@ const ConnectionPage = () => {
                     <div className="speech-wrapper" key={index}>
                       <div className="bubble">
                         <div className="txt">
-                          <p className="name">{message.sender}</p>
+                          <p className="name font-s">{message.sender}</p>
                           <p className="message">{message.text}</p>
                           <span className="timestamp">{message.createdAt}</span>
                         </div>
@@ -328,7 +333,13 @@ const ConnectionPage = () => {
                             You<span> ~ {message.sender}</span>
                           </p>
                           <p className="message">{message.text}</p>
-                          <span className="timestamp">{message.createdAt}</span>
+                          <span className="timestamp">
+                            {" "}
+                            {format(
+                              new Date(message.createdAt),
+                              "dd/MM/yyyy HH:mm:ss"
+                            )}
+                          </span>
                         </div>
                         <div className="bubble-arrow alt"></div>
                       </div>

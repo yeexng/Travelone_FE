@@ -93,7 +93,7 @@ const MainPage = () => {
               <img className="logo-img" src="/assets/Travelone-Logo.png" />
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
+            <Navbar.Collapse id="basic-navbar-nav" className="font-s">
               <Nav className="mr-auto">
                 <Nav.Link>
                   {" "}
@@ -139,8 +139,8 @@ const MainPage = () => {
           id="main-jumbotron"
           style={{ height: "83vh" }}
         >
-          <div className="container jumbotron-title">
-            <h1 className="">Travelone? or Travel Alone?</h1>
+          <div className="container jumbotron-title font-s">
+            <h1>Travelone? or Travel Alone?</h1>
             <p>Alone no more...</p>
           </div>
         </div>
@@ -187,13 +187,13 @@ const MainPage = () => {
                               alt="171x180"
                               src={trips.user?.avatar}
                             />
-                            <Figure.Caption>
+                            <Figure.Caption className="font-s">
                               {trips.user?.firstName} {trips.user?.lastName}{" "}
                             </Figure.Caption>
                           </Figure>
                         </Col>
                         <Col className="p-3 content-card-text">
-                          <h3>{trips?.title}</h3>
+                          <h3 className="font-s">{trips?.title}</h3>
                           <p>Destination: {trips?.destination}</p>
                           <p>
                             Date: {format(new Date(trips?.date), "dd/MM/yyyy")}
@@ -209,7 +209,10 @@ const MainPage = () => {
           {/* Modal Page */}
           <Modal show={show} onHide={handleClose}>
             <Modal.Header>
-              <Modal.Title> Where's your next plan? 🏞🛤🏕🛣🏖🏜🏝 </Modal.Title>
+              <Modal.Title className="font-s">
+                {" "}
+                Where's your next plan? 🏞🛤🏕🛣🏖{" "}
+              </Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <Form onSubmit={handleSubmitTrip}>
@@ -299,12 +302,23 @@ const MainPage = () => {
                     onChange={(val) => setAddOns(val.currentTarget.value)}
                   />
                 </Form.Group>
-                <Button variant="success" type="submit" onClick={handleClose}>
-                  Add Trip
-                </Button>
-                <Button variant="primary" onClick={handleClose}>
-                  Close
-                </Button>
+                <div className="d-flex justify-content-end">
+                  <Button
+                    variant="primary"
+                    onClick={handleClose}
+                    className="font-s mr-1"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    variant="success"
+                    type="submit"
+                    onClick={handleClose}
+                    className="font-s"
+                  >
+                    Add Trip
+                  </Button>
+                </div>
               </Form>
             </Modal.Body>
           </Modal>

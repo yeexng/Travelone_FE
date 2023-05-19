@@ -110,7 +110,7 @@ const HiddenGemPage = () => {
               </Link>
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
+            <Navbar.Collapse id="basic-navbar-nav" className="font-s">
               <Nav className="mr-auto">
                 <Nav.Link onClick={handleShow}>Add a Secret</Nav.Link>
               </Nav>
@@ -149,8 +149,8 @@ const HiddenGemPage = () => {
           className="jumbotron-fluid d-flex align-items-center mb-4"
           style={{ height: "83vh" }}
         >
-          <div className="container jumbotron-title">
-            <h1 className="secret-text">
+          <div className="container jumbotron-title font-s">
+            <h1 className="secret-text ">
               There will always be a special spot waiting for you to discover!
             </h1>
             <p className="secret-text-small">
@@ -198,7 +198,9 @@ const HiddenGemPage = () => {
                         className="card-img"
                       />
                       <Card.Body>
-                        <Card.Title>{posts?.title}</Card.Title>
+                        <Card.Title className="font-s secret-post-title">
+                          {posts?.title}
+                        </Card.Title>
                         <Card.Text>
                           <Row className="mb-2">
                             <Col md={2} className="pr-0">
@@ -208,11 +210,16 @@ const HiddenGemPage = () => {
                                 src={posts.user?.avatar}
                               />
                             </Col>
-                            <Col>
+                            <Col className="secret-post-username font-s">
                               {posts.user?.firstName} {posts.user?.lastName}
                             </Col>
                           </Row>
-                          <div>Location: {posts?.locations}</div>
+                          <div>
+                            <span className="secret-text-location">
+                              Location:
+                            </span>{" "}
+                            {posts?.locations}
+                          </div>
                         </Card.Text>
                       </Card.Body>
                     </Card>
@@ -224,7 +231,10 @@ const HiddenGemPage = () => {
           {/* Modal Page */}
           <Modal show={show} onHide={handleClose}>
             <Modal.Header>
-              <Modal.Title> Share your discoveries? 🏞🛤🏕🛣🏖🏜🏝 </Modal.Title>
+              <Modal.Title className="font-s">
+                {" "}
+                Share your discoveries? 🏞🛤🏕🛣🏖🏜🏝{" "}
+              </Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <Form onSubmit={handleSubmitSecret}>
@@ -262,18 +272,25 @@ const HiddenGemPage = () => {
                       }
                     />
                   </InputGroup>
-                  <Button variant="danger" onClick={handleClose}>
-                    Cancel
-                  </Button>
-                  <Button
-                    variant="success"
-                    type="submit"
-                    onClick={() => {
-                      dispatch(getSecretPostAction());
-                    }}
-                  >
-                    Add Trip
-                  </Button>
+                  <div className="d-flex justify-content-end">
+                    <Button
+                      variant="danger"
+                      onClick={handleClose}
+                      className="font-s mr-1"
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      className="font-s"
+                      variant="success"
+                      type="submit"
+                      onClick={() => {
+                        dispatch(getSecretPostAction());
+                      }}
+                    >
+                      Add Trip
+                    </Button>
+                  </div>
                 </Form.Group>
               </Form>
             </Modal.Body>

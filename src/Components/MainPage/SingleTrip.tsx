@@ -84,7 +84,7 @@ const SingleTrip = () => {
               </Link>
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
+            <Navbar.Collapse id="basic-navbar-nav" className="font-s">
               <Nav className="mr-auto">
                 <Nav.Link>
                   {" "}
@@ -155,14 +155,18 @@ const SingleTrip = () => {
                     alt="stamp"
                   />
                   <div className="mt-2 postcard-text ml-3">
-                    <h2>{oneTripData?.title}</h2>
+                    <h2 className="font-s">{oneTripData?.title}</h2>
                     <p>
                       with{" "}
-                      <span className="mr-3">
+                      <span className="mr-3 trip-details">
                         {oneTripData.user?.firstName}{" "}
                         {oneTripData.user?.lastName}
                       </span>
-                      to <span> {oneTripData?.destination}</span>
+                      to{" "}
+                      <span className="trip-details">
+                        {" "}
+                        {oneTripData?.destination}
+                      </span>
                     </p>
                     <div className="row ">
                       {/* <p className="col- postcard-text-data">
@@ -229,7 +233,7 @@ const SingleTrip = () => {
       {/* Modal Page */}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header>
-          <Modal.Title> Edit Your Trip </Modal.Title>
+          <Modal.Title className="font-s"> Edit Your Trip </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -325,7 +329,7 @@ const SingleTrip = () => {
             </Form.Group>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer className="font-s">
           <Button variant="primary" onClick={handleClose}>
             Close
           </Button>

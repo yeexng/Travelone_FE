@@ -1,7 +1,17 @@
 body {
-  font-family: "Permanent Marker", cursive;
+  font-family: 'Josefin Sans', sans-serif;
   cursor: url(/public/assets/cursor3.png), auto;
 }
+
+.font-p{
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+.font-s{
+  font-family: "Permanent Marker", cursive;
+}
+
+
 
 .sticky-navbar {
   position: sticky;

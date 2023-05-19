@@ -63,8 +63,20 @@ hr {
 }
 
 .postcard-text {
+  font-family: "Permanent Marker", cursive;
   position: absolute;
   width: 70%;
+}
+
+.trip-details{
+  font-family: 'Josefin Sans', sans-serif;
+
+}
+
+.bar-code-in-connection {
+  width: 100%;
+  overflow:hidden;
+  font-size: 30px;
 }
 
 .postcard-text h2 {

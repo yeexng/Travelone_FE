@@ -66,7 +66,7 @@ const LoginPage = () => {
       <div style={{ height: "92vh" }} className="container-fluid main-layout">
         <Row className="justify-content-center align-items-center h-100">
           <Col md={3} className="login-form py-2">
-            <h2 className="login-text"> Adventure Time! </h2>
+            <h2 className="login-text font-s"> Adventure Time! </h2>
             <Form className="login-text" onSubmit={handleSubmit}>
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
@@ -85,7 +85,7 @@ const LoginPage = () => {
                   onChange={(val) => setPassword(val.currentTarget.value)}
                 />
               </Form.Group>
-              <div className="d-flex justify-content-between">
+              <div className="d-flex justify-content-between font-s">
                 <Button
                   variant="primary"
                   type="submit"

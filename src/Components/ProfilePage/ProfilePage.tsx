@@ -46,7 +46,7 @@ const ProfilePage = () => {
               </Link>
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
+            <Navbar.Collapse id="basic-navbar-nav" className="font-s">
               <Nav className="mr-auto">
                 <Nav.Link>
                   {" "}
@@ -88,7 +88,7 @@ const ProfilePage = () => {
             <Col md={8} className="travel-pass">
               <Row className="profile-card ">
                 <Col md={12} className="travel-pass-text ">
-                  <h3 className="mt-4 ml-4">
+                  <h3 className="mt-4 ml-4 font-s">
                     Your Travel Pass{" "}
                     <span className="plane-emoji">
                       {" "}
@@ -184,7 +184,7 @@ const ProfilePage = () => {
       {/* Edit Modal */}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header>
-          <Modal.Title> Your Details </Modal.Title>
+          <Modal.Title className="font-s"> Your Details </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -251,12 +251,13 @@ const ProfilePage = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="danger" onClick={handleClose}>
+          <Button variant="danger" onClick={handleClose} className="font-s">
             Cancel
           </Button>
           <Button
             type="submit"
-            variant="primary"
+            variant="success"
+            className="font-s"
             onClick={() => {
               if (file) {
                 dispatch(editProfileAvatar(userProfileData._id, file));

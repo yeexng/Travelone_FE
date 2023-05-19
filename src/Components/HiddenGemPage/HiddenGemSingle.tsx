@@ -83,7 +83,7 @@ const HiddenGemSingle = () => {
               </Link>
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
+            <Navbar.Collapse id="basic-navbar-nav" className="font-s">
               <Nav className="mr-auto">
                 {oneSecretPostData.user?._id === userProfileData?._id ? (
                   <Nav.Link onClick={handleShow}>Edit Post</Nav.Link>
@@ -141,7 +141,7 @@ const HiddenGemSingle = () => {
             </Col>
             <Col className="post-text m-0">
               <div className="mt-4">
-                <p>
+                <p className="font-s">
                   <img
                     alt="author image"
                     className="profile-img mr-3"
@@ -150,11 +150,16 @@ const HiddenGemSingle = () => {
                   {oneSecretPostData.user?.firstName}{" "}
                   {oneSecretPostData.user?.lastName}
                 </p>
-                <h3>{oneSecretPostData?.title}</h3>
-                <p className="mb-0">{oneSecretPostData?.locations}</p>
+                <h3 className="font-s">{oneSecretPostData?.title}</h3>
+                <p className="mb-0 secret-single-location">
+                  {oneSecretPostData?.locations}
+                </p>
                 <p className="mb-0">{oneSecretPostData?.details}</p>
                 <p className="mt-2 post-date">
-                  {format(new Date(oneSecretPostData?.createdAt), "dd/MM/yyyy")}
+                  {format(
+                    new Date(oneSecretPostData?.createdAt),
+                    "dd/MM/yyyy HH:mm:ss"
+                  )}
                 </p>
               </div>
               <hr></hr>
@@ -179,6 +184,7 @@ const HiddenGemSingle = () => {
                           />
                           <Button
                             variant="outline-secondary"
+                            className="font-s"
                             onClick={() => {
                               postComment(oneSecretPostData._id);
                             }}
@@ -206,7 +212,7 @@ const HiddenGemSingle = () => {
                           <Col className="ml-1">
                             <Row>
                               <Col md={10}>
-                                <p className="my-1">
+                                <p className="my-1 font-s">
                                   {singleComment.user?.firstName}{" "}
                                   {singleComment.user?.lastName}
                                 </p>
@@ -252,7 +258,7 @@ const HiddenGemSingle = () => {
                                 <p className="mt-1 post-date">
                                   {format(
                                     new Date(singleComment?.createdAt),
-                                    "dd/MM/yyyy"
+                                    "dd/MM/yyyy HH:mm:ss"
                                   )}
                                 </p>
                               </Col>
@@ -270,7 +276,7 @@ const HiddenGemSingle = () => {
       {/* Modal Page */}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header>
-          <Modal.Title> Edit Your Trip </Modal.Title>
+          <Modal.Title className="font-s"> Edit Your Trip </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -310,7 +316,7 @@ const HiddenGemSingle = () => {
             </Form.Group>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer className="font-s">
           <Button variant="danger" onClick={handleClose}>
             Cancel
           </Button>

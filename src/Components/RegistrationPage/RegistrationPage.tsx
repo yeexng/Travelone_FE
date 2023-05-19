@@ -62,11 +62,14 @@ const RegistrationPage = () => {
       </div>
       <div style={{ height: "92vh" }} className="container-fluid main-layout">
         <Row className="justify-content-center align-items-center h-100 ">
-          <Col md={3} className="registration-form py-2">
-            <h2 className="registration-text"> Ready to be a Traveloner!? </h2>
+          <Col md={4} className="registration-form py-2">
+            <h2 className="registration-text font-s">
+              {" "}
+              Ready to be a Traveloner!?{" "}
+            </h2>
             <Form className="registration-text" onSubmit={handleSubmit}>
               <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>First Name</Form.Label>
+                <Form.Label className="mb-0">First Name</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Enter your first name"
@@ -74,7 +77,7 @@ const RegistrationPage = () => {
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Last Name</Form.Label>
+                <Form.Label className="mb-0">Last Name</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Enter your last name"
@@ -82,15 +85,19 @@ const RegistrationPage = () => {
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Gender</Form.Label>
+                <Form.Label className="mb-0">Gender</Form.Label>
                 <Form.Control
-                  type="text"
+                  as="select"
                   placeholder="Male/Female"
                   onChange={(val) => setGender(val.currentTarget.value)}
-                />
+                >
+                  <option>Pick One...</option>
+                  <option>Male</option>
+                  <option>Female</option>
+                </Form.Control>
               </Form.Group>
               <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
+                <Form.Label className="mb-0">Email address</Form.Label>
                 <Form.Control
                   type="email"
                   placeholder="Enter email"
@@ -98,7 +105,7 @@ const RegistrationPage = () => {
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
+                <Form.Label className="mb-0">Password</Form.Label>
                 <Form.Control
                   type="password"
                   placeholder="Password"
@@ -106,7 +113,7 @@ const RegistrationPage = () => {
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Emergency Contact</Form.Label>
+                <Form.Label className="mb-0">Emergency Contact</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Please note that this is important for your safety reason!"
@@ -116,7 +123,7 @@ const RegistrationPage = () => {
                 />
               </Form.Group>
               <Form.Group controlId="duedate">
-                <Form.Label>Date of Birth</Form.Label>
+                <Form.Label className="mb-0">Date of Birth</Form.Label>
                 <Form.Control
                   type="date"
                   name="duedate"
@@ -126,23 +133,24 @@ const RegistrationPage = () => {
                   onChange={(val) => setDateOfBirth(val.currentTarget.value)}
                 />
               </Form.Group>
-              <Form.Group controlId="formBasicCheckbox">
+              <Form.Group controlId="formBasicCheckbox" className="my-2">
                 <Form.Check
                   type="checkbox"
                   label="I'm clear that Travelone will take no further responsibilities to ensure my personal safety!"
                 />
               </Form.Group>
-              <div className="d-flex justify-content-between">
+              <div className="d-flex justify-content-end">
+                <Link to={"/login"} className="btn btn-success mr-1 font-s">
+                  Back
+                </Link>
                 <Button
+                  className="font-s"
                   variant="primary"
                   type="submit"
-                  style={{ width: "49%" }}
+                  style={{ width: "35%" }}
                 >
                   Register
                 </Button>
-                <Link to={"/login"} className="btn btn-success">
-                  Back
-                </Link>
               </div>
             </Form>
           </Col>
