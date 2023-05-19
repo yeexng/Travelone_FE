@@ -22,8 +22,10 @@ import axios from "axios";
 import {
   getSecretPostAction,
   getSecretPostByIdAction,
+  postImageToSecretPost,
 } from "../../redux/actions/secretActions/action";
 import Masonry from "react-masonry-css";
+import { get } from "jquery";
 
 const HiddenGemPage = () => {
   const [show, setShow] = useState(false);
@@ -46,19 +48,39 @@ const HiddenGemPage = () => {
   const [locations, setLocations] = useState("");
   const [details, setDetails] = useState("");
 
+  //EDIT PROFILE AVATAR
+  const [file, setFile] = useState<File | null>(null);
+
   const handleSubmitSecret = async (e: FormEvent) => {
+    e.preventDefault();
     try {
-      e.preventDefault();
-      const { data } = await axios.post(baseEndpoint + "/posts", {
+      // Create the new post
+      const { data: newPost } = await axios.post(baseEndpoint + "/posts", {
         user,
         title,
         locations,
         details,
       });
-      console.log(data);
+
+      console.log(newPost);
+
+      if (file) {
+        // Add the image to the post
+        const formData = new FormData();
+        formData.append("image", file);
+
+        dispatch(postImageToSecretPost(newPost._id, file));
+      }
+
+      // Refresh the secret post data
+
+      // Close the modal
+      handleClose();
       dispatch(getSecretPostAction());
-      dispatch({ handleClose });
-    } catch (error) {}
+    } catch (error) {
+      // Handle the error appropriately
+      console.log(error);
+    }
   };
 
   //ADDING IMAGE
@@ -161,7 +183,7 @@ const HiddenGemPage = () => {
             columnClassName="my-masonry-grid_column"
           >
             {filteredSecretPostArray &&
-              filteredSecretPostArray?.map((posts: any) => {
+              filteredSecretPostArray?.reverse().map((posts: any) => {
                 return (
                   <div
                     key={posts._id}
@@ -235,12 +257,23 @@ const HiddenGemPage = () => {
                     onChange={(val) => setDetails(val.currentTarget.value)}
                   />
                   <InputGroup className="mb-3">
-                    <input type="file" />
+                    <input
+                      type="file"
+                      onChange={(event) =>
+                        setFile(event.target.files?.[0] ?? null)
+                      }
+                    />
                   </InputGroup>
                   <Button variant="danger" onClick={handleClose}>
                     Cancel
                   </Button>
-                  <Button variant="success" type="submit" onClick={handleClose}>
+                  <Button
+                    variant="success"
+                    type="submit"
+                    onClick={() => {
+                      dispatch(getSecretPostAction());
+                    }}
+                  >
                     Add Trip
                   </Button>
                 </Form.Group>

@@ -159,7 +159,7 @@ const MainPage = () => {
 
           <Row>
             {filteredTripsArray &&
-              filteredTripsArray?.map((trips: any) => {
+              filteredTripsArray?.reverse().map((trips: any) => {
                 return (
                   <Col
                     key={trips._id}

@@ -102,7 +102,7 @@ const ConnectionPage = () => {
 
   return (
     <>
-      <div>
+      <div className="sticky-navbar">
         <Navbar style={{ height: "8vh" }} bg="dark" variant="dark" expand="lg">
           <div className="container-fluid mx-5">
             <Navbar.Brand>

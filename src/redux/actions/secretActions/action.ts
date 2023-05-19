@@ -107,6 +107,7 @@ export const postImageToSecretPost = (postId: string, file: any) => {
         payload: data,
       });
       dispatch(getSecretPostByIdAction(postId));
+      dispatch(getSecretPostAction());
       return data;
     } catch (error) {
       console.log(error);

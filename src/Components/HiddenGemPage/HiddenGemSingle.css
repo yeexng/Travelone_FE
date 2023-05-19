@@ -39,3 +39,8 @@ hr {
 .edit-btn:hover {
   color: red;
 }
+
+.comments-container {
+  max-height: 56vh; /* Set the maximum height of the container */
+  overflow-y: auto; /* Enable vertical scrolling */
+}

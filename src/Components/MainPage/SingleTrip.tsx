@@ -41,6 +41,7 @@ const SingleTrip = () => {
   );
 
   console.log("Single Trip", oneTripData);
+  console.log("user", userProfileData);
 
   const enterChat = () => {
     // //Adding User to the User Array
@@ -91,7 +92,11 @@ const SingleTrip = () => {
                     Secret HideOuts
                   </Link>
                 </Nav.Link>
-                <Nav.Link onClick={handleShow}>Edit Trip</Nav.Link>
+                {oneTripData.user._id === userProfileData._id ? (
+                  <Nav.Link onClick={handleShow}>Edit Trip</Nav.Link>
+                ) : (
+                  ""
+                )}{" "}
                 <Nav.Link>
                   <Link to={"/trips"} className="secret-link">
                     Back

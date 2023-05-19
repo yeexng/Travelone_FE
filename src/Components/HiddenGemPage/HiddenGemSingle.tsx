@@ -73,7 +73,7 @@ const HiddenGemSingle = () => {
 
   return (
     <>
-      <div>
+      <div className="sticky-navbar">
         <Navbar style={{ height: "8vh" }} bg="dark" variant="dark" expand="lg">
           <div className="container-fluid mx-5">
             <Navbar.Brand>
@@ -84,8 +84,11 @@ const HiddenGemSingle = () => {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="mr-auto">
-                <Nav.Link onClick={handleShow}>Edit Post</Nav.Link>
-
+                {oneSecretPostData.user._id === userProfileData._id ? (
+                  <Nav.Link onClick={handleShow}>Edit Post</Nav.Link>
+                ) : (
+                  ""
+                )}{" "}
                 <Nav.Link>
                   {" "}
                   <Link to={"/secret"} className="secret-link">
@@ -185,7 +188,7 @@ const HiddenGemSingle = () => {
                   </Row>
                 </p>
               </div>
-              <div>
+              <div className="comments-container">
                 {oneSecretPostData?.comments &&
                   oneSecretPostData?.comments.map((singleComment: any) => {
                     return (
@@ -206,31 +209,36 @@ const HiddenGemSingle = () => {
                                 </p>
                               </Col>
                               <Col>
-                                <div
-                                  className="my-1 btn edit-btn"
-                                  onClick={async () => {
-                                    try {
-                                      await axios.delete(
-                                        baseEndpoint +
-                                          `/posts/${oneSecretPostData._id}/comments/${singleComment._id}`
-                                      );
-                                      console.log(
-                                        `Comment with ID ${singleComment._id} has been deleted successfully.`
-                                      );
-                                      dispatch(
-                                        getSecretPostByIdAction(
-                                          oneSecretPostData._id
-                                        )
-                                      );
-                                    } catch (error) {
-                                      console.error(
-                                        `Error deleting Comment with ID ${singleComment._id}`
-                                      );
-                                    }
-                                  }}
-                                >
-                                  <BsTrashFill />
-                                </div>
+                                {singleComment.user?._id ===
+                                userProfileData._id ? (
+                                  <div
+                                    className="my-1 btn edit-btn"
+                                    onClick={async () => {
+                                      try {
+                                        await axios.delete(
+                                          baseEndpoint +
+                                            `/posts/${oneSecretPostData._id}/comments/${singleComment._id}`
+                                        );
+                                        console.log(
+                                          `Comment with ID ${singleComment._id} has been deleted successfully.`
+                                        );
+                                        dispatch(
+                                          getSecretPostByIdAction(
+                                            oneSecretPostData._id
+                                          )
+                                        );
+                                      } catch (error) {
+                                        console.error(
+                                          `Error deleting Comment with ID ${singleComment._id}`
+                                        );
+                                      }
+                                    }}
+                                  >
+                                    <BsTrashFill />
+                                  </div>
+                                ) : (
+                                  ""
+                                )}
                               </Col>
                               <Col md={12}>
                                 <p className="mb-0 mt-0">
