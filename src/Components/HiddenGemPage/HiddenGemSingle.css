@@ -44,3 +44,7 @@ hr {
   max-height: 56vh; /* Set the maximum height of the container */
   overflow-y: auto; /* Enable vertical scrolling */
 }
+
+.comment-row {
+  width: 99%;
+}

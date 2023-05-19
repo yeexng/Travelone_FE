@@ -336,8 +336,8 @@ const ConnectionPage = () => {
                   );
                 })}
               </div>
-              <div className="mb-2">
-                <Row className="chat-input mt-2">
+              <div className="mb-1">
+                <Row className="chat-input mt-2 pt-3">
                   <Col md={1}>
                     <img
                       className="profile-img mr-3"

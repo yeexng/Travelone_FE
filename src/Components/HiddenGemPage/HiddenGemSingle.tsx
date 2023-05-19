@@ -23,6 +23,7 @@ import {
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { BsTrashFill } from "react-icons/bs";
 import axios from "axios";
+import { format } from "date-fns";
 
 const HiddenGemSingle = () => {
   const [show, setShow] = useState(false);
@@ -152,7 +153,9 @@ const HiddenGemSingle = () => {
                 <h3>{oneSecretPostData?.title}</h3>
                 <p className="mb-0">{oneSecretPostData?.locations}</p>
                 <p className="mb-0">{oneSecretPostData?.details}</p>
-                <p className="mt-2 post-date">{oneSecretPostData?.createdAt}</p>
+                <p className="mt-2 post-date">
+                  {format(new Date(oneSecretPostData?.createdAt), "dd/MM/yyyy")}
+                </p>
               </div>
               <hr></hr>
               <div>
@@ -193,7 +196,7 @@ const HiddenGemSingle = () => {
                   oneSecretPostData?.comments.map((singleComment: any) => {
                     return (
                       <div className="single-comment mt-4">
-                        <Row>
+                        <Row className="comment-row">
                           <Col md={1} className="pr-0">
                             <img
                               className="profile-img mt-2"
@@ -247,7 +250,10 @@ const HiddenGemSingle = () => {
                               </Col>
                               <Col md={12}>
                                 <p className="mt-1 post-date">
-                                  {singleComment?.createdAt}
+                                  {format(
+                                    new Date(singleComment?.createdAt),
+                                    "dd/MM/yyyy"
+                                  )}
                                 </p>
                               </Col>
                             </Row>
