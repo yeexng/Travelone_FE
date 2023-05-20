@@ -1,17 +1,15 @@
 body {
-  font-family: 'Josefin Sans', sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   cursor: url(/public/assets/cursor3.png), auto;
 }
 
-.font-p{
-  font-family: 'Josefin Sans', sans-serif;
+.font-p {
+  font-family: "Josefin Sans", sans-serif;
 }
 
-.font-s{
+.font-s {
   font-family: "Permanent Marker", cursive;
 }
-
-
 
 .sticky-navbar {
   position: sticky;
@@ -100,4 +98,3 @@ body {
   margin-top: 10px;
   margin-bottom: 30px;
 }
-

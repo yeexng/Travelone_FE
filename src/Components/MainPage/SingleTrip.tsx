@@ -40,8 +40,8 @@ const SingleTrip = () => {
     (state: RootState) => state.oneTripData.stock
   );
 
-  console.log("Single Trip", oneTripData);
-  console.log("user", userProfileData);
+  // console.log("Single Trip", oneTripData);
+  // console.log("user", userProfileData);
 
   const enterChat = () => {
     // //Adding User to the User Array
@@ -61,7 +61,7 @@ const SingleTrip = () => {
         // Handle the response from the server
         dispatch(getTripByIdAction(oneTripData._id));
 
-        console.log(result); // Assuming the server responds with the updated trip object
+        // console.log(result); // Assuming the server responds with the updated trip object
       })
       .catch((error) => {
         // Handle any errors that occurred during the request

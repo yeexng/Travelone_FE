@@ -35,7 +35,7 @@ hr {
 
 .postcard-div {
   position: relative;
-  border-block: dashed 10px #e44040;
+  border-block: dashed 15px #e44040;
   background-color: aliceblue;
   min-width: 50vw;
   min-height: 63vh;
@@ -68,14 +68,13 @@ hr {
   width: 70%;
 }
 
-.trip-details{
-  font-family: 'Josefin Sans', sans-serif;
-
+.trip-details {
+  font-family: "Josefin Sans", sans-serif;
 }
 
 .bar-code-in-connection {
   width: 100%;
-  overflow:hidden;
+  overflow: hidden;
   font-size: 30px;
 }
 

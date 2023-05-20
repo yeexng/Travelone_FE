@@ -164,6 +164,7 @@ const MainPage = () => {
                   <Col
                     key={trips._id}
                     md={6}
+                    className="main-content-card"
                     onClick={() => {
                       dispatch(getTripByIdAction(`${trips._id}`));
                       navigate(`/trips/${trips._id}`);
@@ -183,7 +184,7 @@ const MainPage = () => {
                           <Figure className="pl-3 pt-3">
                             <Figure.Image
                               width={200}
-                              height={200}
+                              height={100}
                               alt="171x180"
                               src={trips.user?.avatar}
                             />

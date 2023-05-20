@@ -19,15 +19,15 @@ const IntroPage = () => {
       <div style={{ height: "92vh" }} className="container-fluid main-layout">
         <Row className="justify-content-center align-items-center h-100">
           <Col className="text-center">
-            <h1 className="main-text my-5">Travel One? Travel Alone?</h1>
-            <h3 className="sub-text ">
+            <h1 className="main-text my-5 font-s">Travel One? Travel Alone?</h1>
+            <h3 className="sub-text font-s">
               Looking for a travel partner?
               <br></br>Meet people who share the same passion.
               <br></br>Share your adventures and stories.
             </h3>
             <Link
               to={"/login"}
-              className="btn my-5 get-started-btn"
+              className="btn my-5 get-started-btn font-s"
               // id="get-started-btn"
             >
               Get Started

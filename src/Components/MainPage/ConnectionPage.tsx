@@ -39,21 +39,29 @@ const ConnectionPage = () => {
   );
   const dispatch = useAppDispatch();
 
-  console.log("connection", oneTripData);
+  // console.log("connection", oneTripData);
+
+  // Socket.io & Chat
+  const [username, setUserName] = useState("");
+  const [message, setMessage] = useState("");
+  const [onlineUsers, setOnlineUsers] = useState<Adventurer[]>([]);
+  const [chatHistory, setChatHistory] = useState<Message[]>([]);
 
   useEffect(() => {
     dispatch(getTripByIdAction(oneTripData._id));
-    socket.on("welcome", (welcomeMessage) => {
-      console.log(welcomeMessage);
-    });
     //join room
     socket.emit("joinRoom", oneTripData._id);
     socket.emit("setUsername", userProfileData.firstName);
-    socket.on("loggedIn", (adventurersList) => {
-      // console.log(adventurersList);
-      setAdventurersList(adventurersList);
+    socket.on("welcome", (welcomeMessage) => {
+      console.log(welcomeMessage);
     });
-
+    socket.on("loggedIn", (onlineUsersList) => {
+      console.log(onlineUsersList);
+      setOnlineUsers(onlineUsersList);
+    });
+    socket.on("updateOnlineUsersList", (updatedList) => {
+      setOnlineUsers(updatedList);
+    });
     socket.on("newMessage", (newMessage) => {
       // console.log(newMessage);
       // setChatHistory([...chatHistory, newMessage.message])
@@ -65,12 +73,6 @@ const ConnectionPage = () => {
 
     // console.log("In connection:", oneTripData);
   }, []);
-
-  // Socket.io & Chat
-  const [username, setUserName] = useState("");
-  const [message, setMessage] = useState("");
-  const [adventurersList, setAdventurersList] = useState<Adventurer[]>([]);
-  const [chatHistory, setChatHistory] = useState<Message[]>([]);
 
   // Adding to DB
   const [texts, setTexts] = useState("");
@@ -271,9 +273,13 @@ const ConnectionPage = () => {
               <div className="mt-4">
                 <h5 className="font-s">{oneTripData.title} </h5>
                 <div className="mb-2">
-                  Your Adventure Buddies:{" "}
-                  {oneTripData?.adventurers.map((user: any) => {
-                    return <span>{user.firstName}, </span>;
+                  Online Travel Buddies:{" "}
+                  {onlineUsers?.map((user: any) => {
+                    return (
+                      <span key={user.socketId} className="font-s">
+                        {user?.username},{" "}
+                      </span>
+                    );
                   })}
                 </div>
               </div>
