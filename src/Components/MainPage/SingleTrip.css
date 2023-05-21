@@ -68,6 +68,12 @@ hr {
   width: 70%;
 }
 
+.postcard-button {
+  position: absolute;
+  right: auto;
+  bottom: 2vh;
+}
+
 .trip-details {
   font-family: "Josefin Sans", sans-serif;
 }

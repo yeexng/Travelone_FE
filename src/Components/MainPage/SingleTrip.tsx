@@ -40,8 +40,8 @@ const SingleTrip = () => {
     (state: RootState) => state.oneTripData.stock
   );
 
-  // console.log("Single Trip", oneTripData);
-  // console.log("user", userProfileData);
+  console.log("Single Trip", oneTripData);
+  console.log("user", userProfileData);
 
   const enterChat = () => {
     // //Adding User to the User Array
@@ -184,7 +184,6 @@ const SingleTrip = () => {
                           {oneTripData?.lookingFor}
                         </span>
                       </p>
-
                       <p className="col-4 postcard-text-data">
                         Type of Travel: <br />
                         <span className="trip-details">
@@ -211,19 +210,32 @@ const SingleTrip = () => {
                           {oneTripData?.addOns}
                         </span>
                       </p>
-                      <Button
-                        variant="primary"
-                        className="ml-3 mt-2"
-                        onClick={() => {
-                          dispatch(enterChat);
-                          navigate(`/trips/${oneTripData._id}/chat`);
-                          // dispatch(addUserToArray(oneTripData._id));
-                        }}
-                      >
-                        Join the Party
-                      </Button>
                     </div>
                   </div>
+                  {oneTripData.adventurers.some(
+                    (adventure: any) => adventure._id === userProfileData._id
+                  ) ? (
+                    <Button
+                      variant="primary"
+                      className="ml-3 mt-2 postcard-button"
+                      onClick={() => {
+                        navigate(`/trips/${oneTripData._id}/chat`);
+                      }}
+                    >
+                      Go to the Chat
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="primary"
+                      className="ml-3 mt-2 postcard-button"
+                      onClick={() => {
+                        dispatch(enterChat);
+                        navigate(`/trips/${oneTripData._id}/chat`);
+                      }}
+                    >
+                      Join the Party
+                    </Button>
+                  )}{" "}
                 </Row>
               </div>
             </Col>

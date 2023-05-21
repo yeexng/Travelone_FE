@@ -49,20 +49,21 @@ const ConnectionPage = () => {
 
   useEffect(() => {
     dispatch(getTripByIdAction(oneTripData._id));
+
     //join room
     socket.emit("joinRoom", oneTripData._id);
     socket.emit("setUsername", userProfileData.firstName);
-    socket.on("welcome", (welcomeMessage) => {
+    socket.on("welcome", (welcomeMessage: String) => {
       console.log(welcomeMessage);
     });
-    socket.on("loggedIn", (onlineUsersList) => {
+    socket.on("loggedIn", (onlineUsersList: any) => {
       console.log(onlineUsersList);
       setOnlineUsers(onlineUsersList);
     });
-    socket.on("updateOnlineUsersList", (updatedList) => {
+    socket.on("updateOnlineUsersList", (updatedList: any) => {
       setOnlineUsers(updatedList);
     });
-    socket.on("newMessage", (newMessage) => {
+    socket.on("newMessage", (newMessage: any) => {
       // console.log(newMessage);
       // setChatHistory([...chatHistory, newMessage.message])
       // if we set the state just by passing a value, the new message will be appended to the INITIAL state of the component (empty chat history [])
