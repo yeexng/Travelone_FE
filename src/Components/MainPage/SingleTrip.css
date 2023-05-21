@@ -1,0 +1,144 @@
+.single-trip-layout {
+  height: inherit;
+  background-color: black;
+}
+
+.main-row-layout {
+  background-color: black;
+  width: 99vw;
+}
+
+.post-text {
+  position: relative;
+  background-color: #333333;
+  color: white;
+  height: 94vh;
+}
+
+.post-date {
+  color: rgba(255, 255, 255, 0.466);
+  font-size: 12px;
+  font-style: italic;
+}
+
+hr {
+  background-color: white;
+}
+
+.single-comment {
+  border-bottom: rgba(245, 245, 245, 0.178) solid 1px;
+}
+
+.trip-single-div {
+  height: 94vh;
+}
+
+.postcard-div {
+  position: relative;
+  border-block: dashed 15px #e44040;
+  background-color: aliceblue;
+  min-width: 50vw;
+  min-height: 63vh;
+}
+
+.postcard-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.postcard-photo {
+  position: absolute;
+  top: 1vh;
+  right: 2vw;
+}
+
+.postcard-stamp {
+  position: absolute;
+  top: 20vh;
+  right: 8vw;
+  width: 300px;
+}
+
+.postcard-text {
+  font-family: "Permanent Marker", cursive;
+  position: absolute;
+  width: 70%;
+}
+
+.postcard-button {
+  position: absolute;
+  right: auto;
+  bottom: 2vh;
+}
+
+.trip-details {
+  font-family: "Josefin Sans", sans-serif;
+}
+
+.bar-code-in-connection {
+  width: 100%;
+  overflow: hidden;
+  font-size: 30px;
+}
+
+.postcard-text h2 {
+  font-weight: bold;
+}
+
+.postcard-text > p > span {
+  font-size: 20px;
+  font-weight: bold;
+  font-style: italic;
+  color: #7e0000;
+}
+
+.postcard-text-left {
+  position: absolute;
+  top: 16vh;
+  left: 1vw;
+}
+
+.postcard-text-data {
+  font-size: 15px;
+  color: #4042cf;
+  word-wrap: break-word;
+}
+
+.postcard-text-data > span {
+  font-size: 25px;
+  color: #7e0000;
+  word-wrap: break-word;
+}
+
+.chat-history {
+  max-height: 70vh;
+  overflow-y: auto; /* Enable vertical scrolling */
+  border-top: solid 1px rgba(240, 248, 255, 0.199);
+}
+
+.left-connection-div {
+  color: black;
+}
+
+.left-profile-card {
+  border: solid 2px rgba(0, 0, 0, 0.2);
+  background-color: #d4dae8;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.left-travel-pass-text {
+  height: 10vh;
+  background-color: black;
+  color: aliceblue;
+}
+
+.chat-input {
+  border-top: solid 1px rgba(240, 248, 255, 0.199);
+  width: 100%;
+  position: absolute;
+  bottom: 5vh;
+}
