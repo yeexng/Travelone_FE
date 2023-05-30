@@ -25,7 +25,6 @@ hr {
 }
 
 .single-comment {
-  
   border-bottom: rgba(245, 245, 245, 0.178) solid 1px;
 }
 
@@ -45,15 +44,14 @@ hr {
   max-height: 56vh; /* Set the maximum height of the container */
   overflow-y: auto; /* Enable vertical scrolling */
   border-top: rgba(245, 245, 245, 0.178) solid 1px;
-  
 }
 
 .comment-row {
   width: 99%;
 }
 
-.secret-single-location{
+.secret-single-location {
   font-style: italic;
   font-size: 14px;
-  color:rgba(240, 248, 255, 0.76)
+  color: rgba(240, 248, 255, 0.76);
 }

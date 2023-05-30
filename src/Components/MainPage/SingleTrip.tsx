@@ -212,7 +212,7 @@ const SingleTrip = () => {
                       </p>
                     </div>
                   </div>
-                  {oneTripData.adventurers.some(
+                  {oneTripData.adventurers?.some(
                     (adventure: any) => adventure._id === userProfileData._id
                   ) ? (
                     <Button

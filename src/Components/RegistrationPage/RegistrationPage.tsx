@@ -43,10 +43,6 @@ const RegistrationPage = () => {
     }
   };
 
-  useEffect(() => {
-    document.title = "Travelone | Register";
-  }, []);
-
   return (
     <>
       <div>

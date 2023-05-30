@@ -288,7 +288,7 @@ const HiddenGemPage = () => {
                         dispatch(getSecretPostAction());
                       }}
                     >
-                      Add Trip
+                      Add Post
                     </Button>
                   </div>
                 </Form.Group>
